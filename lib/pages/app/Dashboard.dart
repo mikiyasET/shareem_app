@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/widgets/main/EMBottomNav.dart';
 
 import '../../controller/home.controller.dart';
@@ -12,6 +13,7 @@ class Dashboard extends StatelessWidget {
 
   final homeController = Get.put(HomeController());
   final authController = Get.find<AuthController>();
+  final themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +21,18 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         title: Obx(() => Text(homeController.title.value)),
         centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: Colors.black,
+        titleTextStyle:  TextStyle(
+          color: Theme.of(context).colorScheme.onSurface,
           fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.dark_mode_outlined,
-              )),
+            onPressed: () => themeController.toggleDarkMode(),
+            icon: const Icon(
+              Icons.dark_mode_outlined,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(

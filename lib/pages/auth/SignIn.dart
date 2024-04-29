@@ -16,6 +16,8 @@ class SignIn extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(top: 150, left: 30, right: 30, bottom: 20),
           child: Obx(
             () => Column(
@@ -53,12 +55,15 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       'Having an issue ?',
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.8),
                       ),
                     ),
                     TextButton(
@@ -67,12 +72,12 @@ class SignIn extends StatelessWidget {
                             MaterialStateProperty.all(Colors.transparent),
                       ),
                       onPressed: () => Get.toNamed('/resetPassword'),
-                      child: const Text(
+                      child: Text(
                         'Reset password now',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -89,12 +94,15 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Don\'t have an account ?',
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.8),
                       ),
                     ),
                     TextButton(
@@ -106,12 +114,12 @@ class SignIn extends StatelessWidget {
                         authController.clearValues(),
                         Get.toNamed('/signUp'),
                       },
-                      child: const Text(
+                      child: Text(
                         'Create Now',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),

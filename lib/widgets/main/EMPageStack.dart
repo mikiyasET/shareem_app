@@ -14,15 +14,19 @@ class EMPageStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => IndexedStack(
-        index: homeController.pageIndex.value,
-        children: [
-          Home(),
-          Chats(),
-          Notifications(),
-          Settings(),
-        ],
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      height: MediaQuery.of(context).size.height,
+      child: Obx(
+        () => IndexedStack(
+          index: homeController.pageIndex.value,
+          children: [
+            Home(),
+            Chats(),
+            Notifications(),
+            Settings(),
+          ],
+        ),
       ),
     );
   }

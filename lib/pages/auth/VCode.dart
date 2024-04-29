@@ -17,6 +17,8 @@ class Vcode extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
+        color: Theme.of(context).colorScheme.surface,
+        height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.only(top: 100, left: 30, right: 30, bottom: 20),
         width: double.infinity,
         child: Obx(
@@ -51,9 +53,10 @@ class Vcode extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                           textStyle: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.red.withOpacity(.06),
                             borderRadius: BorderRadius.circular(10),
@@ -67,10 +70,13 @@ class Vcode extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                           textStyle: TextStyle(
                               fontSize: 20,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                               fontWeight: FontWeight.bold),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(.06),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(.08),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                                 color: Colors.transparent, width: 1.5),
@@ -116,7 +122,9 @@ class Vcode extends StatelessWidget {
                               width: 14,
                               height: 14,
                               child: CircularProgressIndicator(
-                                  color: Colors.black, strokeWidth: 2),
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  strokeWidth: 2),
                             ),
                           )
                         : Text(
@@ -124,7 +132,7 @@ class Vcode extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black),
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
                   ),
                 ]),

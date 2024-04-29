@@ -20,7 +20,7 @@ class UserApi {
   Future<void> getMe() async {
     try {
       final box = GetStorage();
-      if (coreController.user.value == null && box.read(accessToken_) != null) {
+      if (coreController.user.value == null && box.hasData(accessToken_)) {
         final response = await client.get(meRoute);
         EMResponse res = EMResponse.fromJson(response.toString());
         if (response.statusCode == 200 && res.message == 'USER_DATA') {
@@ -28,10 +28,7 @@ class UserApi {
         }
       }
     } on DioException catch (e) {
-      print("Get Me Error");
-      print(e);
       final error = EMResponse.fromJson(e.response.toString());
-      Fluttertoast.showToast(msg: error.message);
     }
   }
 }

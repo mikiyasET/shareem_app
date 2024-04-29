@@ -16,7 +16,8 @@ class EMBottomNav extends StatelessWidget {
         currentIndex: homeController.pageIndex.value,
         onTap: homeController.changePageIndex,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        selectedItemColor: Theme.of(context).colorScheme.onSurface,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),

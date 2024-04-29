@@ -19,17 +19,17 @@ class SignUp extends StatelessWidget {
       initialDate: authController.dateOfBirthDate.value,
       firstDate: DateTime(DateTime.now().year - 50, 8),
       lastDate: DateTime(DateTime.now().year),
-      barrierColor: Colors.black.withOpacity(0.7),
+      barrierColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
-              primary: Colors.black,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
+              primary: Theme.of(context).colorScheme.onSurface,
+              onPrimary: Theme.of(context).colorScheme.surface,
+              surface: Theme.of(context).colorScheme.surface,
+              onSurface: Theme.of(context).colorScheme.onSurface,
             ),
-            dialogBackgroundColor: Colors.white,
+            dialogBackgroundColor: Theme.of(context).colorScheme.surface,
           ),
           child: child!,
         );
@@ -48,6 +48,8 @@ class SignUp extends StatelessWidget {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(top: 0, left: 30, right: 30, bottom: 20),
           child: Obx(
             () => Column(
@@ -121,8 +123,8 @@ class SignUp extends StatelessWidget {
                       height: 24.0,
                       width: 24.0,
                       child: Checkbox(
-                        checkColor: Colors.white,
-                        activeColor: Colors.black,
+                        checkColor: Theme.of(context).colorScheme.surface,
+                        activeColor: Theme.of(context).colorScheme.onSurface,
                         value: authController.isAnonymous.value,
                         onChanged: authController.changeAnonymous,
                       ),
@@ -136,10 +138,13 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
                           'I want to be anonymous',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black87,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(.8),
                           ),
                         ),
                       ),
@@ -157,12 +162,15 @@ class SignUp extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Already have an account ?',
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.8),
                       ),
                     ),
                     TextButton(
@@ -173,12 +181,12 @@ class SignUp extends StatelessWidget {
                       onPressed: () {
                         Get.back();
                       },
-                      child: const Text(
+                      child: Text(
                         'Sign In',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),

@@ -19,43 +19,49 @@ class UserDetails extends StatelessWidget {
     String? selectedItem;
     return Scaffold(
       appBar: AppBar(),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                  'We recommend completing your profile to get the best experience'),
-              const SizedBox(height: 20),
-              EMButton(
-                label: 'Complete',
-                onPressed: () => coreController.completeProfile(),
-              ),
-              const SizedBox(height: 20),
-              const Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.info_outline, color: Colors.grey),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'By clicking "Complete" you agree to our Terms of Service and Privacy Policy',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+      bottomNavigationBar: Container(
+        color: Theme.of(context).colorScheme.surface,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                    'We recommend completing your profile to get the best experience'),
+                const SizedBox(height: 20),
+                EMButton(
+                  label: 'Complete',
+                  onPressed: () => coreController.completeProfile(),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.info_outline,
+                        color: Theme.of(context).colorScheme.background),
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const Expanded(
+                      child: Text(
+                        'By clicking "Complete" you agree to our Terms of Service and Privacy Policy',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          height: MediaQuery.of(context).size.height,
           padding:
               const EdgeInsets.only(top: 0, left: 30, right: 30, bottom: 20),
           child: Obx(
@@ -94,14 +100,17 @@ class UserDetails extends StatelessWidget {
                     errorText: coreController.lNameErrorText.value,
                   ),
                   const SizedBox(height: 20),
-                  const Row(
+                  Row(
                     children: [
                       Text(
                         'Gender',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black87,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.8),
                         ),
                       ),
                     ],
@@ -132,8 +141,11 @@ class UserDetails extends StatelessWidget {
                               genderList[index]['iconData'],
                               color: coreController.gender.value ==
                                       genderList[index]['preset']
-                                  ? Colors.black
-                                  : Colors.black54,
+                                  ? Theme.of(context).colorScheme.onSurface
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(.5),
                               size: 23,
                             ),
                             const SizedBox(width: 10),
@@ -142,8 +154,11 @@ class UserDetails extends StatelessWidget {
                               style: TextStyle(
                                   color: coreController.gender.value ==
                                           genderList[index]['preset']
-                                      ? Colors.black
-                                      : Colors.black54,
+                                      ? Theme.of(context).colorScheme.onSurface
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(.5),
                                   fontSize: 16),
                             ),
                           ],

@@ -18,6 +18,8 @@ class ResetPassword extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          height: MediaQuery.of(context).size.height,
           padding:
               const EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 20),
           child: Column(

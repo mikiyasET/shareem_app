@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/utils/constants.dart';
 
@@ -36,20 +37,19 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    // Check if the user is unauthorized.
+    print("On error");
+    if (err.type == DioExceptionType.connectionError) {
+      Fluttertoast.showToast(msg: "Connection Error");
+    }
     if (err.response?.statusCode == 401) {
       await refreshTokenFunc();
-      // Retry the request.
       try {
         handler.resolve(await _retry(err.requestOptions));
       } on DioException catch (e) {
-        // If the request fails again, pass the error to the next interceptor in the chain.
         handler.next(e);
       }
-      // Return to prevent the next interceptor in the chain from being executed.
       return;
     }
-    // Pass the error to the next interceptor in the chain.
     return super.onError(err, handler);
   }
 
@@ -59,11 +59,7 @@ class DioInterceptor extends Interceptor {
           options: Options(headers: {
             "Refresh-Token": box.read(refreshToken_),
           }));
-      // on success response, deserialize the response
       if (response.statusCode == 200) {
-        // LoginRequestResponse requestResponse =
-        //    LoginRequestResponse.fromJson(response.data);
-        // UPDATE the STORAGE with new access and refresh-tokens
         box.write(accessToken_, response.data['accessToken']);
         box.write(refreshToken_, response.data['refreshToken']);
         return response;
@@ -71,7 +67,6 @@ class DioInterceptor extends Interceptor {
       return response;
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 401) {
-        // If the refresh token is expired, log the user out.
         box.remove(accessToken_);
         box.remove(refreshToken_);
       }
@@ -88,7 +83,6 @@ class DioInterceptor extends Interceptor {
       );
     } else {
       final String? token = box.read(accessToken_);
-      // Create a new `RequestOptions` object with the same method, path, data, and query parameters as the original request.
       final options = Options(
         method: requestOptions.method,
         headers: {
@@ -96,7 +90,6 @@ class DioInterceptor extends Interceptor {
         },
       );
 
-      // Retry the request with the new `RequestOptions` object.
       return dio.request<dynamic>(requestOptions.path,
           data: requestOptions.data,
           queryParameters: requestOptions.queryParameters,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class EMPButton extends StatelessWidget {
   final String label;
+  final Color? iconColor;
   final Color iconBgColor;
   final IconData icon;
   final void Function()? onTap;
@@ -10,6 +11,7 @@ class EMPButton extends StatelessWidget {
   const EMPButton({
     super.key,
     this.onTap,
+    this.iconColor = Colors.white,
     required this.label,
     required this.icon,
     required this.iconBgColor,
@@ -33,13 +35,15 @@ class EMPButton extends StatelessWidget {
         child: Icon(
           icon,
           size: 20,
-          color: Colors.white,
+          color: iconColor,
         ),
       ),
       title: Text(
         label,
         style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.onSurface),
       ),
       trailing: const Icon(Icons.arrow_forward_ios, size: 15),
       onTap: onTap,

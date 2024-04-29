@@ -14,7 +14,9 @@ class EMButton extends StatelessWidget {
       enableFeedback: isLoading ? false : true,
       height: 55,
       minWidth: double.infinity,
-      color: isLoading ? Colors.black87 : Colors.black,
+      color: isLoading
+          ? Theme.of(context).colorScheme.onSurface.withOpacity(.8)
+          : Theme.of(context).colorScheme.onSurface,
       elevation: 0,
       onPressed: isLoading ? () {} : onPressed ?? () {},
       shape: RoundedRectangleBorder(
@@ -25,19 +27,20 @@ class EMButton extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
           SizedBox(width: 10),
           if (isLoading)
-            const SizedBox(
+            SizedBox(
               width: 15,
               height: 15,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.surface),
                 strokeWidth: 2,
               ),
             ),

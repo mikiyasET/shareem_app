@@ -18,10 +18,10 @@ class EMNButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: Theme.of(context).colorScheme.background.withOpacity(.2),
             blurRadius: 10,
             offset: Offset(0, 2),
           ),
@@ -46,16 +46,16 @@ class EMNButton extends StatelessWidget {
         title: RichText(
           text: TextSpan(
             text: names,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
             children: [
               TextSpan(
                 text: ' ${data.text}',
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.w400,
                 ),
               ),

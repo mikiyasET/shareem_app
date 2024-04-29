@@ -30,10 +30,10 @@ class EMPost extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               border: Border(
                 bottom: BorderSide(
-                  color: Colors.black12,
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(.2),
                   width: .5,
                 ),
               ),
@@ -64,7 +64,7 @@ class EMPost extends StatelessWidget {
                         author,
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -73,7 +73,10 @@ class EMPost extends StatelessWidget {
                         date,
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.grey,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.5),
                         ),
                       ),
                     ],
@@ -83,7 +86,7 @@ class EMPost extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -92,14 +95,16 @@ class EMPost extends StatelessWidget {
                   content,
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.black87,
+                    color:
+                        Theme.of(context).colorScheme.onSurface.withOpacity(.7),
                   ),
                 ),
                 SizedBox(height: 5),
                 Text(
                   '...',
                   style: TextStyle(
-                    color: Colors.black87,
+                    color:
+                        Theme.of(context).colorScheme.onSurface.withOpacity(.7),
                     fontSize: 15,
                   ),
                 ),
@@ -112,51 +117,46 @@ class EMPost extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Image.asset(
-                              'images/icons/upvote_outline.png',
-                              width: 20,
-                              height: 19,
-                              fit: BoxFit.fill,
-                            ),
+                            Icon(CupertinoIcons.up_arrow,
+                                color: Theme.of(context).colorScheme.onSurface),
                             SizedBox(width: 10),
                             Text(
                               upvotes.toString(),
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                           ],
                         ),
                         SizedBox(width: 15),
                         Row(children: [
-                          Image.asset(
-                            'images/icons/downvote_outline.png',
-                            width: 20,
-                            height: 19,
-                            fit: BoxFit.fill,
-                          ),
+                          Icon(CupertinoIcons.down_arrow,
+                              color: Theme.of(context).colorScheme.onSurface),
                           SizedBox(width: 10),
                           Text(
                             '2.5k',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ]),
                       ],
                     ),
                     Row(children: [
-                      Icon(Icons.messenger_outline_sharp, color: Colors.black),
+                      Icon(Icons.messenger_outline_sharp,
+                          color: Theme.of(context).colorScheme.onSurface),
                       SizedBox(width: 10),
                       Text(
                         comments.toString(),
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ]),
-                    Icon(Icons.bookmark_outline, color: Colors.black),
-                    Icon(CupertinoIcons.share, color: Colors.black),
+                    Icon(Icons.bookmark_outline,
+                        color: Theme.of(context).colorScheme.onSurface),
+                    Icon(CupertinoIcons.share,
+                        color: Theme.of(context).colorScheme.onSurface),
                   ],
                 ),
               ],

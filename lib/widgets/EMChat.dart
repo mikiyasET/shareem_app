@@ -20,75 +20,78 @@ class EMChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shortName = name.split(' ').map((e) => e[0]).join();
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 3),
-      leading: CircleAvatar(
-        radius: 28,
-        child: image == null
-            ? Text(
-                shortName,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18),
-              )
-            : null,
-        backgroundImage: image == null
-            ? null
-            : const NetworkImage(
-                'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg'),
-      ),
-      title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(message),
-      trailing: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: unread > 0 ? MainAxisAlignment.center : MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(
-            width: 85,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                type == chatType.received
-                    ? SizedBox()
-                    : Icon(
-                        type == chatType.seen
-                            ? Icons.done_all
-                            : type == chatType.delivered
-                                ? Icons.done_all
-                                : Icons.done,
-                        size: 20,
-                        color:
-                            type == chatType.seen ? Colors.black : Colors.grey,
-                      ),
-                SizedBox(width: 10),
-                Text(time),
-              ],
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(.2),
+            width: .3,
           ),
-          SizedBox(height: 5),
-          unread > 0
-              ? CircleAvatar(
-                  radius: 13,
-                  backgroundColor: Colors.black,
-                  child: Text(
-                    unread.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              : SizedBox(),
-        ],
+        ),
       ),
-      // bottom border
-      shape: Border(
-        bottom: BorderSide(
-          color: Colors.black12,
-          width: .5,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(vertical: 4),
+        leading: CircleAvatar(
+          radius: 28,
+          child: image == null
+              ? Text(
+                  shortName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
+                )
+              : null,
+          backgroundImage: image == null
+              ? null
+              : const NetworkImage(
+                  'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg'),
+        ),
+        title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(message),
+        trailing: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: unread > 0 ? MainAxisAlignment.center : MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(
+              width: 85,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  type == chatType.received
+                      ? SizedBox()
+                      : Icon(
+                          type == chatType.seen
+                              ? Icons.done_all
+                              : type == chatType.delivered
+                                  ? Icons.done_all
+                                  : Icons.done,
+                          size: 20,
+                          color:
+                              type == chatType.seen ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurface.withOpacity(.5),
+                        ),
+                  SizedBox(width: 10),
+                  Text(time),
+                ],
+              ),
+            ),
+            SizedBox(height: 5),
+            unread > 0
+                ? CircleAvatar(
+                    radius: 13,
+                    backgroundColor: Theme.of(context).colorScheme.onSurface,
+                    child: Text(
+                      unread.toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.surface,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         ),
       ),
     );

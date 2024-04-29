@@ -19,10 +19,12 @@ class ChangePassword extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          height: MediaQuery.of(context).size.height,
           padding:
-          const EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 20),
+              const EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 20),
           child: Obx(
-                () => Column(
+            () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -40,7 +42,7 @@ class ChangePassword extends StatelessWidget {
                   errorText: authController.confirmPasswordErrorText.value,
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +55,10 @@ class ChangePassword extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black87,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.8),
                         ),
                       ),
                     ),
@@ -67,20 +72,23 @@ class ChangePassword extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       style: ButtonStyle(
                         overlayColor:
-                        MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                       ),
                       onPressed: () => Get.back(),
-                      child: const Text(
+                      child: Text(
                         'Remembered your password ?',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black87,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.8),
                         ),
                       ),
                     ),
