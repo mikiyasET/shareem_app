@@ -9,6 +9,7 @@ class EMInput extends StatelessWidget {
   final String? errorText;
   final TextEditingController? controller;
   final bool readOnly;
+  final bool bigSize;
   final Function()? onTapped;
 
   EMInput(
@@ -19,6 +20,7 @@ class EMInput extends StatelessWidget {
       this.isError = false,
       this.errorText,
       this.onTapped,
+      this.bigSize = false,
       this.readOnly = false});
 
   final themeController = Get.find<ThemeController>();
@@ -50,6 +52,7 @@ class EMInput extends StatelessWidget {
             height: 1.5,
           ),
           decoration: InputDecoration(
+            contentPadding: bigSize ? const EdgeInsets.symmetric(horizontal: 20, vertical: 15) : null,
             isDense: true,
             filled: true,
             labelText: label,

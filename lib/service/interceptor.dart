@@ -44,6 +44,16 @@ class DioInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       await refreshTokenFunc();
       try {
+        final String? token = box.read(accessToken_);
+        final headers = token != null
+            ? {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${token ?? ''}",
+        }
+            : {
+          "Content-Type": "application/json",
+        };
+        err.requestOptions.headers.addAll(headers);
         handler.resolve(await _retry(err.requestOptions));
       } on DioException catch (e) {
         handler.next(e);
@@ -55,13 +65,16 @@ class DioInterceptor extends Interceptor {
 
   Future<Response<dynamic>> refreshTokenFunc() async {
     try {
-      var response = await dio.post(refreshTokenRoute,
-          options: Options(headers: {
-            "Refresh-Token": box.read(refreshToken_),
-          }));
+      var response = await dio.post(
+        refreshTokenRoute,
+        data: {
+          "Refresh-Token": box.read(refreshToken_),
+        },
+      );
       if (response.statusCode == 200) {
         box.write(accessToken_, response.data['accessToken']);
         box.write(refreshToken_, response.data['refreshToken']);
+        print("Token refreshed");
         return response;
       }
       return response;

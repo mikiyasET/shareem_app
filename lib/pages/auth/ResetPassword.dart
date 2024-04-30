@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 import 'package:shareem_app/widgets/EMInput.dart';
@@ -26,7 +27,14 @@ class ResetPassword extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              EMInput(label: 'Email', controller: authController.email.value),
+              Obx(
+                () => EMInput(
+                  label: 'Email',
+                  controller: authController.email.value,
+                  isError: authController.isEmailError.value,
+                  errorText: authController.emailErrorText.value,
+                ),
+              ),
               const SizedBox(height: 20),
               Obx(
                 () => EMButton(

@@ -332,6 +332,10 @@ class AuthApi {
             authController.isEmailError.value = true;
             authController.emailErrorText.value = 'Invalid email address';
             break;
+          case 'USER_NOT_FOUND':
+            authController.isEmailError.value = true;
+            authController.emailErrorText.value = 'Please check the email and try again.';
+            break;
           case 'FORGOT_FAILED':
             Fluttertoast.showToast(
               msg: 'There was an error during password reset',

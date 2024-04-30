@@ -93,11 +93,23 @@ class AuthController extends GetxController {
   Future resetPassword() async {
     isLoading.value = true;
     isEmailError.value = email.value.text.isEmpty;
-    if (!isEmailError.value) {
-      isEmailError.value = email.value.text.length < 6;
-      emailErrorText.value = 'Invalid email';
+    if (isEmailError.value) {
+      emailErrorText.value = 'Email is required';
+      isLoading.value = false;
+      return;
     }
-    checkEmail();
+    isEmailError.value = email.value.text.length < 6;
+    if (isEmailError.value) {
+      emailErrorText.value = 'Invalid email';
+      isLoading.value = false;
+      return;
+    }
+    if (isEmailError.value) {
+      isEmailError.value = !GetUtils.isEmail(email.value.text);
+      emailErrorText.value = 'Invalid email';
+      isLoading.value = false;
+      return;
+    }
     if (!isEmailError.value) {
       AuthApi signIn = AuthApi();
       await signIn.forgotPassword(email.value.text);

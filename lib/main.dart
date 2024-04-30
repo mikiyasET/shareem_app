@@ -6,10 +6,11 @@ import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/middleware/navigation.middleware.dart';
 import 'package:shareem_app/model/user.dart';
-import 'package:shareem_app/pages/app/AdvanceSettings.dart';
+import 'package:shareem_app/pages/app/advanced/AdvanceSettings.dart';
 import 'package:shareem_app/pages/app/Dashboard.dart';
 import 'package:shareem_app/pages/app/UserDetails.dart';
 import 'package:shareem_app/pages/app/Settings.dart';
+import 'package:shareem_app/pages/app/advanced/EditAccount.dart';
 import 'package:shareem_app/pages/auth/ResetPassword.dart';
 import 'package:shareem_app/pages/auth/SignUp.dart';
 import 'package:shareem_app/pages/auth/SignIn.dart';
@@ -17,6 +18,8 @@ import 'package:shareem_app/pages/auth/VCode.dart';
 import 'package:shareem_app/pages/auth/changePassword.dart';
 import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/theme.dart';
+
+import 'pages/app/advanced/Account.dart';
 
 void main() async {
   await GetStorage.init();
@@ -48,6 +51,13 @@ class Base extends StatelessWidget {
           GetPage(name: '/userDetails', page: () => UserDetails()),
           GetPage(name: '/settings', page: () => Settings()),
           GetPage(name: '/advancedSettings', page: () => AdvancedSettings()),
+          GetPage(name: '/account', page: () => Account()),
+          GetPage(
+            name: '/editAccount',
+            page: () => EditAccount(),
+            transition: Transition.downToUp,
+            fullscreenDialog: true,
+          ),
         ],
         routingCallback: NavigationMiddleWare.observer);
   }

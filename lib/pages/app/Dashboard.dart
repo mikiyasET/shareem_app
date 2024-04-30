@@ -2,16 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/editAccount.controller.dart';
+import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/widgets/main/EMBottomNav.dart';
+import 'package:shareem_app/widgets/main/EMPageStack.dart';
 
-import '../../controller/home.controller.dart';
-import '../../widgets/main/EMPageStack.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
 
   final homeController = Get.put(HomeController());
+  final editAccountController = Get.put(EditAccountController());
   final authController = Get.find<AuthController>();
   final themeController = Get.find<ThemeController>();
 

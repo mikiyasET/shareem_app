@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/theme.controller.dart';
 
 import '../../widgets/EMButton.dart';
 import '../../widgets/EMInput.dart';
@@ -10,7 +11,7 @@ class SignIn extends StatelessWidget {
   SignIn({super.key});
 
   final authController = Get.find<AuthController>();
-
+  final themeController = Get.find<ThemeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class SignIn extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Image.asset(
-                    'images/ShareEm.png',
+                    themeController.isDarkMode.value ? 'images/ShareEm-White.png' :'images/ShareEm.png',
                   ),
                 ),
                 const SizedBox(height: 70),

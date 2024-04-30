@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/theme.controller.dart';
+import '../../../controller/theme.controller.dart';
 
 class AdvancedSettings extends StatelessWidget {
    AdvancedSettings({super.key});
@@ -19,7 +19,7 @@ class AdvancedSettings extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           padding:
-              const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -28,6 +28,7 @@ class AdvancedSettings extends StatelessWidget {
                 leading: const Icon(CupertinoIcons.person),
                 title: const Text('Account profile', style: TextStyle(fontSize: 18)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Get.toNamed('/account'),
               ),
               Divider(color: Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
               ListTile(

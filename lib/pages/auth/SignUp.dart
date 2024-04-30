@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/widgets/EMInput.dart';
 
 import '../../widgets/EMButton.dart';
@@ -12,6 +13,7 @@ class SignUp extends StatelessWidget {
   SignUp({super.key});
 
   final authController = Get.find<AuthController>();
+  final themeController = Get.find<ThemeController>();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -66,7 +68,7 @@ class SignUp extends StatelessWidget {
                         ? 70
                         : 140,
                     width: double.infinity,
-                    'images/ShareEm.png',
+                    themeController.isDarkMode.value ? 'images/ShareEm-White.png' :'images/ShareEm.png',
                   ),
                 ),
                 const SizedBox(height: 30),
