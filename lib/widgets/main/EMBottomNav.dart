@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
 
 import '../../controller/home.controller.dart';
 
@@ -8,6 +9,7 @@ class EMBottomNav extends StatelessWidget {
   EMBottomNav({super.key});
 
   final homeController = Get.find<HomeController>();
+  final tempController = Get.find<TempController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,14 @@ class EMBottomNav extends StatelessWidget {
             activeIcon: Icon(CupertinoIcons.chat_bubble_2),
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.add),
+            label: 'Create',
+            activeIcon: Icon(CupertinoIcons.add),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.bell),
             activeIcon: Icon(Icons.notifications_on_outlined, size: 25,),
-            label: 'Notifications',
+            label: 'New',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.settings),

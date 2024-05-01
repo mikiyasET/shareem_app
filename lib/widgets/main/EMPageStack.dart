@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/pages/app/AddPost.dart';
 import 'package:shareem_app/pages/app/Chats.dart';
 import 'package:shareem_app/pages/app/Home.dart';
 import 'package:shareem_app/pages/app/Notifications.dart';
@@ -23,6 +24,7 @@ class EMPageStack extends StatelessWidget {
           children: [
             Home(),
             Chats(),
+            AddPost(),
             Notifications(),
             Settings(),
           ],

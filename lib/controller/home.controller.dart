@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:shareem_app/model/user.dart';
 
 class HomeController extends GetxController {
   final RxInt pageIndex = 0.obs;
   final RxString title = 'Home'.obs;
+  final Rx<User?> user =  Rx<User?>(null);
 
   void changePageIndex(int index) {
     pageIndex.value = index;
@@ -14,9 +16,12 @@ class HomeController extends GetxController {
         title.value = 'Chats';
         break;
       case 2:
-        title.value = 'Notifications';
+        title.value = '';
         break;
       case 3:
+        title.value = 'Notifications';
+        break;
+      case 4:
         title.value = 'Settings';
         break;
       default:

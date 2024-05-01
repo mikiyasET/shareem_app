@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/home.controller.dart';
+import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/widgets/EMPButton.dart';
 
 class Settings extends StatelessWidget {
-  const Settings({super.key});
+  Settings({super.key});
+
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,8 @@ class Settings extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Wrap(children: [
-                          const Text(
-                            'Mikiyas Lemlemu',
+                          Text(
+                            makeFullName(homeController.user.value?.fName, homeController.user.value?.lName),
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w600,
@@ -141,19 +145,24 @@ class Settings extends StatelessWidget {
               ),
             ]),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 15),
           EMPButton(
-              label: 'My Posts',
-              icon: CupertinoIcons.book_fill,
+              label: 'Vents',
+              icon: CupertinoIcons.bubble_left_bubble_right_fill,
               iconBgColor: Colors.indigo),
           EMPButton(
               label: 'Liked',
               icon: CupertinoIcons.heart_fill,
               iconBgColor: Colors.red),
           EMPButton(
-              label: 'Bookmark',
+              label: 'Saved',
               icon: CupertinoIcons.bookmark_fill,
               iconBgColor: Colors.teal),
+          // draft
+          EMPButton(
+              label: 'Drafts',
+              icon: CupertinoIcons.collections,
+              iconBgColor: Colors.blueGrey),
           EMPButton(
               label: 'My Comments',
               icon: CupertinoIcons.chat_bubble_2_fill,

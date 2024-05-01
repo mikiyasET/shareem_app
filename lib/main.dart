@@ -6,6 +6,7 @@ import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/middleware/navigation.middleware.dart';
 import 'package:shareem_app/model/user.dart';
+import 'package:shareem_app/pages/app/AddPost.dart';
 import 'package:shareem_app/pages/app/advanced/AdvanceSettings.dart';
 import 'package:shareem_app/pages/app/Dashboard.dart';
 import 'package:shareem_app/pages/app/UserDetails.dart';
@@ -55,6 +56,12 @@ class Base extends StatelessWidget {
           GetPage(
             name: '/editAccount',
             page: () => EditAccount(),
+            transition: Transition.downToUp,
+            fullscreenDialog: true,
+          ),
+          GetPage(
+            name: '/addPost',
+            page: () => AddPost(),
             transition: Transition.downToUp,
             fullscreenDialog: true,
           ),

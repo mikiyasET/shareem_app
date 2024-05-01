@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shareem_app/controller/editAccount.controller.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/model/user.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 
 class EditGender extends StatelessWidget {
   EditGender({super.key});
 
-  final editAccountController = Get.find<EditAccountController>();
+  final tempController = Get.find<TempController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +21,22 @@ class EditGender extends StatelessWidget {
               icon: Icons.male,
               tooltip: 'Male',
               context: context,
-              isSelected: editAccountController.gender.value == Gender.male,
-              onTap: () => editAccountController.gender.value = Gender.male,
+              isSelected: tempController.gender.value == Gender.male,
+              onTap: () => tempController.gender.value = Gender.male,
             ),
             EMGenderButton(
               icon: Icons.female,
               tooltip: 'Female',
               context: context,
-              isSelected: editAccountController.gender.value == Gender.female,
-              onTap: () => editAccountController.gender.value = Gender.female,
+              isSelected: tempController.gender.value == Gender.female,
+              onTap: () => tempController.gender.value = Gender.female,
             ),
             EMGenderButton(
               icon: Icons.block,
               tooltip: 'None',
               context: context,
-              isSelected: editAccountController.gender.value == Gender.none,
-              onTap: () => editAccountController.gender.value = Gender.none,
+              isSelected: tempController.gender.value == Gender.none,
+              onTap: () => tempController.gender.value = Gender.none,
             ),
             SizedBox(height: 20),
             EMButton(
