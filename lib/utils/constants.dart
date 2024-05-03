@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../model/user.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 const BASE_URL = 'http://127.0.0.1:3100/api/v1';
 const String accessToken_ = 'accessToken';
@@ -19,6 +18,14 @@ const String refreshTokenRoute = '/auth/refresh';
 const String completeProfileRoute = '/user/complete-reg';
 const String meRoute = '/user/me';
 
+const String createVentRoute = '/vent';
+const String getVentsRoute = '/vent';
+const String createCommentsRoute = '/comment';
+const String getVentCommentsRoute = '/comment';
+const String reactVentRoute = '/vent/like';
+
+const String getTagsRoute = '/tags/';
+
 List<Map<String, dynamic>> genderList = [
   {"title": "Male", "preset": Gender.male, "iconData": Icons.male_rounded},
   {
@@ -31,4 +38,10 @@ List<Map<String, dynamic>> genderList = [
     "preset": Gender.none,
     "iconData": Icons.no_accounts_rounded
   },
+];
+final feelingList = [
+  {'name': 'Happy', 'preset': 'happy'},
+  {'name': 'Sad', 'preset': 'sad'},
+  {'name': 'Angry', 'preset': 'angry'},
+  {'name': 'Neutral', 'preset': 'none'}
 ];

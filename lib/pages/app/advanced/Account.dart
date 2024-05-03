@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
-import 'package:shareem_app/pages/app/advanced/EditAccount.dart';
 
 class Account extends StatelessWidget {
   Account({super.key});
@@ -32,7 +31,7 @@ class Account extends StatelessWidget {
                         'https://avatars.githubusercontent.com/u/57899051?v=4')
                     .image,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               TextButton(
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(
@@ -40,9 +39,9 @@ class Account extends StatelessWidget {
                   ),
                 ),
                 onPressed: null,
-                child: Text('Edit Photo'),
+                child: const Text('Edit Photo'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ListTile(
                 onTap: () =>
                     Get.toNamed('/editAccount', parameters: {'type': 'name'}),
@@ -59,7 +58,7 @@ class Account extends StatelessWidget {
                                 .colorScheme
                                 .onSurface
                                 .withOpacity(.5))),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Icon(Icons.arrow_forward_ios,
                         size: 18,
                         color: Theme.of(context)
@@ -69,7 +68,7 @@ class Account extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ListTile(
                 onTap: () => Get.toNamed(
                   '/editAccount',
@@ -88,7 +87,7 @@ class Account extends StatelessWidget {
                                 .colorScheme
                                 .onSurface
                                 .withOpacity(.5))),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Icon(Icons.arrow_forward_ios,
                         size: 18,
                         color: Theme.of(context)
@@ -98,7 +97,7 @@ class Account extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ListTile(
                 onTap: () => Get.toNamed('/editAccount', parameters: {'type': 'gender'}),
                 title: const Text('Gender',
@@ -113,7 +112,7 @@ class Account extends StatelessWidget {
                             .colorScheme
                             .onSurface
                             .withOpacity(.5)),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Icon(Icons.arrow_forward_ios,
                         size: 18,
                         color: Theme.of(context)
@@ -123,7 +122,7 @@ class Account extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ListTile(
                   onTap: () => Get.toNamed('/editAccount', parameters: {'type': 'email'}),
                   title: const Text('Email',
@@ -139,7 +138,7 @@ class Account extends StatelessWidget {
                                     .colorScheme
                                     .onSurface
                                     .withOpacity(.5))),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Icon(Icons.arrow_forward_ios,
                             size: 18,
                             color: Theme.of(context)
@@ -147,7 +146,7 @@ class Account extends StatelessWidget {
                                 .onSurface
                                 .withOpacity(.5)),
                       ])),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ListTile(
                 title: const Text('BirthDate',
                     style:

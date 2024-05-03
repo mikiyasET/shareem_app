@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/service/api/auth.api.dart';
-import '../model/user.dart';
+import '../model/User.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 class CoreController extends GetxController {
   final Rx<TextEditingController> username = TextEditingController().obs;

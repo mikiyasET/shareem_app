@@ -1,30 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pinput/pinput.dart';
+import 'package:shareem_app/model/Tag.dart';
+import 'package:shareem_app/service/api/vent.api.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 class EMPost extends StatelessWidget {
+  final String id;
   final String title;
   final String content;
+  final Feeling feeling;
   final String author;
   final String? authorAvatar;
   final String date;
   final int upvotes;
   final int comments;
+  final bool isLiked;
+  final bool isDisliked;
+  final List<Tag> tags;
+  final bool isDetailed;
+  final bool bottomBorder;
+  final Function()? onTap;
 
-  const EMPost(
-      {super.key,
-      required this.title,
-      required this.content,
-      required this.author,
-      this.authorAvatar,
-      required this.date,
-      required this.upvotes,
-      required this.comments});
+  const EMPost({
+    super.key,
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.feeling,
+    required this.author,
+    this.authorAvatar,
+    required this.date,
+    required this.upvotes,
+    required this.comments,
+    this.isLiked = false,
+    this.isDisliked = false,
+    this.tags = const [],
+    this.isDetailed = false,
+    this.bottomBorder = true,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final shortName = author.split(' ').map((e) => e[0]).join();
+    final VentApi ventApi = VentApi();
 
-    return Container(
+    return InkWell(
+      onTap: onTap,
       child: Column(
         children: [
           Container(
@@ -33,8 +57,9 @@ class EMPost extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               border: Border(
                 bottom: BorderSide(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(.2),
-                  width: .5,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(.2),
+                  width: bottomBorder ? .5 : 0,
                 ),
               ),
             ),
@@ -48,18 +73,18 @@ class EMPost extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 13,
+                        backgroundImage: authorAvatar == null
+                            ? null
+                            : NetworkImage(authorAvatar!),
                         child: authorAvatar == null
                             ? Text(
                                 shortName,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               )
                             : null,
-                        backgroundImage: authorAvatar == null
-                            ? null
-                            : NetworkImage(authorAvatar!),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         author,
                         style: TextStyle(
@@ -68,7 +93,21 @@ class EMPost extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Spacer(),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(feeling.toString().split('.').last,
+                            style: const TextStyle(fontSize: 12)),
+                      ),
+                      const Spacer(),
                       Text(
                         date,
                         style: TextStyle(
@@ -90,62 +129,118 @@ class EMPost extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  content,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color:
-                        Theme.of(context).colorScheme.onSurface.withOpacity(.7),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  '...',
-                  style: TextStyle(
-                    color:
-                        Theme.of(context).colorScheme.onSurface.withOpacity(.7),
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(height: 20),
+                const SizedBox(height: 10),
+                isDetailed
+                    ? Text(
+                        content,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.7),
+                        ),
+                      )
+                    : Text(
+                        content.length > 50
+                            ? content.replaceAll("\n", " ").substring(0, 200)
+                            : content.replaceAll("\n", " "),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.7),
+                        ),
+                      ),
+                const SizedBox(height: 5),
+                content.length > 200 && !isDetailed
+                    ? Text(
+                        '...',
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(.7),
+                          fontSize: 15,
+                        ),
+                      )
+                    : const SizedBox(),
+                tags.length > 0 ? const SizedBox(height: 5) : SizedBox(),
+                tags.length > 0
+                    ? Wrap(
+                        children: tags
+                            .map((tag) => Container(
+                                  margin:
+                                      const EdgeInsets.only(right: 5, top: 5),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(.1),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    '#${tag.name}',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 12,
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       children: [
-                        Row(
-                          children: [
-                            Icon(CupertinoIcons.up_arrow,
-                                color: Theme.of(context).colorScheme.onSurface),
-                            SizedBox(width: 10),
-                            Text(
-                              upvotes.toString(),
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
+                        InkWell(
+                          onTap: () {
+                            ventApi.reactVent(id, true);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(CupertinoIcons.up_arrow,
+                                  color: isLiked
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSurface),
+                              const SizedBox(width: 10),
+                              Text(
+                                upvotes.toString(),
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 15),
-                        Row(children: [
-                          Icon(CupertinoIcons.down_arrow,
-                              color: Theme.of(context).colorScheme.onSurface),
-                          SizedBox(width: 10),
-                          Text(
-                            '2.5k',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                            ],
                           ),
-                        ]),
+                        ),
+                        const SizedBox(width: 20),
+                        InkWell(
+                          onTap: () {
+                            ventApi.reactVent(id, false);
+                          },
+                          child: Icon(CupertinoIcons.down_arrow,
+                              color: isDisliked
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.onSurface),
+                        ),
                       ],
                     ),
                     Row(children: [
                       Icon(Icons.messenger_outline_sharp,
                           color: Theme.of(context).colorScheme.onSurface),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         comments.toString(),
                         style: TextStyle(

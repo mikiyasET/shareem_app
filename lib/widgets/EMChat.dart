@@ -6,7 +6,7 @@ class EMChat extends StatelessWidget {
   final String message;
   final String time;
   final int unread;
-  final chatType type;
+  final ChatType type;
 
   const EMChat(
       {super.key,
@@ -30,22 +30,22 @@ class EMChat extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(vertical: 4),
+        contentPadding: const EdgeInsets.symmetric(vertical: 4),
         leading: CircleAvatar(
           radius: 28,
-          child: image == null
-              ? Text(
-                  shortName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                )
-              : null,
           backgroundImage: image == null
               ? null
               : const NetworkImage(
                   'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg'),
+          child: image == null
+              ? Text(
+                  shortName,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18),
+                )
+              : null,
         ),
-        title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(message),
         trailing: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -58,24 +58,24 @@ class EMChat extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  type == chatType.received
-                      ? SizedBox()
+                  type == ChatType.received
+                      ? const SizedBox()
                       : Icon(
-                          type == chatType.seen
+                          type == ChatType.seen
                               ? Icons.done_all
-                              : type == chatType.delivered
+                              : type == ChatType.delivered
                                   ? Icons.done_all
                                   : Icons.done,
                           size: 20,
                           color:
-                              type == chatType.seen ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurface.withOpacity(.5),
+                              type == ChatType.seen ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurface.withOpacity(.5),
                         ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(time),
                 ],
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             unread > 0
                 ? CircleAvatar(
                     radius: 13,
@@ -90,7 +90,7 @@ class EMChat extends StatelessWidget {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),
@@ -98,4 +98,4 @@ class EMChat extends StatelessWidget {
   }
 }
 
-enum chatType { seen, delivered, sent, received }
+enum ChatType { seen, delivered, sent, received }

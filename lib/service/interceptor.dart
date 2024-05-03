@@ -19,7 +19,7 @@ class DioInterceptor extends Interceptor {
     final headers = token != null
         ? {
             "Content-Type": "application/json",
-            "Authorization": "Bearer ${token ?? ''}",
+            "Authorization": "Bearer $token",
           }
         : {
             "Content-Type": "application/json",
@@ -28,16 +28,9 @@ class DioInterceptor extends Interceptor {
     return super.onRequest(options, handler);
   }
 
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
-        "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}");
-    return super.onResponse(response, handler);
-  }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    print("On error");
     if (err.type == DioExceptionType.connectionError) {
       Fluttertoast.showToast(msg: "Connection Error");
     }
@@ -47,12 +40,12 @@ class DioInterceptor extends Interceptor {
         final String? token = box.read(accessToken_);
         final headers = token != null
             ? {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer ${token ?? ''}",
-        }
+                "Content-Type": "application/json",
+                "Authorization": "Bearer $token",
+              }
             : {
-          "Content-Type": "application/json",
-        };
+                "Content-Type": "application/json",
+              };
         err.requestOptions.headers.addAll(headers);
         handler.resolve(await _retry(err.requestOptions));
       } on DioException catch (e) {
@@ -74,7 +67,6 @@ class DioInterceptor extends Interceptor {
       if (response.statusCode == 200) {
         box.write(accessToken_, response.data['accessToken']);
         box.write(refreshToken_, response.data['refreshToken']);
-        print("Token refreshed");
         return response;
       }
       return response;
@@ -99,7 +91,7 @@ class DioInterceptor extends Interceptor {
       final options = Options(
         method: requestOptions.method,
         headers: {
-          "Authorization": "Bearer ${token}",
+          "Authorization": "Bearer $token",
         },
       );
 

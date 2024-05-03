@@ -10,14 +10,14 @@ class Notifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0,vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 0.0,vertical: 10),
               child: Text('Today'),
             ),
             EMNButton(names: 'm_miko', date: '6 hour ago', type: NotificationType.like),

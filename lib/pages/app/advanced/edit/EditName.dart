@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/core.controller.dart';
-import 'package:shareem_app/helpers/editAccount.helper.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 import 'package:shareem_app/widgets/EMInput.dart';
 

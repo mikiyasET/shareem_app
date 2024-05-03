@@ -6,15 +6,15 @@ class Chats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
               child: Text('Messages'),
             ),
             EMChat(
@@ -23,26 +23,26 @@ class Chats extends StatelessWidget {
               time: '10:00 PM',
               image: 'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg',
               unread: 6,
-              type: chatType.received,
+              type: ChatType.received,
             ),
             EMChat(
               name: 'Solomon Nigguse',
               message: "Eyemetaw new",
               time: '10:00 PM',
-              type: chatType.sent,
+              type: ChatType.sent,
             ),
             EMChat(
               name: 'Surafel Zeleke',
               message: "Eyemetaw new",
               time: '10:00 PM',
               image: 'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg',
-              type: chatType.seen,
+              type: ChatType.seen,
             ),
             EMChat(
               name: 'Yoseph Taddese',
               message: "Eyemetaw new",
               time: '10:00 PM',
-              type: chatType.delivered,
+              type: ChatType.delivered,
             ),
           ],
         ),

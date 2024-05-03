@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
-import 'package:shareem_app/model/user.dart';
+import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 class EditGender extends StatelessWidget {
   EditGender({super.key});
@@ -38,7 +39,7 @@ class EditGender extends StatelessWidget {
               isSelected: tempController.gender.value == Gender.none,
               onTap: () => tempController.gender.value = Gender.none,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             EMButton(
               label: 'Update',
               onPressed: () => Navigator.of(context).pop(),
@@ -87,7 +88,7 @@ class EditGender extends StatelessWidget {
                     .onSurface
                     .withOpacity(isSelected ? 1 : .3),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 tooltip,
                 style: TextStyle(

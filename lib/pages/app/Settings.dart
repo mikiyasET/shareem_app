@@ -36,7 +36,7 @@ class Settings extends StatelessWidget {
                         child: Wrap(children: [
                           Text(
                             makeFullName(homeController.user.value?.fName, homeController.user.value?.lName),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w600,
                             ),
@@ -66,7 +66,7 @@ class Settings extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(children: [
@@ -88,7 +88,7 @@ class Settings extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class Settings extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 decoration: BoxDecoration(
@@ -145,29 +145,29 @@ class Settings extends StatelessWidget {
               ),
             ]),
           ),
-          SizedBox(height: 15),
-          EMPButton(
+          const SizedBox(height: 15),
+          const EMPButton(
               label: 'Vents',
               icon: CupertinoIcons.bubble_left_bubble_right_fill,
               iconBgColor: Colors.indigo),
-          EMPButton(
+          const EMPButton(
               label: 'Liked',
               icon: CupertinoIcons.heart_fill,
               iconBgColor: Colors.red),
-          EMPButton(
+          const EMPButton(
               label: 'Saved',
               icon: CupertinoIcons.bookmark_fill,
               iconBgColor: Colors.teal),
           // draft
-          EMPButton(
+          const EMPButton(
               label: 'Drafts',
               icon: CupertinoIcons.collections,
               iconBgColor: Colors.blueGrey),
-          EMPButton(
+          const EMPButton(
               label: 'My Comments',
               icon: CupertinoIcons.chat_bubble_2_fill,
               iconBgColor: Colors.deepOrange),
-          EMPButton(
+          const EMPButton(
               label: 'Developers',
               icon: Icons.developer_mode,
               iconBgColor: Colors.lightGreen),

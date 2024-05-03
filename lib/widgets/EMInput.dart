@@ -56,7 +56,7 @@ class EMInput extends StatelessWidget {
             isDense: true,
             filled: true,
             labelText: label,
-            fillColor: themeController.isDarkMode.value ? Color(0xFF1f1f1f) : Color(0xFFEAEAEA),
+            fillColor: themeController.isDarkMode.value ? const Color(0xFF1f1f1f) : const Color(0xFFEAEAEA),
             errorText: isError ? errorText : null,
             errorStyle: TextStyle(
               fontSize: 12,

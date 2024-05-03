@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/core.controller.dart';
-import 'package:shareem_app/model/user.dart';
 import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 
@@ -16,7 +13,6 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedItem;
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: Container(

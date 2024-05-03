@@ -38,6 +38,7 @@ class EMTheme {
       buttonTheme: buttonTheme(),
       inputDecorationTheme: customInput(),
       appBarTheme: appBarThemeLight(),
+      scaffoldBackgroundColor: surface,
       colorScheme: const ColorScheme(
         primary: primary,
         brightness: Brightness.light,
@@ -62,6 +63,7 @@ class EMTheme {
       inputDecorationTheme: customInput(),
       primaryColor: primary,
       appBarTheme: appBarThemeDark(),
+      scaffoldBackgroundColor: onSurface,
       colorScheme: const ColorScheme(
         primary: primary,
         brightness: Brightness.dark,
@@ -78,7 +80,6 @@ class EMTheme {
       dividerTheme: dividerTheme(),
     );
   }
-
   DividerThemeData dividerTheme() {
     return const DividerThemeData(
       color: Colors.black12,
@@ -88,6 +89,7 @@ class EMTheme {
   AppBarTheme appBarThemeLight() {
     return const AppBarTheme(
       backgroundColor: surface,
+      surfaceTintColor: surface,
       elevation: 0,
       titleTextStyle: TextStyle(
         color: onSurface,
@@ -101,6 +103,7 @@ class EMTheme {
   AppBarTheme appBarThemeDark() {
     return const AppBarTheme(
       backgroundColor: onSurface,
+      surfaceTintColor: onSurface,
       elevation: 2,
       titleTextStyle: TextStyle(
         color: surface,

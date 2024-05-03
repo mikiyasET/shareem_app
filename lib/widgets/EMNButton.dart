@@ -16,20 +16,20 @@ class EMNButton extends StatelessWidget {
     final NotificationTypeData data = notificationColorIcon(type);
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).colorScheme.background.withOpacity(.2),
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         leading: Container(
           height: 40,
           width: 40,

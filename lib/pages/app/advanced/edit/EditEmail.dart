@@ -22,7 +22,7 @@ class EditEmail extends StatelessWidget {
           errorText: coreController.fNameErrorText.value,
           bigSize: true,
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         EMButton(label: 'Update', onPressed: () => Get.back())
       ],
     );

@@ -17,14 +17,16 @@ class API {
   late Dio client;
 
   void setToken(String authToken) {
-    if (authToken.isNotEmpty)
+    if (authToken.isNotEmpty) {
       client.options.headers['Authorization'] = 'Bearer $authToken';
+    }
   }
 
   Future<void> clientSetup() async {
     final box = GetStorage();
     final String token = box.read(accessToken_);
-    if (token.isNotEmpty)
+    if (token.isNotEmpty) {
       client.options.headers['Authorization'] = 'Bearer $token';
+    }
   }
 }

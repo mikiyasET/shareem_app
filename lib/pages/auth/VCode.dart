@@ -19,7 +19,7 @@ class Vcode extends StatelessWidget {
       body: Container(
         color: Theme.of(context).colorScheme.surface,
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.only(top: 100, left: 30, right: 30, bottom: 20),
+        padding: const EdgeInsets.only(top: 100, left: 30, right: 30, bottom: 20),
         width: double.infinity,
         child: Obx(
           () => Column(
@@ -28,15 +28,15 @@ class Vcode extends StatelessWidget {
               children: [
                 Text('Verification ${authController.isResetPassword.value}',
                     style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                SizedBox(height: 30),
-                Opacity(
+                        const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 30),
+                const Opacity(
                     opacity: .8,
                     child: Text(
                         'Enter the verification code sent to your email',
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w400))),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Pinput(
                   controller: authController.code.value,
                   validator: (value) {
@@ -51,7 +51,7 @@ class Vcode extends StatelessWidget {
                           width: 55,
                           height: 55,
                           padding:
-                              EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                              const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                           textStyle: TextStyle(
                             fontSize: 20,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -67,7 +67,7 @@ class Vcode extends StatelessWidget {
                           width: 55,
                           height: 55,
                           padding:
-                              EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                              const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                           textStyle: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -91,14 +91,14 @@ class Vcode extends StatelessWidget {
                     authController.isCodeError.value = false;
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 EMButton(
                     label: 'Verify',
                     isLoading: authController.isLoading.value,
                     onPressed: () => authController.verifyCode()),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Opacity(
+                  const Opacity(
                     opacity: .8,
                     child: Text('Didn\'t receive the code? ',
                         style: TextStyle(

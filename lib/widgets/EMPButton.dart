@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EMPButton extends StatelessWidget {
@@ -23,12 +22,12 @@ class EMPButton extends StatelessWidget {
       shape: const Border(
         bottom: BorderSide(color: Colors.black26, width: 0.3),
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       leading: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         decoration: BoxDecoration(
           color: iconBgColor,
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(5),
           ),
         ),

@@ -1,4 +1,4 @@
-import '../model/user.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 bool checkStrLen(str, len) => str.length >= len;
 
@@ -42,6 +42,8 @@ Status strToStatus(String status) {
       return Status.inactive;
   }
 }
+
+
 
 String ucWords(String str) {
   return str[0].toUpperCase() + str.substring(1);

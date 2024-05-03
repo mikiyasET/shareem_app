@@ -7,7 +7,6 @@ class ThemeController extends GetxController {
   void onInit() {
     super.onInit();
     isDarkMode.value = (_loadThemeFromBox() ? true : false);
-    print("Loadded DATA: ${_loadThemeFromBox()}");
   }
 
   final _box = GetStorage();
@@ -22,7 +21,6 @@ class ThemeController extends GetxController {
 
   void toggleDarkMode() {
     isDarkMode.value = !isDarkMode.value;
-    print("ISSS: ${isDarkMode.value}");
     Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
     _saveThemeToBox(!_loadThemeFromBox());
     update();

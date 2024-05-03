@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/helpers/editAccount.helper.dart';
 import 'package:shareem_app/pages/app/advanced/edit/EditEmail.dart';
 import 'package:shareem_app/pages/app/advanced/edit/EditGender.dart';
 import 'package:shareem_app/pages/app/advanced/edit/EditName.dart';
 import 'package:shareem_app/pages/app/advanced/edit/EditUsername.dart';
-import 'package:shareem_app/widgets/EMInput.dart';
 
 class EditAccount extends StatelessWidget {
   EditAccount({super.key});

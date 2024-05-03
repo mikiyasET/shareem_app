@@ -16,7 +16,7 @@ class EMBottomNav extends StatelessWidget {
     return Obx(
       () => BottomNavigationBar(
         currentIndex: homeController.pageIndex.value,
-        onTap: homeController.changePageIndex,
+        onTap:(index) => homeController.changePageIndex(context, index),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).colorScheme.surface,
         selectedItemColor: Theme.of(context).colorScheme.onSurface,

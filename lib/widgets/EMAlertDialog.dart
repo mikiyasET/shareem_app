@@ -7,10 +7,11 @@ Future<void> EMAlertDialog({
   required String title,
   required Widget content,
   required List<Widget> actions,
+  isDismissible = false,
 }) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: isDismissible, // user must tap button!
     builder: (BuildContext context) {
       if (Platform.isIOS) {
         return CupertinoAlertDialog(

@@ -1,4 +1,5 @@
 import 'package:shareem_app/helpers/format.helper.dart';
+import 'package:shareem_app/utils/enums.dart';
 
 class User {
   final String id;
@@ -61,16 +62,4 @@ class User {
       'updatedAt': updatedAt.toIso8601String(),
     };
   }
-}
-
-enum Gender { male, female, none }
-
-enum Feeling { happy, sad, angry, none }
-
-enum Status {
-  suspended,
-  deactivated,
-  active,
-  inactive,
-  incomplete
 }

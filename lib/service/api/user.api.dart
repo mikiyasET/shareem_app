@@ -1,15 +1,10 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/model/Error.dart';
-import 'package:shareem_app/model/user.dart';
+import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/utils/constants.dart';
-import '../../controller/auth.controller.dart';
 import '../api.dart';
 
 class UserApi {
@@ -28,7 +23,13 @@ class UserApi {
         }
       }
     } on DioException catch (e) {
-      final error = EMResponse.fromJson(e.response.toString());
+      // if (e.response != null) {
+      //   final error = EMResponse.fromJson(e.response.toString());
+      //   Fluttertoast.showToast(msg: error.message);
+      // } else {
+      //   Fluttertoast.showToast(msg: "Unknown Error");
+      //   print(e);
+      // }
     }
   }
 }

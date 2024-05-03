@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
-import 'package:shareem_app/widgets/EMInput.dart';
+import 'package:shareem_app/utils/constants.dart';
 
 class AddPost extends StatelessWidget {
   AddPost({super.key});
 
   final tempController = Get.find<TempController>();
+  final ventController = Get.find<VentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class AddPost extends StatelessWidget {
               cursorColor: Theme.of(context).colorScheme.onSurface,
               decoration: InputDecoration(
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                 hintText: 'Title',
                 hintStyle: TextStyle(
                   fontSize: 30,
@@ -42,53 +44,56 @@ class AddPost extends StatelessWidget {
                 enabledBorder: InputBorder.none,
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(left: 15,bottom: 10, top: 10),
-              child: Row(
-                children: [
-                  MaterialButton(
-                    elevation: 0,
-                    highlightElevation: 0,
-                    highlightColor: Colors.blueGrey[90],
-                    onPressed: () {},
-                    color:  Theme.of(context).colorScheme.onSurface.withOpacity(.1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+            Obx(
+              ()=> Container(
+                margin: const EdgeInsets.only(left: 15, bottom: 10, top: 10),
+                child: Row(
+                  children: [
+                    MaterialButton(
+                      elevation: 0,
+                      highlightElevation: 0,
+                      highlightColor: Colors.blueGrey[90],
+                      onPressed: () => Get.toNamed('/addTags'),
+                      color:
+                          Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(ventController.selectedTags.isEmpty ? 'Add tags' : "Edit tags",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          )),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: Text('Add tags',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        )),
-                  ),
-                  SizedBox(width: 10),
-                  MaterialButton(
-                    elevation: 0,
-                    highlightElevation: 0,
-                    highlightColor: Colors.blueGrey[90],
-                    onPressed: () {},
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                    const SizedBox(width: 10),
+                    MaterialButton(
+                      elevation: 0,
+                      highlightElevation: 0,
+                      highlightColor: Colors.blueGrey[90],
+                      onPressed: () => Get.toNamed('/addFeelings'),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(tempController.feeling.isEmpty ? 'Add feelings' : feelingList.firstWhereOrNull((element) => element['preset'] == tempController.feeling.value)!['name']!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          )),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: Text('Add feelings',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        )),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             TextField(
-              controller: tempController.postBody.value,
-              onChanged: (value) => tempController.postBodyText.value = value,
+              controller: tempController.postContent.value,
+              onChanged: (value) => tempController.postContentText.value = value,
               maxLines: null,
-              minLines: 25,
+              minLines: 22,
               textCapitalization: TextCapitalization.sentences,
               style: TextStyle(
                 fontSize: 17,
@@ -98,7 +103,7 @@ class AddPost extends StatelessWidget {
               cursorColor: Theme.of(context).colorScheme.onSurface,
               decoration: InputDecoration(
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                 hintText: 'body text',
                 hintStyle: TextStyle(
                   fontSize: 17,

@@ -1,13 +1,10 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/model/Error.dart';
-import 'package:shareem_app/model/user.dart';
+import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/utils/constants.dart';
 import '../../controller/auth.controller.dart';
 import '../api.dart';
@@ -28,13 +25,11 @@ class AuthApi {
       EMResponse res = EMResponse.fromJson(response.toString());
       if (response.statusCode == 200 && res.message == 'LOGIN_SUCCESS') {
         final data = res.data;
-        print(data);
         final box = GetStorage();
         box.write(accessToken_, data['accessToken']);
         box.write(refreshToken_, data['refreshToken']);
         final coreController = Get.find<CoreController>();
         coreController.user.value = User.fromJson(data['user']);
-        Get.offAllNamed('/');
       }
     } on DioException catch (e) {
       authController.isLoading.value = false;
@@ -75,7 +70,6 @@ class AuthApi {
 
   Future<void> signUp(String email, String password, String birthDate,
       String code, bool anonymous) async {
-    print("Signup called");
     try {
       final response = await client.post(signUpRoute, data: {
         'email': email,
@@ -172,7 +166,6 @@ class AuthApi {
       if (response.statusCode == 200 && res.message == 'EMAIL_VERIFY_SUCCESS') {
         Get.toNamed('/vCode');
       }
-      print('Response: $res');
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
@@ -380,7 +373,6 @@ class AuthApi {
         authController.isResetPassword.value = false;
         authController.resetAccessToken.value = res.data['token'];
         authController.isCodeError.value = false;
-        print("Reset token: ${authController.resetAccessToken.value}");
         Get.offNamed('/changePassword');
       }
       authController.isLoading.value = false;
@@ -439,10 +431,8 @@ class AuthApi {
       }
       authController.isLoading.value = false;
     } on DioException catch (e) {
-      print(e);
       authController.isLoading.value = false;
       if (e.response != null) {
-        print(e.response.toString());
         EMResponse error = EMResponse.fromJson(e.response.toString());
         switch (error.message) {
           case 'PASSWORD_LENGTH_ERROR':
