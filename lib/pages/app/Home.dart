@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
         child: ListView.builder(
           itemCount: ventController.vents.length,
           itemBuilder: (context, index) {
-            final Vent vent = ventController.vents[index];
+            final Vent vent = ventController.vents.value[index];
             print(vent);
             return EMPost(
               id: vent.id,
@@ -95,6 +95,7 @@ class Home extends StatelessWidget {
               tags: vent.tags,
               isLiked: vent.isLiked,
               isDisliked: vent.isDisliked,
+              isSaved: vent.saved.where((element) => element.userId == homeController.user.value!.id).isNotEmpty,
               onTap: () {
                 ventController.selectedVent.value = vent;
                 Get.toNamed('/post');

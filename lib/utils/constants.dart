@@ -4,6 +4,7 @@ import 'package:shareem_app/utils/enums.dart';
 const BASE_URL = 'http://127.0.0.1:3100/api/v1';
 const String accessToken_ = 'accessToken';
 const String refreshToken_ = 'refreshToken';
+const String draft_ = 'draft';
 
 // --- Auth Routes ---
 const String signInRoute = '/auth/signIn';
@@ -23,6 +24,8 @@ const String getVentsRoute = '/vent';
 const String createCommentsRoute = '/comment';
 const String getVentCommentsRoute = '/comment';
 const String reactVentRoute = '/vent/like';
+const String getSavedRoute = '/vent/saved';
+const String saveVentRoute = '/vent/save';
 
 const String getTagsRoute = '/tags/';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/home.controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
@@ -19,6 +20,7 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
+  final homeController = Get.find<HomeController>();
   final ventController = Get.find<VentController>();
   final tempController = Get.find<TempController>();
   final themeController = Get.find<ThemeController>();
@@ -80,6 +82,7 @@ class _PostState extends State<Post> {
                       bottomBorder: false,
                       isLiked: vent.isLiked,
                       isDisliked: vent.isDisliked,
+                      isSaved: vent.saved.where((element) => element.userId == homeController.user.value!.id).isNotEmpty,
                     ),
                     Container(
                       height: 20,

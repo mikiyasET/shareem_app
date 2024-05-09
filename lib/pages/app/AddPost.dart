@@ -45,7 +45,7 @@ class AddPost extends StatelessWidget {
               ),
             ),
             Obx(
-              ()=> Container(
+              () => Container(
                 margin: const EdgeInsets.only(left: 15, bottom: 10, top: 10),
                 child: Row(
                   children: [
@@ -54,13 +54,19 @@ class AddPost extends StatelessWidget {
                       highlightElevation: 0,
                       highlightColor: Colors.blueGrey[90],
                       onPressed: () => Get.toNamed('/addTags'),
-                      color:
-                          Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(.1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      child: Text(ventController.selectedTags.isEmpty ? 'Add tags' : "Edit tags",
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      child: Text(
+                          ventController.selectedTags.isEmpty
+                              ? 'Add tags'
+                              : "Edit tags",
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
@@ -73,12 +79,21 @@ class AddPost extends StatelessWidget {
                       highlightElevation: 0,
                       highlightColor: Colors.blueGrey[90],
                       onPressed: () => Get.toNamed('/addFeelings'),
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(.1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      child: Text(tempController.feeling.isEmpty ? 'Add feelings' : feelingList.firstWhereOrNull((element) => element['preset'] == tempController.feeling.value)!['name']!,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      child: Text(
+                          tempController.feeling.value.isEmpty
+                              ? 'Add feelings'
+                              : feelingList.firstWhereOrNull((element) =>
+                                  element['preset'] ==
+                                  tempController.feeling.value)!['name']!,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
@@ -91,7 +106,8 @@ class AddPost extends StatelessWidget {
             ),
             TextField(
               controller: tempController.postContent.value,
-              onChanged: (value) => tempController.postContentText.value = value,
+              onChanged: (value) =>
+                  tempController.postContentText.value = value,
               maxLines: null,
               minLines: 22,
               textCapitalization: TextCapitalization.sentences,

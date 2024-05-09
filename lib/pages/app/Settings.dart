@@ -35,7 +35,8 @@ class Settings extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         child: Wrap(children: [
                           Text(
-                            makeFullName(homeController.user.value?.fName, homeController.user.value?.lName),
+                            makeFullName(homeController.user.value?.fName,
+                                homeController.user.value?.lName),
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w600,
@@ -154,15 +155,23 @@ class Settings extends StatelessWidget {
               label: 'Liked',
               icon: CupertinoIcons.heart_fill,
               iconBgColor: Colors.red),
-          const EMPButton(
-              label: 'Saved',
-              icon: CupertinoIcons.bookmark_fill,
-              iconBgColor: Colors.teal),
+          EMPButton(
+            label: 'Saved',
+            icon: CupertinoIcons.bookmark_fill,
+            iconBgColor: Colors.teal,
+            onTap: () {
+              Get.toNamed('/saved');
+            },
+          ),
           // draft
-          const EMPButton(
-              label: 'Drafts',
-              icon: CupertinoIcons.collections,
-              iconBgColor: Colors.blueGrey),
+          EMPButton(
+            label: 'Drafts',
+            icon: CupertinoIcons.collections,
+            iconBgColor: Colors.blueGrey,
+            onTap: () {
+              Get.toNamed('/draft');
+            },
+          ),
           const EMPButton(
               label: 'My Comments',
               icon: CupertinoIcons.chat_bubble_2_fill,

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
+import 'package:shareem_app/model/Draft.dart';
+import 'package:shareem_app/model/Saved.dart';
 import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/service/api/tag.api.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
@@ -13,6 +15,7 @@ class HomeController extends GetxController {
   final RxInt pageIndex = 0.obs;
   final RxString title = 'Home'.obs;
   final Rx<User?> user = Rx<User?>(null);
+  final RxList<Saved> userSaved = <Saved>[].obs;
   final coreController = Get.find<CoreController>();
 
   @override
@@ -60,7 +63,21 @@ class HomeController extends GetxController {
                   ),
                 );
                 return;
+              } else {
+                final draft = Draft.fromJson({
+                  'title': tempController.postTitle.value.text,
+                  'content': tempController.postContent.value.text,
+                  'tags': ventController.selectedTags.isEmpty
+                      ? []
+                      : ventController.selectedTags
+                          .map((element) => {'id': element}),
+                  'feeling': tempController.feeling.value,
+                });
+                ventController.addDraft(draft);
               }
+              tempController.clearVentValues();
+              ventController.selectedTags.clear();
+              ScaffoldMessenger.of(context).clearSnackBars();
               Get.back();
               changePage(index);
             },

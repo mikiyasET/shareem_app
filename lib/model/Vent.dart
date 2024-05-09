@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/model/Comment.dart';
+import 'package:shareem_app/model/Saved.dart';
 import 'package:shareem_app/model/Tag.dart';
 import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/model/VentUser.dart';
@@ -21,6 +22,7 @@ class Vent {
   final List<Comment> commentList;
   final Feeling feeling;
   final List<Tag> tags;
+  final List<Saved> saved;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -37,6 +39,7 @@ class Vent {
     this.commentList = const [],
     required this.feeling,
     required this.tags,
+    required this.saved,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -52,13 +55,19 @@ class Vent {
       author: VentUser.fromJson(json['user']),
       likes: json['likes'],
       isLiked: json['like'].length > 0 && json['like'][0]['type'] == 'upvote',
-      isDisliked: json['like'].length > 0 && json['like'][0]['type'] == 'downvote',
+      isDisliked:
+          json['like'].length > 0 && json['like'][0]['type'] == 'downvote',
       comments: json['comments'],
       commentList: [],
       feeling: strToFeeling(json['feeling']),
       tags: json['tags'].length > 0
-          ? json['tags'].map<Tag>((t) => ventController.tags.firstWhere((t2) => t2.id == t['tag_id']))
+          ? json['tags']
+              .map<Tag>((t) =>
+                  ventController.tags.firstWhere((t2) => t2.id == t['tag_id']))
               .toList()
+          : [],
+      saved: json['saved'].length > 0
+          ? json['saved'].map<Saved>((s) => Saved.fromJson(s)).toList()
           : [],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
@@ -78,6 +87,7 @@ class Vent {
         'commentList': commentList.map((c) => c.toJson()).toList(),
         'feeling': feeling,
         'tags': tags,
+        'saved': saved,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };
