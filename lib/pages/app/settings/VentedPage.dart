@@ -131,7 +131,11 @@ class _VentedPageState extends State<VentedPage> {
                       date: timeago.format(vented.createdAt),
                       upvotes: vented.likes,
                       comments: vented.comments,
-                      tools: false,
+                      isLiked: vented.isLiked,
+                      isSaved: vented.saved
+                          .where((element) =>
+                              element.userId == homeController.user.value!.id)
+                          .isNotEmpty,
                       onTap: () {
                         ventController.selectedVent.value = vented;
                         Get.toNamed('/post');

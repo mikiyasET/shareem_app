@@ -1,3 +1,4 @@
+import 'package:shareem_app/model/Vent.dart';
 import 'package:shareem_app/model/VentUser.dart';
 
 class Comment {
@@ -7,7 +8,8 @@ class Comment {
   final int likes;
   final int comments;
   final String content;
-  final VentUser user;
+  final VentUser? user;
+  final Vent? vent;
   final String? replyTo;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -20,6 +22,7 @@ class Comment {
     required this.comments,
     required this.content,
     required this.user,
+    this.vent,
     this.replyTo,
     required this.createdAt,
     required this.updatedAt,
@@ -33,7 +36,8 @@ class Comment {
       likes: json['likes'],
       comments: json['comments'],
       content: json['content'],
-      user: VentUser.fromJson(json['user']),
+      user: json['vent'] == null ? null : Vent.fromJson(json['vent']).author,
+      vent: json['vent'] == null ? null : Vent.fromJson(json['vent']),
       replyTo: json['replyTo'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
@@ -41,15 +45,16 @@ class Comment {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'userId': userId,
-    'ventId': ventId,
-    'likes': likes,
-    'comments': comments,
-    'content': content,
-    'user': user.toJson(),
-    'replyTo': replyTo,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'userId': userId,
+        'ventId': ventId,
+        'likes': likes,
+        'comments': comments,
+        'content': content,
+        'user': user?.toJson(),
+        'vent': vent?.toJson(),
+        'replyTo': replyTo,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 }

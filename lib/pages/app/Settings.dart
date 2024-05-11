@@ -187,10 +187,14 @@ class Settings extends StatelessWidget {
               Get.toNamed('/commented');
             },
           ),
-          const EMPButton(
-              label: 'Developers',
-              icon: Icons.developer_mode,
-              iconBgColor: Colors.lightGreen),
+          EMPButton(
+            label: 'Developers',
+            icon: Icons.developer_mode,
+            iconBgColor: Colors.lightGreen,
+            onTap: () {
+              Get.toNamed('/developers');
+            },
+          ),
           EMPButton(
             label: 'Advanced Settings',
             icon: Icons.more_horiz_rounded,

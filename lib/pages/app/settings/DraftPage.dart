@@ -5,7 +5,6 @@ import 'package:pinput/pinput.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
-import 'package:shareem_app/utils/constants.dart';
 
 class DraftPage extends StatefulWidget {
   DraftPage({super.key});
@@ -32,7 +31,7 @@ class _DraftPageState extends State<DraftPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text('Drafts'),
+        title: const Text('Drafts'),
       ),
       body: Obx(
         () => ventController.drafts.length > 0
@@ -110,13 +109,13 @@ class _DraftPageState extends State<DraftPage> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 0.2,
                     height: 0.2,
                   );
                 },
               )
-            : Center(child: Text('No drafts')),
+            : const Center(child: Text('No drafts')),
       ),
     );
   }

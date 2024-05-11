@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/home.controller.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
@@ -82,37 +80,45 @@ class _PostState extends State<Post> {
                       bottomBorder: false,
                       isLiked: vent.isLiked,
                       isDisliked: vent.isDisliked,
-                      isSaved: vent.saved.where((element) => element.userId == homeController.user.value!.id).isNotEmpty,
+                      isSaved: vent.saved
+                          .where((element) =>
+                              element.userId == homeController.user.value!.id)
+                          .isNotEmpty,
                     ),
                     Container(
                       height: 20,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(.05),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.05),
                       ),
                     ),
-                    vent.commentList.isNotEmpty ? Padding(
-                      padding: const EdgeInsets.only(left: 40.0),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: vent.commentList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final comment = vent.commentList[index];
-                            return EMComment(
-                              content: comment.content,
-                              author: comment.user.fullName,
-                              comments: comment.comments,
-                              upvotes: comment.likes,
-                              date: timeago.format(comment.createdAt, locale: 'en_short'),
-                            );
-                          }
-                      ),
-                    ) : const Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: Text('Be the first to comment!'),
-                      ),
-                    ),
+                    vent.commentList.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 40.0),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: vent.commentList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final comment = vent.commentList[index];
+                                  return EMComment(
+                                    content: comment.content,
+                                    author: comment.user!.fullName,
+                                    comments: comment.comments,
+                                    upvotes: comment.likes,
+                                    date: timeago.format(comment.createdAt,
+                                        locale: 'en_short'),
+                                  );
+                                }),
+                          )
+                        : const Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.0),
+                              child: Text('Be the first to comment!'),
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -124,7 +130,8 @@ class _PostState extends State<Post> {
         child: BottomSheet(
             enableDrag: false,
             onClosing: () {},
-            backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(.01),
+            backgroundColor:
+                Theme.of(context).colorScheme.onSurface.withOpacity(.01),
             builder: (BuildContext context) {
               return Container(
                   color: Theme.of(context).colorScheme.surface,
@@ -135,78 +142,86 @@ class _PostState extends State<Post> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ventController.isPostDetailScrolling.value ? SizedBox() : Text(
-                            "Please follow the community guidelines when commenting.",
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(.6),
-                              fontSize: 12,
-                            )),
-                        ventController.isPostDetailScrolling.value ? SizedBox() : const SizedBox(height: 10),
-                         TextField(
-                           controller: tempController.commentContent.value,
-                            scrollController: _commentScrollController,
-                            onTap: () {
-                              ventController.isPostDetailScrolling.value = false;
-                            },
-                            onChanged: (value) {
-                              ventController.isPostDetailScrolling.value = false;
-                            },
-                            minLines: 1,
-                            maxLines: ventController.isPostDetailScrolling.value
-                                ? 1
-                                : 10,
-                            style: const TextStyle(
-                              fontSize: 17,
-                              height: 1.5,
-                            ),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(0),
-                              hintText: 'Add a comment',
-                              hintStyle: TextStyle(
-                                  color: Theme.of(context).colorScheme.onSurface),
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              focusedErrorBorder: InputBorder.none,
-                            ),
-                          ),
-
-                        ventController.isPostDetailScrolling.value ? SizedBox() : SizedBox(height: 20),
-                        ventController.isPostDetailScrolling.value ? SizedBox() : MaterialButton(
-                          minWidth: double.infinity,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          onPressed: () {
-                            VentApi ventApi = VentApi();
-                            ventApi.createComment();
+                        ventController.isPostDetailScrolling.value
+                            ? SizedBox()
+                            : Text(
+                                "Please follow the community guidelines when commenting.",
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(.6),
+                                  fontSize: 12,
+                                )),
+                        ventController.isPostDetailScrolling.value
+                            ? SizedBox()
+                            : const SizedBox(height: 10),
+                        TextField(
+                          controller: tempController.commentContent.value,
+                          scrollController: _commentScrollController,
+                          onTap: () {
+                            ventController.isPostDetailScrolling.value = false;
                           },
-                          elevation: 0,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.06),
-                          splashColor: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.01),
-                          highlightColor: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.01),
-                          highlightElevation: 0,
-                          child: Text(
-                            'Reply',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          onChanged: (value) {
+                            ventController.isPostDetailScrolling.value = false;
+                          },
+                          minLines: 1,
+                          maxLines: ventController.isPostDetailScrolling.value
+                              ? 1
+                              : 10,
+                          style: const TextStyle(
+                            fontSize: 17,
+                            height: 1.5,
+                          ),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(0),
+                            hintText: 'Add a comment',
+                            hintStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
                           ),
                         ),
+                        ventController.isPostDetailScrolling.value
+                            ? SizedBox()
+                            : SizedBox(height: 20),
+                        ventController.isPostDetailScrolling.value
+                            ? SizedBox()
+                            : MaterialButton(
+                                minWidth: double.infinity,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                onPressed: () {
+                                  VentApi ventApi = VentApi();
+                                  ventApi.createComment();
+                                },
+                                elevation: 0,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(.06),
+                                splashColor: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(.01),
+                                highlightColor: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(.01),
+                                highlightElevation: 0,
+                                child: Text(
+                                  'Reply',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ));

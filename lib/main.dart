@@ -15,6 +15,7 @@ import 'package:shareem_app/pages/app/UserDetails.dart';
 import 'package:shareem_app/pages/app/feelings.dart';
 import 'package:shareem_app/pages/app/settings/AdvanceSettings.dart';
 import 'package:shareem_app/pages/app/settings/CommentedPage.dart';
+import 'package:shareem_app/pages/app/settings/Developers.dart';
 import 'package:shareem_app/pages/app/settings/DraftPage.dart';
 import 'package:shareem_app/pages/app/settings/EditAccount.dart';
 import 'package:shareem_app/pages/app/settings/LikedPage.dart';
@@ -63,11 +64,12 @@ class Base extends StatelessWidget {
           GetPage(name: '/settings', page: () => Settings()),
           GetPage(name: '/advancedSettings', page: () => AdvancedSettings()),
           GetPage(name: '/account', page: () => Account()),
-          GetPage(name: '/vented', page: () => VentedPage()),
-          GetPage(name: '/liked', page: () => LikedPage()),
+          GetPage(name: '/vented', page: () => const VentedPage()),
+          GetPage(name: '/liked', page: () => const LikedPage()),
           GetPage(name: '/saved', page: () => SavedPage()),
           GetPage(name: '/draft', page: () => DraftPage()),
-          GetPage(name: '/commented', page: () => CommentedPage()),
+          GetPage(name: '/commented', page: () => const CommentedPage()),
+          GetPage(name: '/developers', page: () => const Developers()),
           GetPage(
             name: '/editAccount',
             page: () => EditAccount(),
@@ -139,7 +141,7 @@ class PagePicker extends StatelessWidget {
                 return SignIn();
               }
             } else {
-              return Text("Something went wrong");
+              return const Text("Something went wrong");
             }
           },
         );

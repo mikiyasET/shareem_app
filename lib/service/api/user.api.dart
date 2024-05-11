@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/home.controller.dart';
+import 'package:shareem_app/model/Comment.dart';
 import 'package:shareem_app/model/Error.dart';
 import 'package:shareem_app/model/Like.dart';
 import 'package:shareem_app/model/Saved.dart';
@@ -203,6 +204,70 @@ class UserApi {
         final error = EMResponse.fromJson(e.response.toString());
         print("Error Fetching Saved");
         print(error.message);
+      } else {
+        print("Error 2");
+        print(e);
+      }
+      if (nextPage) {
+        return 3; // load failed
+      } else {
+        return 4; // refresh failed
+      }
+    } catch (e) {
+      print(e);
+      if (nextPage) {
+        return 3; // load failed
+      } else {
+        return 4; // refresh failed
+      }
+    }
+  }
+
+  Future<int> fetchCommented({nextPage = false}) async {
+    final homeController = Get.find<HomeController>();
+    try {
+      if (nextPage) {
+        homeController.commentedPageIndex.value++;
+      }
+
+      final response = await client.get(getCommentedRoute, queryParameters: {
+        'page': nextPage ? homeController.commentedPageIndex.value : 0,
+        'limit': nextPage
+            ? homeController.commentedLimit.value
+            : homeController.commentedLimit.value *
+                (homeController.commentedPageIndex.value + 1),
+      });
+
+      EMResponse res = EMResponse.fromJson(response.toString());
+      if (response.statusCode == 200 && res.success) {
+        homeController.commentedFetchedOnce.value = true;
+        if (nextPage) {
+          if (res.data.isEmpty) {
+            return 0; // no more data
+          }
+          final List<Comment> commented =
+              res.data.map<Comment>((s) => Comment.fromJson(s)).toList();
+          for (var comment in commented) {
+            if (!homeController.userCommented
+                .map((x) => x.id)
+                .contains(comment)) {
+              homeController.userCommented.add(comment);
+            }
+          }
+          return 1;
+        } else {
+          final List<Comment> commented =
+              res.data.map<Comment>((s) => Comment.fromJson(s)).toList();
+          homeController.userCommented.assignAll(commented);
+          return 2;
+        }
+      }
+      return 5;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        final error = EMResponse.fromJson(e.response.toString());
+        print("Error Fetching Comment");
+        print(error.toJson());
       } else {
         print("Error 2");
         print(e);

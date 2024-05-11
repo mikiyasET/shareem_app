@@ -28,6 +28,7 @@ const String saveVentRoute = '/vent/save';
 const String getSavedRoute = '/vent/saved';
 const String getLikedRoute = '/vent/liked';
 const String getVentedRoute = '/vent/vented';
+const String getCommentedRoute = '/comment/me';
 
 const String getTagsRoute = '/tags/';
 

@@ -38,20 +38,19 @@ class AdvancedSettings extends StatelessWidget {
               Divider(
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-              ListTile(
-                leading: const Icon(CupertinoIcons.lock),
-                title: const Text('Privacy & Security',
-                    style: TextStyle(fontSize: 18)),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+              const ListTile(
+                leading: Icon(CupertinoIcons.lock),
+                title:
+                    Text('Privacy & Security', style: TextStyle(fontSize: 18)),
+                trailing: Icon(Icons.arrow_forward_ios, size: 18),
               ),
               Divider(
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-              ListTile(
-                leading: const Icon(CupertinoIcons.bell),
-                title:
-                    const Text('Notifications', style: TextStyle(fontSize: 18)),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+              const ListTile(
+                leading: Icon(CupertinoIcons.bell),
+                title: Text('Notifications', style: TextStyle(fontSize: 18)),
+                trailing: Icon(Icons.arrow_forward_ios, size: 18),
               ),
               Divider(
                   color:

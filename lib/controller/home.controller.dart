@@ -4,6 +4,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
+import 'package:shareem_app/model/Comment.dart';
 import 'package:shareem_app/model/Draft.dart';
 import 'package:shareem_app/model/Like.dart';
 import 'package:shareem_app/model/Saved.dart';
@@ -37,6 +38,13 @@ class HomeController extends GetxController {
   final RxInt likedLimit = 10.obs;
   final RxBool likedFetchedOnce = false.obs;
   final Rx<RefreshController> likedRefreshController =
+      RefreshController(initialRefresh: false).obs;
+
+  final RxList<Comment> userCommented = <Comment>[].obs;
+  final RxInt commentedPageIndex = 0.obs;
+  final RxInt commentedLimit = 10.obs;
+  final RxBool commentedFetchedOnce = false.obs;
+  final Rx<RefreshController> commentedRefreshController =
       RefreshController(initialRefresh: false).obs;
 
   @override

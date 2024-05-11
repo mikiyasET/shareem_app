@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
-import 'package:pinput/pinput.dart';
+import 'package:flutter/material.dart';
 import 'package:shareem_app/model/Tag.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/utils/enums.dart';
@@ -196,8 +194,8 @@ class EMPost extends StatelessWidget {
                 : const SizedBox(),
             tools
                 ? Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -211,7 +209,9 @@ class EMPost extends StatelessWidget {
                                 children: [
                                   Icon(CupertinoIcons.up_arrow,
                                       color: isLiked
-                                          ? Theme.of(context).colorScheme.primary
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
                                           : Theme.of(context)
                                               .colorScheme
                                               .onSurface),
@@ -219,8 +219,9 @@ class EMPost extends StatelessWidget {
                                   Text(
                                     upvotes.toString(),
                                     style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.onSurface,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
                                     ),
                                   ),
                                 ],
@@ -234,7 +235,9 @@ class EMPost extends StatelessWidget {
                               child: Icon(CupertinoIcons.down_arrow,
                                   color: isDisliked
                                       ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context).colorScheme.onSurface),
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSurface),
                             ),
                           ],
                         ),
@@ -263,7 +266,7 @@ class EMPost extends StatelessWidget {
                             color: Theme.of(context).colorScheme.onSurface),
                       ],
                     ),
-                )
+                  )
                 : const SizedBox(),
           ],
         ),

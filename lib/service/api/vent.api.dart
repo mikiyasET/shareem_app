@@ -96,7 +96,6 @@ class VentApi {
       } else {
         return 4; // refresh failed
       }
-      final error = EMResponse.fromJson(e.response.toString());
     }
   }
 
