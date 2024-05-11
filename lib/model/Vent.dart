@@ -4,9 +4,7 @@ import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/model/Comment.dart';
 import 'package:shareem_app/model/Saved.dart';
 import 'package:shareem_app/model/Tag.dart';
-import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/model/VentUser.dart';
-import 'package:shareem_app/pages/app/Tags.dart';
 import 'package:shareem_app/utils/enums.dart';
 
 class Vent {

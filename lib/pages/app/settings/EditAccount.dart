@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/helpers/editAccount.helper.dart';
-import 'package:shareem_app/pages/app/advanced/edit/EditEmail.dart';
-import 'package:shareem_app/pages/app/advanced/edit/EditGender.dart';
-import 'package:shareem_app/pages/app/advanced/edit/EditName.dart';
-import 'package:shareem_app/pages/app/advanced/edit/EditUsername.dart';
+import 'package:shareem_app/pages/app/settings/edit/EditEmail.dart';
+import 'package:shareem_app/pages/app/settings/edit/EditGender.dart';
+import 'package:shareem_app/pages/app/settings/edit/EditName.dart';
+import 'package:shareem_app/pages/app/settings/edit/EditUsername.dart';
 
 class EditAccount extends StatelessWidget {
   EditAccount({super.key});
@@ -24,12 +24,7 @@ class EditAccount extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: IndexedStack(
           index: type.index,
-          children: [
-            EditName(),
-            EditUsername(),
-            EditGender(),
-            EditEmail()
-          ],
+          children: [EditName(), EditUsername(), EditGender(), EditEmail()],
         ),
       ),
     );

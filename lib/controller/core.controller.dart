@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/service/api/auth.api.dart';
-import '../model/User.dart';
 import 'package:shareem_app/utils/enums.dart';
+
+import '../model/User.dart';
 
 class CoreController extends GetxController {
   final Rx<TextEditingController> username = TextEditingController().obs;
   final Rx<TextEditingController> fName = TextEditingController().obs;
   final Rx<TextEditingController> lName = TextEditingController().obs;
   final Rx<Gender> gender = Gender.none.obs;
-  final Rx<User?> user =  Rx<User?>(null);
+  final Rx<User?> user = Rx<User?>(null);
 
   final RxBool isUsernameError = false.obs;
   final RxBool isfNameError = false.obs;
@@ -21,8 +23,7 @@ class CoreController extends GetxController {
   final RxString fNameErrorText = 'First name is required'.obs;
   final RxString lNameErrorText = 'Last name is required'.obs;
   final RxString genderErrorText = 'Gender is required'.obs;
-
-
+  final authController = Get.find<AuthController>();
 
   void clearValues() {
     username.value.clear();

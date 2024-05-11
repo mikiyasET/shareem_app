@@ -1,14 +1,11 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/controller/core.controller.dart';
-import 'package:shareem_app/controller/vent.controller.dart';
-import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/home.controller.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
+import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/helpers/vent.helper.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/widgets/main/EMBottomNav.dart';

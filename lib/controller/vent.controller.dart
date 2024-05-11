@@ -8,16 +8,19 @@ import 'package:shareem_app/model/Vent.dart';
 import 'package:shareem_app/utils/constants.dart';
 
 class VentController extends GetxController {
-  final RxInt page = 0.obs;
-  final RxInt limit = 10.obs;
   final RxList<Tag> tags = <Tag>[].obs;
   final RxList<Vent> vents = <Vent>[].obs;
   final RxList<int> selectedTags = <int>[].obs;
-  final RxBool isPostDetailScrolling = true.obs;
   final Rx<Vent?> selectedVent = Rx<Vent?>(null);
+
+  final RxBool isPostDetailScrolling = true.obs;
   final Rx<ScrollController> scrollController = ScrollController().obs;
+
+  final RxInt page = 0.obs;
+  final RxInt limit = 10.obs;
   final Rx<RefreshController> refreshController =
       RefreshController(initialRefresh: false).obs;
+
   final RxList<Draft> drafts = <Draft>[].obs;
 
   void addDraft(Draft draft) {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
@@ -147,14 +146,22 @@ class Settings extends StatelessWidget {
             ]),
           ),
           const SizedBox(height: 15),
-          const EMPButton(
-              label: 'Vents',
-              icon: CupertinoIcons.bubble_left_bubble_right_fill,
-              iconBgColor: Colors.indigo),
-          const EMPButton(
-              label: 'Liked',
-              icon: CupertinoIcons.heart_fill,
-              iconBgColor: Colors.red),
+          EMPButton(
+            label: 'Vents',
+            icon: CupertinoIcons.bubble_left_bubble_right_fill,
+            iconBgColor: Colors.indigo,
+            onTap: () {
+              Get.toNamed('/vented');
+            },
+          ),
+          EMPButton(
+            label: 'Liked',
+            icon: CupertinoIcons.heart_fill,
+            iconBgColor: Colors.red,
+            onTap: () {
+              Get.toNamed('/liked');
+            },
+          ),
           EMPButton(
             label: 'Saved',
             icon: CupertinoIcons.bookmark_fill,
@@ -172,10 +179,14 @@ class Settings extends StatelessWidget {
               Get.toNamed('/draft');
             },
           ),
-          const EMPButton(
-              label: 'My Comments',
-              icon: CupertinoIcons.chat_bubble_2_fill,
-              iconBgColor: Colors.deepOrange),
+          EMPButton(
+            label: 'My Comments',
+            icon: CupertinoIcons.chat_bubble_2_fill,
+            iconBgColor: Colors.deepOrange,
+            onTap: () {
+              Get.toNamed('/commented');
+            },
+          ),
           const EMPButton(
               label: 'Developers',
               icon: Icons.developer_mode,

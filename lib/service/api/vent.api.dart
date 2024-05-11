@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/controller/home.controller.dart';
-import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
+import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/model/Comment.dart';
 import 'package:shareem_app/model/Error.dart';
 import 'package:shareem_app/model/Saved.dart';
 import 'package:shareem_app/model/Vent.dart';
 import 'package:shareem_app/service/api.dart';
+import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/utils/constants.dart';
 
 class VentApi {
@@ -38,6 +38,8 @@ class VentApi {
         homeController.changePage(0);
         VentApi ventApi = VentApi();
         ventApi.fetchVents();
+        UserApi userApi = UserApi();
+        userApi.fetchVented();
         Fluttertoast.showToast(msg: "Vent created successfully");
       }
       return response.data;
@@ -58,12 +60,12 @@ class VentApi {
     try {
       if (nextPage) {
         ventController.page.value++;
-      } else {
-        ventController.page.value = 0;
       }
       final response = await client.get(getVentsRoute, queryParameters: {
-        'page': ventController.page.value,
-        'limit': ventController.limit.value,
+        'page': nextPage ? ventController.page.value : 0,
+        'limit': nextPage
+            ? ventController.limit.value
+            : ventController.limit.value * (ventController.page.value + 1),
       });
       EMResponse res = EMResponse.fromJson(response.toString());
       if (response.statusCode == 200 && res.success) {
@@ -73,20 +75,16 @@ class VentApi {
           }
           final List<Vent> vents =
               res.data.map<Vent>((vent) => Vent.fromJson(vent)).toList();
-          vents.forEach((vent) {
+          for (var vent in vents) {
             if (!ventController.vents.map((x) => x.id).contains(vent.id)) {
               ventController.vents.add(vent);
             }
-          });
+          }
           return 1; // load completed
         } else {
           final List<Vent> vents =
               res.data.map<Vent>((vent) => Vent.fromJson(vent)).toList();
-          vents.forEach((vent) {
-            if (!ventController.vents.map((x) => x.id).contains(vent.id)) {
-              ventController.vents.add(vent);
-            }
-          });
+          ventController.vents.assignAll(vents);
           return 2; // refresh completed
         }
         // print(res.data);
@@ -110,8 +108,7 @@ class VentApi {
       });
       EMResponse res = EMResponse.fromJson(response.toString());
       if (response.statusCode == 200 && res.success) {
-        // print(res.data);
-        ventController.vents.forEach((vent) {
+        for (var vent in ventController.vents) {
           if (vent.id == ventController.selectedVent.value!.id) {
             print('1');
             res.data.forEach((comment) {
@@ -122,7 +119,7 @@ class VentApi {
             ventController.selectedVent.value = null;
             ventController.selectedVent.value = vent;
           }
-        });
+        }
       }
     } on DioException catch (e) {
       print("OKK");
@@ -236,8 +233,6 @@ class VentApi {
     }
   }
 
-
-
   Future<void> saveVent(String ventId) async {
     final ventController = Get.find<VentController>();
     final homeController = Get.find<HomeController>();
@@ -253,9 +248,16 @@ class VentApi {
                 .where((s) => s.userId == homeController.user.value!.id)
                 .isEmpty) {
               ventController.vents.value[i].saved.add(Saved.fromJson(res.data));
+              homeController.userSaved.add(Saved.fromJson(res.data));
+              homeController.userSaved
+                  .sort((a, b) => b.createdAt.compareTo(a.createdAt));
             } else {
-              ventController.vents.value[i].saved.removeWhere(
-                  (s) => s.userId == homeController.user.value!.id);
+              final saved = ventController.vents.value[i].saved
+                  .where((s) => s.userId == homeController.user.value!.id)
+                  .first;
+              ventController.vents[i].saved
+                  .removeWhere((e) => e.id == saved.id);
+              homeController.userSaved.removeWhere((s) => s.id == saved.id);
             }
             List<Vent> temp = ventController.vents.value;
             if (ventController.selectedVent.value != null) {

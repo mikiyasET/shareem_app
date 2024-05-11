@@ -24,8 +24,10 @@ const String getVentsRoute = '/vent';
 const String createCommentsRoute = '/comment';
 const String getVentCommentsRoute = '/comment';
 const String reactVentRoute = '/vent/like';
-const String getSavedRoute = '/vent/saved';
 const String saveVentRoute = '/vent/save';
+const String getSavedRoute = '/vent/saved';
+const String getLikedRoute = '/vent/liked';
+const String getVentedRoute = '/vent/vented';
 
 const String getTagsRoute = '/tags/';
 

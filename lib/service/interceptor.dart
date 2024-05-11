@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/model/Error.dart';
 import 'package:shareem_app/utils/constants.dart';
 
 class DioInterceptor extends Interceptor {
@@ -11,10 +14,10 @@ class DioInterceptor extends Interceptor {
       receiveTimeout: const Duration(seconds: 30),
     ),
   );
-  final box = GetStorage();
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final box = GetStorage();
     final String? token = box.read(accessToken_);
     final headers = token != null
         ? {
@@ -28,7 +31,6 @@ class DioInterceptor extends Interceptor {
     return super.onRequest(options, handler);
   }
 
-
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.type == DioExceptionType.connectionError) {
@@ -37,6 +39,7 @@ class DioInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       await refreshTokenFunc();
       try {
+        final box = GetStorage();
         final String? token = box.read(accessToken_);
         final headers = token != null
             ? {
@@ -58,6 +61,8 @@ class DioInterceptor extends Interceptor {
 
   Future<Response<dynamic>> refreshTokenFunc() async {
     try {
+      final box = GetStorage();
+
       var response = await dio.post(
         refreshTokenRoute,
         data: {
@@ -65,21 +70,24 @@ class DioInterceptor extends Interceptor {
         },
       );
       if (response.statusCode == 200) {
-        box.write(accessToken_, response.data['accessToken']);
-        box.write(refreshToken_, response.data['refreshToken']);
+        EMResponse emResponse = EMResponse.fromJson(response.toString());
+
+        await box.write(accessToken_, emResponse.data['accessToken']);
+        await box.write(refreshToken_, emResponse.data['refreshToken']);
         return response;
       }
       return response;
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 401) {
-        box.remove(accessToken_);
-        box.remove(refreshToken_);
+        final authController = Get.find<AuthController>();
+        authController.logoutUser();
       }
       return e.response!;
     }
   }
 
   Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+    final box = GetStorage();
     if (box.read(accessToken_) == null || box.read(refreshToken_) == null) {
       return dio.request<dynamic>(
         requestOptions.path,

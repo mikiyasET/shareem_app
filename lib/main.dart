@@ -6,28 +6,30 @@ import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/route.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/middleware/navigation.middleware.dart';
-import 'package:shareem_app/pages/app/advanced/DraftPage.dart';
-import 'package:shareem_app/pages/app/advanced/SavedPage.dart';
-import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/pages/app/AddPost.dart';
-import 'package:shareem_app/pages/app/Post.dart';
-import 'package:shareem_app/pages/app/Tags.dart';
-import 'package:shareem_app/pages/app/advanced/AdvanceSettings.dart';
 import 'package:shareem_app/pages/app/Dashboard.dart';
-import 'package:shareem_app/pages/app/UserDetails.dart';
+import 'package:shareem_app/pages/app/Post.dart';
 import 'package:shareem_app/pages/app/Settings.dart';
-import 'package:shareem_app/pages/app/advanced/EditAccount.dart';
+import 'package:shareem_app/pages/app/Tags.dart';
+import 'package:shareem_app/pages/app/UserDetails.dart';
 import 'package:shareem_app/pages/app/feelings.dart';
+import 'package:shareem_app/pages/app/settings/AdvanceSettings.dart';
+import 'package:shareem_app/pages/app/settings/CommentedPage.dart';
+import 'package:shareem_app/pages/app/settings/DraftPage.dart';
+import 'package:shareem_app/pages/app/settings/EditAccount.dart';
+import 'package:shareem_app/pages/app/settings/LikedPage.dart';
+import 'package:shareem_app/pages/app/settings/SavedPage.dart';
+import 'package:shareem_app/pages/app/settings/VentedPage.dart';
 import 'package:shareem_app/pages/auth/ResetPassword.dart';
-import 'package:shareem_app/pages/auth/SignUp.dart';
 import 'package:shareem_app/pages/auth/SignIn.dart';
+import 'package:shareem_app/pages/auth/SignUp.dart';
 import 'package:shareem_app/pages/auth/VCode.dart';
 import 'package:shareem_app/pages/auth/changePassword.dart';
 import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/theme.dart';
-
-import 'pages/app/advanced/Account.dart';
 import 'package:shareem_app/utils/enums.dart';
+
+import 'pages/app/settings/Account.dart';
 
 void main() async {
   await GetStorage.init();
@@ -61,8 +63,11 @@ class Base extends StatelessWidget {
           GetPage(name: '/settings', page: () => Settings()),
           GetPage(name: '/advancedSettings', page: () => AdvancedSettings()),
           GetPage(name: '/account', page: () => Account()),
+          GetPage(name: '/vented', page: () => VentedPage()),
+          GetPage(name: '/liked', page: () => LikedPage()),
           GetPage(name: '/saved', page: () => SavedPage()),
           GetPage(name: '/draft', page: () => DraftPage()),
+          GetPage(name: '/commented', page: () => CommentedPage()),
           GetPage(
             name: '/editAccount',
             page: () => EditAccount(),
