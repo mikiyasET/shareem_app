@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shareem_app/utils/enums.dart';
 
-const BASE_URL = 'http://127.0.0.1:3100/api/v1';
+const backendUrl = 'http://127.0.0.1:3100';
+const profileUrl = '${backendUrl}/img/up_image';
+const BASE_URL = '${backendUrl}/api/v1';
 const String accessToken_ = 'accessToken';
 const String refreshToken_ = 'refreshToken';
 const String draft_ = 'draft';
@@ -29,6 +31,9 @@ const String getSavedRoute = '/vent/saved';
 const String getLikedRoute = '/vent/liked';
 const String getVentedRoute = '/vent/vented';
 const String getCommentedRoute = '/comment/me';
+
+const String editUserRoute = '/user/update';
+const String editPhotoRoute = '/user/update-image';
 
 const String getTagsRoute = '/tags/';
 

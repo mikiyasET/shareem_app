@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shareem_app/controller/core.controller.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
+import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 import 'package:shareem_app/widgets/EMInput.dart';
 
 class EditEmail extends StatelessWidget {
   EditEmail({super.key});
 
-  final coreController = Get.find<CoreController>();
+  final tempController = Get.find<TempController>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +17,21 @@ class EditEmail extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         EMInput(
-          controller: coreController.fName.value,
+          controller: tempController.email.value,
           label: 'Email',
-          isError: coreController.isfNameError.value,
-          errorText: coreController.fNameErrorText.value,
+          isError: tempController.isfNameError.value,
+          errorText: tempController.fNameErrorText.value,
           bigSize: true,
         ),
         const SizedBox(height: 30),
-        EMButton(label: 'Update', onPressed: () => Get.back())
+        EMButton(
+          label: 'Update',
+          isLoading: tempController.isUpdateButtonLoading.value,
+          onPressed: () {
+            UserApi userApi = UserApi();
+            userApi.updateProfile('email');
+          },
+        )
       ],
     );
   }

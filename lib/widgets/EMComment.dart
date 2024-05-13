@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class EMComment extends StatelessWidget {
   final String content;
@@ -33,7 +33,8 @@ class EMComment extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.only(left: 20, right: 10, bottom: 20, top: 10),
+            padding:
+                const EdgeInsets.only(left: 20, right: 10, bottom: 20, top: 10),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               border: Border(
@@ -108,7 +109,7 @@ class EMComment extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        content.length > 50
+                        content.length > 200
                             ? content.replaceAll("\n", " ").substring(0, 200)
                             : content.replaceAll("\n", " "),
                         style: TextStyle(
@@ -163,7 +164,6 @@ class EMComment extends StatelessWidget {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ],

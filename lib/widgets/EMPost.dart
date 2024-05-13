@@ -141,7 +141,7 @@ class EMPost extends StatelessWidget {
                     ),
                   )
                 : Text(
-                    content.length > 50
+                    content.length > 200
                         ? content.replaceAll("\n", " ").substring(0, 200)
                         : content.replaceAll("\n", " "),
                     style: TextStyle(

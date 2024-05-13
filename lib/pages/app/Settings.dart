@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
+import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/widgets/EMPButton.dart';
 
 class Settings extends StatelessWidget {
@@ -17,53 +18,57 @@ class Settings extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Row(
-              children: [
-                const CircleAvatar(
-                  radius: 45,
-                  backgroundImage: NetworkImage(
-                      'https://previews.123rf.com/images/aleshyn/aleshyn1402/aleshyn140200165/25985734-picture-of-beautiful-girl-on-the-ocean.jpg'),
-                ),
-                const SizedBox(width: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Wrap(children: [
-                          Text(
-                            makeFullName(homeController.user.value?.fName,
-                                homeController.user.value?.lName),
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
+            child: Obx(
+              () => Row(
+                children: [
+                  homeController.user.value?.image == null
+                      ? Icon(Icons.person, size: 45)
+                      : CircleAvatar(
+                          radius: 45,
+                          backgroundImage: NetworkImage(
+                              '${profileUrl}/${homeController.user.value?.image}'),
+                        ),
+                  const SizedBox(width: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Wrap(children: [
+                            Text(
+                              makeFullName(homeController.user.value?.fName,
+                                  homeController.user.value?.lName),
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                          ]),
+                        ),
+                        Row(
+                          children: List.generate(
+                            6,
+                            (index) => const Icon(Icons.star,
+                                color: Colors.orange, size: 16),
                           ),
-                        ]),
-                      ),
-                      Row(
-                        children: List.generate(
-                          6,
-                          (index) => const Icon(Icons.star,
-                              color: Colors.orange, size: 16),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'View profile',
-                          style: TextStyle(
-                              color: Colors.teal,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            'View profile',
+                            style: TextStyle(
+                                color: Colors.teal,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),

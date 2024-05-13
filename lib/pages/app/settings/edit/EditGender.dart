@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
-import 'package:shareem_app/model/User.dart';
-import 'package:shareem_app/widgets/EMButton.dart';
+import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/utils/enums.dart';
+import 'package:shareem_app/widgets/EMButton.dart';
 
 class EditGender extends StatelessWidget {
   EditGender({super.key});
@@ -42,7 +41,11 @@ class EditGender extends StatelessWidget {
             const SizedBox(height: 20),
             EMButton(
               label: 'Update',
-              onPressed: () => Navigator.of(context).pop(),
+              isLoading: tempController.isUpdateButtonLoading.value,
+              onPressed: () {
+                UserApi userApi = UserApi();
+                userApi.updateProfile('gender');
+              },
             ),
           ],
         ),

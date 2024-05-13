@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 
 class EMButton extends StatelessWidget {
   final String label;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? elevation;
   final bool isLoading;
   final void Function()? onPressed;
 
-  const EMButton(
-      {super.key, required this.label, this.onPressed, this.isLoading = false});
+  const EMButton({
+    super.key,
+    required this.label,
+    this.backgroundColor,
+    this.textColor,
+    this.elevation,
+    this.onPressed,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +26,8 @@ class EMButton extends StatelessWidget {
       minWidth: double.infinity,
       color: isLoading
           ? Theme.of(context).colorScheme.onSurface.withOpacity(.8)
-          : Theme.of(context).colorScheme.onSurface,
-      elevation: 0,
+          : backgroundColor ?? Theme.of(context).colorScheme.onSurface,
+      elevation: elevation ?? 0,
       onPressed: isLoading ? () {} : onPressed ?? () {},
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -30,7 +40,7 @@ class EMButton extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Theme.of(context).colorScheme.surface,
+              color: textColor ?? Theme.of(context).colorScheme.surface,
             ),
           ),
           SizedBox(width: 10),
