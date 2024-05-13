@@ -12,27 +12,29 @@ class EditUsername extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        EMInput(
-          controller: tempController.username.value,
-          label: 'Username',
-          isError: tempController.isUsernameError.value,
-          errorText: tempController.usernameErrorText.value,
-          bigSize: true,
-        ),
-        SizedBox(height: 20),
-        EMButton(
-          label: 'Update',
-          isLoading: tempController.isUpdateButtonLoading.value,
-          onPressed: () {
-            UserApi userApi = UserApi();
-            userApi.updateProfile('username');
-          },
-        )
-      ],
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          EMInput(
+            controller: tempController.username.value,
+            label: 'Username',
+            isError: tempController.isUsernameError.value,
+            errorText: tempController.usernameErrorText.value,
+            bigSize: true,
+          ),
+          SizedBox(height: 20),
+          EMButton(
+            label: 'Update',
+            isLoading: tempController.isUpdateButtonLoading.value,
+            onPressed: () {
+              UserApi userApi = UserApi();
+              userApi.updateProfile('username');
+            },
+          )
+        ],
+      ),
     );
   }
 }

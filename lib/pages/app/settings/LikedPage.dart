@@ -86,7 +86,7 @@ class _LikedPageState extends State<LikedPage> {
                     ? const CupertinoActivityIndicator()
                     : const CircularProgressIndicator();
               }
-              return Container(
+              return SizedBox(
                 height: 55.0,
                 child: Center(child: body),
               );
@@ -108,7 +108,7 @@ class _LikedPageState extends State<LikedPage> {
               } else {
                 body = const Text("No more vents.");
               }
-              return Container(
+              return SizedBox(
                 height: 55.0,
                 child: Center(child: body),
               );

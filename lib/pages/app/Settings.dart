@@ -55,7 +55,7 @@ class Settings extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () => Get.toNamed('/account'),
                           child: const Text(
                             'View profile',
                             style: TextStyle(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shareem_app/utils/enums.dart';
 
-const backendUrl = 'http://127.0.0.1:3100';
-const profileUrl = '${backendUrl}/img/up_image';
-const BASE_URL = '${backendUrl}/api/v1';
+const String backendUrl = 'http://127.0.0.1:3100';
+const String profileUrl = '${backendUrl}/img/up_image';
+const String BASE_URL = '${backendUrl}/api/v1';
 const String accessToken_ = 'accessToken';
 const String refreshToken_ = 'refreshToken';
 const String draft_ = 'draft';

@@ -6,6 +6,7 @@ import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/model/Error.dart';
 import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/utils/constants.dart';
+
 import '../../controller/auth.controller.dart';
 import '../api.dart';
 
@@ -296,7 +297,8 @@ class AuthApi {
     }
   }
 
-  Future<void> forgotPassword(String email, {replace = false, resendCode = false}) async {
+  Future<void> forgotPassword(String email,
+      {replace = false, resendCode = false}) async {
     try {
       final response = await client.post(forgotPasswordRoute, data: {
         'email': email,
@@ -327,7 +329,8 @@ class AuthApi {
             break;
           case 'USER_NOT_FOUND':
             authController.isEmailError.value = true;
-            authController.emailErrorText.value = 'Please check the email and try again.';
+            authController.emailErrorText.value =
+                'Please check the email and try again.';
             break;
           case 'FORGOT_FAILED':
             Fluttertoast.showToast(

@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/widgets/EMInput.dart';
@@ -52,7 +49,8 @@ class SignUp extends StatelessWidget {
         child: Container(
           color: Theme.of(context).colorScheme.surface,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 0, left: 30, right: 30, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 0, left: 30, right: 30, bottom: 20),
           child: Obx(
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +66,9 @@ class SignUp extends StatelessWidget {
                         ? 70
                         : 140,
                     width: double.infinity,
-                    themeController.isDarkMode.value ? 'images/ShareEm-White.png' :'images/ShareEm.png',
+                    themeController.isDarkMode.value
+                        ? 'images/ShareEm-White.png'
+                        : 'images/ShareEm.png',
                   ),
                 ),
                 const SizedBox(height: 30),

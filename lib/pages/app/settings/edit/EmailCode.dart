@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/service/api/auth.api.dart';
+import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 
-class Vcode extends StatelessWidget {
-  Vcode({super.key});
+class EmailCode extends StatelessWidget {
+  EmailCode({super.key});
 
-  final authController = Get.find<AuthController>();
+  final tempController = Get.find<TempController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +38,15 @@ class Vcode extends StatelessWidget {
                             fontSize: 15, fontWeight: FontWeight.w400))),
                 const SizedBox(height: 40),
                 Pinput(
-                  controller: authController.code.value,
+                  controller: tempController.emailCode.value,
                   validator: (value) {
-                    if (authController.isCodeError.value) {
-                      return authController.codeErrorText.value;
+                    if (tempController.isEmailCodeError.value) {
+                      return tempController.emailCodeErrorText.value;
                     }
                     return null;
                   },
-                  errorText: authController.codeErrorText.value,
-                  defaultPinTheme: authController.isCodeError.value
+                  errorText: tempController.emailCodeErrorText.value,
+                  defaultPinTheme: tempController.isEmailCodeError.value
                       ? PinTheme(
                           width: 55,
                           height: 55,
@@ -84,17 +85,21 @@ class Vcode extends StatelessWidget {
                   isCursorAnimationEnabled: true,
                   length: 6,
                   onCompleted: (value) {
-                    authController.verifyCode();
+                    UserApi userApi = UserApi();
+                    userApi.updateProfile('email');
                   },
                   onChanged: (value) {
-                    authController.isCodeError.value = false;
+                    tempController.isEmailCodeError.value = false;
                   },
                 ),
                 const SizedBox(height: 30),
                 EMButton(
                     label: 'Verify',
-                    isLoading: authController.isLoading.value,
-                    onPressed: () => authController.verifyCode()),
+                    isLoading: tempController.isUpdateButtonLoading.value,
+                    onPressed: () {
+                      UserApi userApi = UserApi();
+                      userApi.updateProfile('email');
+                    }),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   const Opacity(
@@ -104,17 +109,17 @@ class Vcode extends StatelessWidget {
                             fontSize: 15, fontWeight: FontWeight.w400)),
                   ),
                   InkWell(
-                    onTap: authController.resendLoading.value
+                    onTap: tempController.isEmailResendLoading.value
                         ? null
                         : () {
-                            authController.resendLoading.value = true;
+                            tempController.isEmailResendLoading.value = true;
                             AuthApi().forgotPassword(
-                              authController.email.value.text,
+                              tempController.email.value.text,
                               replace: true,
                               resendCode: true,
                             );
                           },
-                    child: authController.resendLoading.value
+                    child: tempController.isEmailResendLoading.value
                         ? Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: SizedBox(

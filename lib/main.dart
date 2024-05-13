@@ -21,6 +21,7 @@ import 'package:shareem_app/pages/app/settings/EditAccount.dart';
 import 'package:shareem_app/pages/app/settings/LikedPage.dart';
 import 'package:shareem_app/pages/app/settings/SavedPage.dart';
 import 'package:shareem_app/pages/app/settings/VentedPage.dart';
+import 'package:shareem_app/pages/app/settings/edit/EmailCode.dart';
 import 'package:shareem_app/pages/auth/ResetPassword.dart';
 import 'package:shareem_app/pages/auth/SignIn.dart';
 import 'package:shareem_app/pages/auth/SignUp.dart';
@@ -70,6 +71,7 @@ class Base extends StatelessWidget {
           GetPage(name: '/draft', page: () => DraftPage()),
           GetPage(name: '/commented', page: () => const CommentedPage()),
           GetPage(name: '/developers', page: () => const Developers()),
+          GetPage(name: '/emailCode', page: () => EmailCode()),
           GetPage(
             name: '/editAccount',
             page: () => EditAccount(),

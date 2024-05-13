@@ -59,17 +59,17 @@ class Home extends StatelessWidget {
                 builder: (BuildContext context, LoadStatus? mode) {
                   Widget body;
                   if (mode == LoadStatus.idle) {
-                    body = Text("Scroll up to load more");
+                    body = const Text("Scroll up to load more");
                   } else if (mode == LoadStatus.loading) {
                     body = Platform.isIOS
-                        ? CupertinoActivityIndicator()
-                        : CircularProgressIndicator();
+                        ? const CupertinoActivityIndicator()
+                        : const CircularProgressIndicator();
                   } else if (mode == LoadStatus.failed) {
-                    body = Text("Load Failed!Click retry!");
+                    body = const Text("Load Failed!Click retry!");
                   } else if (mode == LoadStatus.canLoading) {
-                    body = Text("Release to load more");
+                    body = const Text("Release to load more");
                   } else {
-                    body = Text("No more vents.");
+                    body = const Text("No more vents.");
                   }
                   return Container(
                     height: 55.0,

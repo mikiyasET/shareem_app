@@ -143,7 +143,7 @@ class _PostState extends State<Post> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ventController.isPostDetailScrolling.value
-                            ? SizedBox()
+                            ? const SizedBox()
                             : Text(
                                 "Please follow the community guidelines when commenting.",
                                 style: TextStyle(
@@ -154,7 +154,7 @@ class _PostState extends State<Post> {
                                   fontSize: 12,
                                 )),
                         ventController.isPostDetailScrolling.value
-                            ? SizedBox()
+                            ? const SizedBox()
                             : const SizedBox(height: 10),
                         TextField(
                           controller: tempController.commentContent.value,
@@ -186,10 +186,10 @@ class _PostState extends State<Post> {
                           ),
                         ),
                         ventController.isPostDetailScrolling.value
-                            ? SizedBox()
-                            : SizedBox(height: 20),
+                            ? const SizedBox()
+                            : const SizedBox(height: 20),
                         ventController.isPostDetailScrolling.value
-                            ? SizedBox()
+                            ? const SizedBox()
                             : MaterialButton(
                                 minWidth: double.infinity,
                                 shape: RoundedRectangleBorder(

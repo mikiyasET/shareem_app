@@ -12,27 +12,29 @@ class EditEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        EMInput(
-          controller: tempController.email.value,
-          label: 'Email',
-          isError: tempController.isfNameError.value,
-          errorText: tempController.fNameErrorText.value,
-          bigSize: true,
-        ),
-        const SizedBox(height: 30),
-        EMButton(
-          label: 'Update',
-          isLoading: tempController.isUpdateButtonLoading.value,
-          onPressed: () {
-            UserApi userApi = UserApi();
-            userApi.updateProfile('email');
-          },
-        )
-      ],
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          EMInput(
+            controller: tempController.email.value,
+            label: 'Email',
+            isError: tempController.isEmailError.value,
+            errorText: tempController.emailErrorText.value,
+            bigSize: true,
+          ),
+          const SizedBox(height: 30),
+          EMButton(
+            label: 'Update',
+            isLoading: tempController.isUpdateButtonLoading.value,
+            onPressed: () {
+              UserApi userApi = UserApi();
+              userApi.updateProfile('checkEmail');
+            },
+          )
+        ],
+      ),
     );
   }
 }

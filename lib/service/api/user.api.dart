@@ -335,6 +335,7 @@ class UserApi {
       tempController.isUsernameError.value = false;
       tempController.isEmailError.value = false;
       tempController.isGenderError.value = false;
+      tempController.isEmailCodeError.value = false;
       final data;
       switch (type) {
         case 'name':
@@ -401,7 +402,7 @@ class UserApi {
             'gender': tempController.gender.value.toString().split('.').last[0],
           };
           break;
-        case 'email':
+        case 'checkEmail':
           if (tempController.email.value.text.isEmpty) {
             tempController.isEmailError.value = true;
             tempController.emailErrorText.value = 'Email is required';
@@ -418,7 +419,35 @@ class UserApi {
           data = {
             'email': tempController.email.value.text,
           };
-          break;
+        case 'resend':
+          if (tempController.email.value.text.isEmpty) {
+            tempController.isEmailError.value = true;
+            tempController.emailErrorText.value = 'Email is required';
+            tempController.isUpdateButtonLoading.value = false;
+            return;
+          }
+          if (tempController.email.value.text ==
+              homeController.user.value?.email) {
+            tempController.isEmailError.value = true;
+            tempController.emailErrorText.value = 'Email is the same';
+            tempController.isUpdateButtonLoading.value = false;
+            return;
+          }
+          data = {
+            'email': tempController.email.value.text,
+          };
+          tempController.isEmailResendLoading.value = true;
+        case 'email':
+          if (tempController.emailCode.value.text.isEmpty) {
+            tempController.isEmailCodeError.value = true;
+            tempController.emailCodeErrorText.value = 'Code is required';
+            tempController.isUpdateButtonLoading.value = false;
+            return;
+          }
+          data = {
+            'email': tempController.email.value.text,
+            'code': tempController.emailCode.value.text,
+          };
         default:
           data = {};
       }
@@ -426,9 +455,20 @@ class UserApi {
       tempController.isUpdateButtonLoading.value = false;
       EMResponse res = EMResponse.fromJson(response.toString());
       if (res.success) {
-        Fluttertoast.showToast(msg: 'Profile Updated');
-        homeController.user.value = User.fromJson(res.data);
-        getX.Get.back();
+        if (type == 'checkEmail') {
+          getX.Get.toNamed('/emailCode');
+        } else if (type == 'resend') {
+          tempController.isEmailResendLoading.value = false;
+        } else if (type == 'email') {
+          Fluttertoast.showToast(msg: 'Profile Updated');
+          homeController.user.value = User.fromJson(res.data);
+          getX.Get.back();
+          getX.Get.back();
+        } else {
+          Fluttertoast.showToast(msg: 'Profile Updated');
+          homeController.user.value = User.fromJson(res.data);
+          getX.Get.back();
+        }
       }
     } on DioException catch (e) {
       tempController.isUpdateButtonLoading.value = false;
@@ -440,6 +480,19 @@ class UserApi {
         } else if (error.message == 'USERNAME_NO_CHANGE') {
           tempController.isUsernameError.value = true;
           tempController.usernameErrorText.value = 'Username is the same';
+        } else if (error.message == 'EMAIL_ALREADY_EXISTS') {
+          tempController.isEmailError.value = true;
+          tempController.emailErrorText.value = 'Email already exists';
+        } else if (error.message == 'EMAIL_NO_CHANGE') {
+          tempController.isEmailError.value = true;
+          tempController.emailErrorText.value = 'Email is the same';
+        } else if (error.message == 'EMAIL_VERIFY_FAILED') {
+          tempController.isEmailError.value = true;
+          tempController.emailErrorText.value =
+              'Couldn\'t send verification code';
+        } else if (error.message == 'EMAIL_CONFIRM_FAILED') {
+          tempController.isEmailCodeError.value = true;
+          tempController.emailCodeErrorText.value = "Invalid code";
         }
         print("Error updating profile");
         print(error.message);

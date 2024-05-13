@@ -18,18 +18,22 @@ class TempController extends GetxController {
   final Rx<TextEditingController> lName = TextEditingController().obs;
   final Rx<TextEditingController> email = TextEditingController().obs;
   final Rx<Gender> gender = Gender.none.obs;
+  final Rx<TextEditingController> emailCode = TextEditingController().obs;
+  final RxBool isEmailResendLoading = false.obs;
 
   final RxBool isUsernameError = false.obs;
   final RxBool isfNameError = false.obs;
   final RxBool islNameError = false.obs;
   final RxBool isEmailError = false.obs;
   final RxBool isGenderError = false.obs;
+  final RxBool isEmailCodeError = false.obs;
 
   final RxString usernameErrorText = 'Username is required'.obs;
   final RxString fNameErrorText = 'First name is required'.obs;
   final RxString lNameErrorText = 'Last name is required'.obs;
   final RxString emailErrorText = 'Email is required'.obs;
   final RxString genderErrorText = 'Gender is required'.obs;
+  final RxString emailCodeErrorText = 'Email code is required'.obs;
 
   @override
   void onInit() {

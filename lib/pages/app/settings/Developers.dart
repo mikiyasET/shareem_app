@@ -53,7 +53,7 @@ class Developers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Developers'),
+        title: const Text('Developers'),
       ),
       body: SafeArea(
         child: ListView.builder(

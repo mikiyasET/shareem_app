@@ -54,7 +54,7 @@ Future<void> editPhoto(BuildContext context) async {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2.2,
                 child: tempController.profileImage.value == ''
@@ -166,10 +166,11 @@ Future<void> pickImage(BuildContext context, {bool isCamera = false}) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               dismissDirection: DismissDirection.horizontal,
-              backgroundColor: Color(0xff068181),
-              content: Text('Please enable camera permission from settings'),
+              backgroundColor: const Color(0xff068181),
+              content:
+                  const Text('Please enable camera permission from settings'),
               action: SnackBarAction(
-                backgroundColor: Color(0xff056767),
+                backgroundColor: const Color(0xff056767),
                 label: 'Settings',
                 onPressed: () {
                   openAppSettings();
@@ -190,10 +191,11 @@ Future<void> pickImage(BuildContext context, {bool isCamera = false}) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               dismissDirection: DismissDirection.horizontal,
-              backgroundColor: Color(0xff068181),
-              content: Text('Please enable photo permission from settings'),
+              backgroundColor: const Color(0xff068181),
+              content:
+                  const Text('Please enable photo permission from settings'),
               action: SnackBarAction(
-                backgroundColor: Color(0xff056767),
+                backgroundColor: const Color(0xff056767),
                 textColor: Colors.white,
                 label: 'Settings',
                 onPressed: () {

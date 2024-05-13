@@ -87,7 +87,7 @@ class _SavedPageState extends State<SavedPage> {
                     ? const CupertinoActivityIndicator()
                     : const CircularProgressIndicator();
               }
-              return Container(
+              return SizedBox(
                 height: 55.0,
                 child: Center(child: body),
               );
@@ -109,7 +109,7 @@ class _SavedPageState extends State<SavedPage> {
               } else {
                 body = const Text("No more vents.");
               }
-              return Container(
+              return SizedBox(
                 height: 55.0,
                 child: Center(child: body),
               );
