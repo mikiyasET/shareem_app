@@ -10,6 +10,7 @@ class Comment {
   final String content;
   final VentUser? user;
   final Vent? vent;
+  final bool identity;
   final String? replyTo;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -23,6 +24,7 @@ class Comment {
     required this.content,
     required this.user,
     this.vent,
+    required this.identity,
     this.replyTo,
     required this.createdAt,
     required this.updatedAt,
@@ -36,8 +38,9 @@ class Comment {
       likes: json['likes'],
       comments: json['comments'],
       content: json['content'],
-      user: json['vent'] == null ? null : Vent.fromJson(json['vent']).author,
+      user: json['user'] == null ? null : VentUser.fromJson(json['user']),
       vent: json['vent'] == null ? null : Vent.fromJson(json['vent']),
+      identity: json['identity'],
       replyTo: json['replyTo'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
@@ -53,6 +56,7 @@ class Comment {
         'content': content,
         'user': user?.toJson(),
         'vent': vent?.toJson(),
+        'identity': identity,
         'replyTo': replyTo,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),

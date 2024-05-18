@@ -2,17 +2,24 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/controller/route.controller.dart';
+import 'package:shareem_app/controller/temp.controller.dart';
 
 class NavigationMiddleWare {
   static observer(Routing? routing) {
     final routeController = Get.find<RouteController>();
     final authController = Get.find<AuthController>();
-    const authRoutes = ['/', '/signIn', '/signUp', '/resetPassword', '/changePassword', '/vCode'];
+
+    const authRoutes = [
+      '/',
+      '/signIn',
+      '/signUp',
+      '/resetPassword',
+      '/changePassword',
+      '/vCode'
+    ];
     if (routing?.isBack == true) {
       routeController.back(routing?.current ?? '/');
       switch (routeController.previousRoute.value) {
-        case '/signUp':
-          break;
         case '/resetPassword':
           authController.isResetPassword.value = false;
           break;
@@ -21,6 +28,12 @@ class NavigationMiddleWare {
           break;
         case '/addFeelings':
           Fluttertoast.showToast(msg: "Feeling updated.");
+          break;
+        case '/password':
+          final tempController = Get.find<TempController>();
+          tempController.currentPassword.value.clear();
+          tempController.newPassword.value.clear();
+          tempController.confirmPassword.value.clear();
           break;
         default:
           break;

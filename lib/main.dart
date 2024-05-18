@@ -13,15 +13,18 @@ import 'package:shareem_app/pages/app/Settings.dart';
 import 'package:shareem_app/pages/app/Tags.dart';
 import 'package:shareem_app/pages/app/UserDetails.dart';
 import 'package:shareem_app/pages/app/feelings.dart';
-import 'package:shareem_app/pages/app/settings/AdvanceSettings.dart';
 import 'package:shareem_app/pages/app/settings/CommentedPage.dart';
 import 'package:shareem_app/pages/app/settings/Developers.dart';
 import 'package:shareem_app/pages/app/settings/DraftPage.dart';
-import 'package:shareem_app/pages/app/settings/EditAccount.dart';
 import 'package:shareem_app/pages/app/settings/LikedPage.dart';
 import 'package:shareem_app/pages/app/settings/SavedPage.dart';
 import 'package:shareem_app/pages/app/settings/VentedPage.dart';
-import 'package:shareem_app/pages/app/settings/edit/EmailCode.dart';
+import 'package:shareem_app/pages/app/settings/advanced/AdvanceSettings.dart';
+import 'package:shareem_app/pages/app/settings/advanced/EditAccount.dart';
+import 'package:shareem_app/pages/app/settings/advanced/NotificationSettings.dart';
+import 'package:shareem_app/pages/app/settings/advanced/Password.dart';
+import 'package:shareem_app/pages/app/settings/advanced/Security.dart';
+import 'package:shareem_app/pages/app/settings/advanced/edit/EmailCode.dart';
 import 'package:shareem_app/pages/auth/ResetPassword.dart';
 import 'package:shareem_app/pages/auth/SignIn.dart';
 import 'package:shareem_app/pages/auth/SignUp.dart';
@@ -31,7 +34,7 @@ import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/theme.dart';
 import 'package:shareem_app/utils/enums.dart';
 
-import 'pages/app/settings/Account.dart';
+import 'pages/app/settings/advanced/Account.dart';
 
 void main() async {
   await GetStorage.init();
@@ -65,6 +68,9 @@ class Base extends StatelessWidget {
           GetPage(name: '/settings', page: () => Settings()),
           GetPage(name: '/advancedSettings', page: () => AdvancedSettings()),
           GetPage(name: '/account', page: () => Account()),
+          GetPage(name: '/security', page: () => Security()),
+          GetPage(name: '/password', page: () => Password()),
+          GetPage(name: '/notSettings', page: () => NotificationSettings()),
           GetPage(name: '/vented', page: () => const VentedPage()),
           GetPage(name: '/liked', page: () => const LikedPage()),
           GetPage(name: '/saved', page: () => SavedPage()),

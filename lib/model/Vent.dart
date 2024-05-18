@@ -21,6 +21,7 @@ class Vent {
   final Feeling feeling;
   final List<Tag> tags;
   final List<Saved> saved;
+  final bool identity;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -38,6 +39,7 @@ class Vent {
     required this.feeling,
     required this.tags,
     required this.saved,
+    required this.identity,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -67,6 +69,7 @@ class Vent {
       saved: json['saved'].length > 0
           ? json['saved'].map<Saved>((s) => Saved.fromJson(s)).toList()
           : [],
+      identity: json['identity'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
     );
@@ -86,6 +89,7 @@ class Vent {
         'feeling': feeling,
         'tags': tags,
         'saved': saved,
+        'identity': identity,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };

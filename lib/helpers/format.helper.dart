@@ -52,7 +52,9 @@ String makeFullName(String? fName, String? lName, {bool isShort = false}) {
   if (isShort) {
     name = "${fName ?? ''} ${lName ?? ''}".trim();
   } else {
-    name = "${ucWords(fName ?? '')} ${ucWords(lName ?? '')}".trim();
+    name =
+        "${fName != null && fName.length > 0 ? ucWords(fName) : ''} ${lName != null && lName.length > 0 ? ucWords(lName) : ''}"
+            .trim();
   }
   if (name.isEmpty) {
     return "Anonymous";

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shareem_app/model/Tag.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
+import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/utils/enums.dart';
 
 class EMPost extends StatelessWidget {
@@ -74,7 +75,7 @@ class EMPost extends StatelessWidget {
                     radius: 13,
                     backgroundImage: authorAvatar == null
                         ? null
-                        : NetworkImage(authorAvatar!),
+                        : NetworkImage("${profileUrl}/${authorAvatar!}"),
                     child: authorAvatar == null
                         ? Text(
                             shortName,
@@ -92,20 +93,22 @@ class EMPost extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(.1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(feeling.toString().split('.').last,
-                        style: const TextStyle(fontSize: 12)),
-                  ),
+                  feeling.toString().split('.').last == 'none'
+                      ? SizedBox()
+                      : Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(.1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(feeling.toString().split('.').last,
+                              style: const TextStyle(fontSize: 12)),
+                        ),
                   const Spacer(),
                   Text(
                     date,

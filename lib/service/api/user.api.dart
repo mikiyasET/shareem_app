@@ -448,6 +448,11 @@ class UserApi {
             'email': tempController.email.value.text,
             'code': tempController.emailCode.value.text,
           };
+        case 'identity':
+          data = {
+            'identity': tempController.userIdentity.value,
+          };
+          break;
         default:
           data = {};
       }
@@ -464,6 +469,17 @@ class UserApi {
           homeController.user.value = User.fromJson(res.data);
           getX.Get.back();
           getX.Get.back();
+        } else if (type == 'identity') {
+          homeController.user.value = User.fromJson(res.data);
+          tempController.userIdentity.value =
+              homeController.user.value?.identity ?? false;
+          if (homeController.user.value?.identity == true) {
+            Fluttertoast.cancel();
+            Fluttertoast.showToast(msg: 'Other can see your identity now');
+          } else {
+            Fluttertoast.cancel();
+            Fluttertoast.showToast(msg: 'You are now anonymous.');
+          }
         } else {
           Fluttertoast.showToast(msg: 'Profile Updated');
           homeController.user.value = User.fromJson(res.data);
@@ -477,6 +493,9 @@ class UserApi {
         if (error.message == 'USERNAME_ALREADY_EXISTS') {
           tempController.isUsernameError.value = true;
           tempController.usernameErrorText.value = 'Username already exists';
+        } else if (error.message == 'NAME_LENGTH_ERROR') {
+          tempController.isfNameError.value = true;
+          tempController.fNameErrorText.value = 'Invalid name length';
         } else if (error.message == 'USERNAME_NO_CHANGE') {
           tempController.isUsernameError.value = true;
           tempController.usernameErrorText.value = 'Username is the same';
@@ -493,6 +512,10 @@ class UserApi {
         } else if (error.message == 'EMAIL_CONFIRM_FAILED') {
           tempController.isEmailCodeError.value = true;
           tempController.emailCodeErrorText.value = "Invalid code";
+        } else if (error.message == 'UPDATE_IDENTITY_NO_CHANGE') {
+          Fluttertoast.showToast(msg: 'No changes made');
+        } else if (error.message == 'UPDATE_INVALID_IDENTITY') {
+          Fluttertoast.showToast(msg: 'Invalid identity value');
         }
         print("Error updating profile");
         print(error.message);
@@ -504,6 +527,80 @@ class UserApi {
       tempController.isUpdateButtonLoading.value = false;
       print("Error updating profile (unknown error)");
       print(e);
+    }
+  }
+
+  Future<void> updatePassword() async {
+    final tempController = getX.Get.find<TempController>();
+    try {
+      tempController.isUpdateButtonLoading.value = true;
+      tempController.isCurrentPasswordError.value = false;
+      tempController.isNewPasswordError.value = false;
+      tempController.isConfirmPasswordError.value = false;
+      if (tempController.currentPassword.value.text.isEmpty) {
+        tempController.isCurrentPasswordError.value = true;
+        tempController.currentPasswordErrorText.value =
+            'Current password is required';
+        tempController.isUpdateButtonLoading.value = false;
+        return;
+      }
+      if (tempController.newPassword.value.text.isEmpty) {
+        tempController.isNewPasswordError.value = true;
+        tempController.newPasswordErrorText.value = 'New password is required';
+        tempController.isUpdateButtonLoading.value = false;
+        return;
+      }
+      if (tempController.confirmPassword.value.text.isEmpty) {
+        tempController.isConfirmPasswordError.value = true;
+        tempController.confirmPasswordErrorText.value =
+            'Confirm password is required';
+        tempController.isUpdateButtonLoading.value = false;
+        return;
+      }
+      if (tempController.newPassword.value.text !=
+          tempController.confirmPassword.value.text) {
+        tempController.isConfirmPasswordError.value = true;
+        tempController.confirmPasswordErrorText.value =
+            'Passwords do not match';
+        tempController.isUpdateButtonLoading.value = false;
+        return;
+      }
+      final data = {
+        'oldPass': tempController.currentPassword.value.text,
+        'newPass': tempController.newPassword.value.text,
+      };
+      final response = await client.put(editPasswordRoute, data: data);
+      tempController.isUpdateButtonLoading.value = false;
+      EMResponse res = EMResponse.fromJson(response.toString());
+      if (res.success) {
+        tempController.currentPassword.value.clear();
+        tempController.newPassword.value.clear();
+        tempController.confirmPassword.value.clear();
+        Fluttertoast.showToast(msg: 'Password Updated');
+        getX.Get.back();
+      }
+    } on DioException catch (e) {
+      tempController.isUpdateButtonLoading.value = false;
+      if (e.response != null) {
+        final error = EMResponse.fromJson(e.response.toString());
+        if (error.message == 'UPDATE_PASSWORD_FAILED') {
+          tempController.isCurrentPasswordError.value = true;
+          tempController.currentPasswordErrorText.value = 'Incorrect password';
+        } else if (error.message == 'UPDATE_PASSWORD_SAME') {
+          tempController.isNewPasswordError.value = true;
+          tempController.newPasswordErrorText.value =
+              'New password is the same as the old password';
+        } else if (error.message == 'UPDATE_PASSWORD_LENGTH_ERROR') {
+          tempController.isNewPasswordError.value = true;
+          tempController.newPasswordErrorText.value = 'Password is too short';
+        }
+      } else {
+        print("Error updating password (not response)");
+        print(e);
+      }
+    } catch (e) {
+      tempController.isUpdateButtonLoading.value = false;
+      print("Error updating password (unknown error)");
     }
   }
 }

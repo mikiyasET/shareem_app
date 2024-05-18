@@ -21,12 +21,12 @@ class Draft {
 
   factory Draft.fromJson(Map<String, dynamic> json) {
     final ventController = Get.find<VentController>();
-print(json['tags']);
     return Draft(
       id: json['id'] ?? 0,
       title: json['title'],
       content: json['content'],
-      tags: json['tags'].length > 0 ? json['tags']
+      tags: json['tags'].length > 0
+          ? json['tags']
               .map<Tag>((t) =>
                   ventController.tags.firstWhere((t2) => t2.id == t['id']))
               .toList()

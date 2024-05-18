@@ -235,12 +235,14 @@ class AuthApi {
         'lName': coreController.lName.value.text,
         'gender': coreController.gender.value.toString().split('.').last[0],
       });
+      coreController.isBtnLoading.value = false;
       EMResponse res = EMResponse.fromJson(response.toString());
       if (response.statusCode == 200 &&
           res.message == 'REGISTRATION_COMPLETED') {
         coreController.user.value = User.fromJson(res.data);
       }
     } on DioException catch (e) {
+      coreController.isBtnLoading.value = false;
       authController.isLoading.value = false;
       if (e.response != null) {
         EMResponse error = EMResponse.fromJson(e.response.toString());

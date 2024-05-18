@@ -123,7 +123,11 @@ class _CommentedPageState extends State<CommentedPage> {
                   itemBuilder: (context, index) {
                     final comment = homeController.userCommented[index];
                     return EMComment(
-                      author: comment.user!.fullName,
+                      author: comment.identity
+                          ? comment.user!.fullName
+                          : comment.user!.shortHiddenName,
+                      authorAvatar:
+                          comment.identity ? comment.user?.image : null,
                       content: comment.content,
                       date: timeago.format(comment.createdAt),
                       upvotes: comment.likes,

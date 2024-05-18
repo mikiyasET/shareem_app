@@ -26,9 +26,12 @@ class UserDetails extends StatelessWidget {
                 const Text(
                     'We recommend completing your profile to get the best experience'),
                 const SizedBox(height: 20),
-                EMButton(
-                  label: 'Complete',
-                  onPressed: () => coreController.completeProfile(),
+                Obx(
+                  () => EMButton(
+                    label: 'Complete',
+                    isLoading: coreController.isBtnLoading.value,
+                    onPressed: () => coreController.completeProfile(),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(

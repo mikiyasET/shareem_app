@@ -11,6 +11,7 @@ class User {
   final Gender gender; // gender
   final String? image;
   final Feeling feeling; // feeling
+  final bool identity;
   final Status status; // status
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -25,6 +26,7 @@ class User {
     required this.gender,
     this.image,
     required this.feeling,
+    required this.identity,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
@@ -41,6 +43,7 @@ class User {
         gender: strToGender(json['gender']),
         image: json['image'],
         feeling: strToFeeling(json['feeling']),
+        identity: json['identity'],
         status: strToStatus(json['status']),
         createdAt: DateTime.parse(json['createdAt']),
         updatedAt: DateTime.parse(json['updatedAt']));
@@ -57,6 +60,7 @@ class User {
       'gender': gender,
       'image': image,
       'feeling': feeling,
+      'identity': identity,
       'status': status,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),

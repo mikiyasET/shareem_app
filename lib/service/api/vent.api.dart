@@ -109,19 +109,17 @@ class VentApi {
       if (response.statusCode == 200 && res.success) {
         for (var vent in ventController.vents) {
           if (vent.id == ventController.selectedVent.value!.id) {
-            print('1');
-            res.data.forEach((comment) {
+            for (var comment in res.data) {
               if (!vent.commentList.map((x) => x.id).contains(comment['id'])) {
                 vent.commentList.add(Comment.fromJson(comment));
               }
-            });
+            }
             ventController.selectedVent.value = null;
             ventController.selectedVent.value = vent;
           }
         }
       }
     } on DioException catch (e) {
-      print("OKK");
       final error = EMResponse.fromJson(e.response.toString());
     } catch (e) {
       print(e);
@@ -181,6 +179,8 @@ class VentApi {
 
   Future<void> reactVent(String ventId, bool likeType) async {
     final ventController = Get.find<VentController>();
+    final homeController = Get.find<HomeController>();
+
     try {
       final response = await client.post(reactVentRoute, data: {
         'ventId': ventId,
@@ -207,6 +207,7 @@ class VentApi {
                 : ventController.vents.value[i].isDisliked
                     ? false
                     : true;
+
             List<Vent> temp = ventController.vents.value;
             if (ventController.selectedVent.value != null) {
               ventController.selectedVent.value = null;
@@ -215,6 +216,30 @@ class VentApi {
             ventController.vents.value = [];
             ventController.vents.value = temp;
             print("Reacting vent ${ventController.vents[i].likes}");
+          }
+        }
+        for (int i = 0; i < homeController.userVented.length; i++) {
+          if (homeController.userVented[i].id == ventId) {
+            homeController.userVented.value[i].likes =
+                homeController.userVented.value[i].isLiked
+                    ? homeController.userVented.value[i].likes - 1
+                    : likeType
+                        ? homeController.userVented.value[i].likes + 1
+                        : homeController.userVented.value[i].likes;
+            homeController.userVented.value[i].isLiked = likeType
+                ? homeController.userVented.value[i].isLiked
+                    ? false
+                    : true
+                : false;
+            homeController.userVented.value[i].isDisliked = likeType
+                ? false
+                : homeController.userVented.value[i].isDisliked
+                    ? false
+                    : true;
+
+            List<Vent> temp = homeController.userVented.value;
+            homeController.userVented.value = [];
+            homeController.userVented.value = temp;
           }
         }
       }

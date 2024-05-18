@@ -34,6 +34,7 @@ const String getCommentedRoute = '/comment/me';
 
 const String editUserRoute = '/user/update';
 const String editPhotoRoute = '/user/update-image';
+const String editPasswordRoute = '/user/update-password';
 
 const String getTagsRoute = '/tags/';
 

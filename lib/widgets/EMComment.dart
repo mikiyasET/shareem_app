@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shareem_app/utils/constants.dart';
 
 class EMComment extends StatelessWidget {
   final String content;
@@ -58,7 +58,7 @@ class EMComment extends StatelessWidget {
                         radius: 13,
                         backgroundImage: authorAvatar == null
                             ? null
-                            : NetworkImage(authorAvatar!),
+                            : NetworkImage("$profileUrl/${authorAvatar!}"),
                         child: authorAvatar == null
                             ? Text(
                                 shortName,
@@ -133,39 +133,6 @@ class EMComment extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                const SizedBox(height: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.up_arrow,
-                              color: Theme.of(context).colorScheme.onSurface,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              upvotes.toString(),
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 20),
-                        Icon(
-                          CupertinoIcons.down_arrow,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

@@ -26,7 +26,6 @@ class _SavedPageState extends State<SavedPage> {
   void initState() {
     if (homeController.saveFetchedOnce.isFalse) {
       userApi.fetchSaved();
-      print("Shoowwwww");
     }
     super.initState();
   }
@@ -127,13 +126,15 @@ class _SavedPageState extends State<SavedPage> {
                       title: saved.title,
                       content: saved.content,
                       feeling: saved.feeling,
-                      author: saved.author.fullName,
+                      author: saved.identity
+                          ? saved.author.fullName
+                          : saved.author.shortHiddenName,
+                      authorAvatar: saved.identity ? saved.author.image : null,
                       date: timeago.format(saved.createdAt),
                       upvotes: saved.likes,
                       comments: saved.comments,
                       tools: false,
                       onTap: () {
-                        print(saved.saved[0].toJson());
                         ventController.selectedVent.value = saved;
                         Get.toNamed('/post');
                       },

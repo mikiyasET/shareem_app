@@ -13,6 +13,7 @@ class CoreController extends GetxController {
   final Rx<TextEditingController> lName = TextEditingController().obs;
   final Rx<Gender> gender = Gender.none.obs;
   final Rx<User?> user = Rx<User?>(null);
+  final RxBool isBtnLoading = false.obs;
 
   final RxBool isUsernameError = false.obs;
   final RxBool isfNameError = false.obs;
@@ -42,10 +43,9 @@ class CoreController extends GetxController {
   void completeProfile() async {
     if (checkStrLen(username.value.text, 4)) {
       if (checkStrLen(fName.value.text, 3)) {
-        if (checkStrLen(lName.value.text, 3)) {
-          AuthApi auth = AuthApi();
-          await auth.completeProfile();
-        }
+        isBtnLoading.value = true;
+        AuthApi auth = AuthApi();
+        await auth.completeProfile();
       }
     }
   }

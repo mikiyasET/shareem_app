@@ -127,11 +127,16 @@ class _VentedPageState extends State<VentedPage> {
                       title: vented.title,
                       content: vented.content,
                       feeling: vented.feeling,
-                      author: vented.author.fullName,
+                      author: vented.identity
+                          ? vented.author.fullName
+                          : vented.author.shortHiddenName,
+                      authorAvatar:
+                          vented.identity ? vented.author.image : null,
                       date: timeago.format(vented.createdAt),
                       upvotes: vented.likes,
                       comments: vented.comments,
                       isLiked: vented.isLiked,
+                      isDisliked: vented.isDisliked,
                       isSaved: vented.saved
                           .where((element) =>
                               element.userId == homeController.user.value!.id)

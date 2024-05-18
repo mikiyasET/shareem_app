@@ -126,7 +126,10 @@ class _LikedPageState extends State<LikedPage> {
                       title: liked.title,
                       content: liked.content,
                       feeling: liked.feeling,
-                      author: liked.author.fullName,
+                      author: liked.identity
+                          ? liked.author.fullName
+                          : liked.author.shortHiddenName,
+                      authorAvatar: liked.identity ? liked.author.image : null,
                       date: timeago.format(liked.createdAt),
                       upvotes: liked.likes,
                       comments: liked.comments,

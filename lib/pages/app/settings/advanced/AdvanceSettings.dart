@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/widgets/EMAlertDialog.dart';
 
-import '../../../controller/theme.controller.dart';
+import '../../../../controller/theme.controller.dart';
 
 class AdvancedSettings extends StatelessWidget {
   AdvancedSettings({super.key});
@@ -38,19 +38,21 @@ class AdvancedSettings extends StatelessWidget {
               Divider(
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-              const ListTile(
+              ListTile(
                 leading: Icon(CupertinoIcons.lock),
                 title:
                     Text('Privacy & Security', style: TextStyle(fontSize: 18)),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Get.toNamed('/security'),
               ),
               Divider(
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-              const ListTile(
+              ListTile(
                 leading: Icon(CupertinoIcons.bell),
                 title: Text('Notifications', style: TextStyle(fontSize: 18)),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Get.toNamed('/notSettings'),
               ),
               Divider(
                   color:
