@@ -31,6 +31,7 @@ const String getSavedRoute = '/vent/saved';
 const String getLikedRoute = '/vent/liked';
 const String getVentedRoute = '/vent/vented';
 const String getCommentedRoute = '/comment/me';
+const String getPointsRoute = '/vent/points';
 
 const String editUserRoute = '/user/update';
 const String editPhotoRoute = '/user/update-image';

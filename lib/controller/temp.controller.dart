@@ -5,6 +5,7 @@ import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/utils/enums.dart';
 
 class TempController extends GetxController {
+  final RxInt postId = 0.obs;
   final Rx<TextEditingController> postTitle = TextEditingController().obs;
   final Rx<TextEditingController> postContent = TextEditingController().obs;
   final Rx<TextEditingController> commentContent = TextEditingController().obs;
@@ -48,14 +49,13 @@ class TempController extends GetxController {
 
   @override
   void onInit() {
-    VentApi ventApi = VentApi();
-    ventApi.fetchVents();
     final homeController = Get.find<HomeController>();
     userIdentity.value = homeController.user.value?.identity ?? false;
     super.onInit();
   }
 
   void clearVentValues() {
+    postId.value = 0;
     postTitle.value.clear();
     postContent.value.clear();
     postTitleText.value = '';

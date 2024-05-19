@@ -11,6 +11,7 @@ import 'package:shareem_app/model/Saved.dart';
 import 'package:shareem_app/model/User.dart';
 import 'package:shareem_app/model/Vent.dart';
 import 'package:shareem_app/service/api/tag.api.dart';
+import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/widgets/EMAlertDialog.dart';
 
 class HomeController extends GetxController {
@@ -47,10 +48,22 @@ class HomeController extends GetxController {
   final Rx<RefreshController> commentedRefreshController =
       RefreshController(initialRefresh: false).obs;
 
+  final RxBool fetchedTags = false.obs;
+  final RxInt ventCount = 0.obs;
+  final RxInt draftCount = 0.obs;
+  final RxInt dayCount = 0.obs;
+
   @override
   void onInit() {
     TagApi tagApi = TagApi();
-    tagApi.fetchTags();
+    VentApi ventApi = VentApi();
+
+    tagApi.fetchTags().then((value) {
+      if (fetchedTags.value) {
+        ventApi.fetchVents();
+      }
+    });
+    ventApi.fetchPoints();
     user.value = coreController.user.value;
     super.onInit();
   }
@@ -95,6 +108,7 @@ class HomeController extends GetxController {
                   return;
                 } else {
                   final draft = Draft.fromJson({
+                    'id': tempController.postId.value,
                     'title': tempController.postTitle.value.text,
                     'content': tempController.postContent.value.text,
                     'tags': ventController.selectedTags.isEmpty

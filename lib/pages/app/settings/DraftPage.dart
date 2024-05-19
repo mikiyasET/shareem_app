@@ -41,6 +41,8 @@ class _DraftPageState extends State<DraftPage> {
                   return InkWell(
                     splashFactory: InkRipple.splashFactory,
                     onTap: () {
+                      tempController.postId.value =
+                          ventController.drafts[index].id;
                       tempController.postTitle.value
                           .setText(ventController.drafts[index].title);
                       tempController.postTitleText.value =
@@ -80,7 +82,7 @@ class _DraftPageState extends State<DraftPage> {
                                 ),
                               ),
                               Text(
-                                "Saved by you",
+                                "Saved by you ${ventController.drafts[index].id}",
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .colorScheme

@@ -8,7 +8,6 @@ import 'package:shareem_app/widgets/EMPButton.dart';
 
 class Settings extends StatelessWidget {
   Settings({super.key});
-
   final homeController = Get.find<HomeController>();
 
   @override
@@ -47,13 +46,6 @@ class Settings extends StatelessWidget {
                             ),
                           ]),
                         ),
-                        Row(
-                          children: List.generate(
-                            6,
-                            (index) => const Icon(Icons.star,
-                                color: Colors.orange, size: 16),
-                          ),
-                        ),
                         InkWell(
                           onTap: () => Get.toNamed('/account'),
                           child: const Text(
@@ -74,81 +66,87 @@ class Settings extends StatelessWidget {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                width: MediaQuery.of(context).size.width / 3.5,
-                child: const Column(
-                  children: [
-                    Text('103',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600)),
-                    Text('Posts',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                width: MediaQuery.of(context).size.width / 3.5,
-                height: 80,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Stack(
-                    alignment: Alignment.center,
+            child: Obx(
+              () => Row(children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  child: Column(
                     children: [
-                      const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('103',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600)),
-                          Text('Posts',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600))
-                        ],
-                      ),
-                      Opacity(
-                        opacity: .2,
-                        child: Image.asset(
-                          'images/icons/mvp_ribbon.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+                      Text(homeController.ventCount.toString(),
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600)),
+                      Text('Vent',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600))
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.1),
-                  borderRadius: BorderRadius.circular(10),
+                const SizedBox(width: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  height: 80,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('${homeController.dayCount}',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            Text(homeController.dayCount > 1 ? 'Days' : 'Day',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ))
+                          ],
+                        ),
+                        Opacity(
+                          opacity: .2,
+                          child: Image.asset(
+                            'images/icons/mvp_ribbon.png',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                width: MediaQuery.of(context).size.width / 3.5,
-                child: const Column(
-                  children: [
-                    Text('103',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600)),
-                    Text('Posts',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))
-                  ],
+                const SizedBox(width: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  child: Column(
+                    children: [
+                      Text(homeController.draftCount.toString(),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600)),
+                      Text('Drafts',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600))
+                    ],
+                  ),
                 ),
-              ),
-            ]),
+              ]),
+            ),
           ),
           const SizedBox(height: 15),
           EMPButton(

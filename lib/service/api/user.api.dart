@@ -165,13 +165,14 @@ class UserApi {
   }
 
   Future<int> fetchLiked({nextPage = false}) async {
+    print("Calling fetch");
     final homeController = getX.Get.find<HomeController>();
     try {
       if (nextPage) {
         homeController.likedPageIndex.value++;
       }
 
-      final response = await client.get(getSavedRoute, queryParameters: {
+      final response = await client.get(getLikedRoute, queryParameters: {
         'page': nextPage ? homeController.likedPageIndex.value : 0,
         'limit': nextPage
             ? homeController.likedLimit.value

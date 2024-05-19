@@ -79,38 +79,43 @@ class Home extends StatelessWidget {
               ),
               onRefresh: _onRefresh,
               onLoading: _onLoading,
-              child: ListView.builder(
-                itemCount: ventController.vents.length,
-                itemBuilder: (context, index) {
-                  final Vent vent = ventController.vents.value[index];
-                  return EMPost(
-                    id: vent.id,
-                    title: vent.title,
-                    content: vent.content,
-                    feeling: vent.feeling,
-                    author: vent.identity
-                        ? vent.author.fullName
-                        : vent.author.shortHiddenName,
-                    authorAvatar: vent.author.image,
-                    date: timeago.format(vent.createdAt),
-                    upvotes: vent.likes,
-                    comments: vent.comments,
-                    tags: vent.tags,
-                    isLiked: vent.isLiked,
-                    isDisliked: vent.isDisliked,
-                    isSaved: vent.saved
-                        .where((element) =>
-                            element.userId == homeController.user.value!.id)
-                        .isNotEmpty,
-                    onTap: () {
-                      ventController.selectedVent.value = vent;
-                      Get.toNamed('/post');
-                    },
-                  );
-                },
-              ),
+              child: ventController.vents.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: ventController.vents.length,
+                      itemBuilder: (context, index) {
+                        final Vent vent = ventController.vents.value[index];
+                        return EMPost(
+                          id: vent.id,
+                          title: vent.title,
+                          content: vent.content,
+                          feeling: vent.feeling,
+                          author: vent.identity
+                              ? vent.author.fullName
+                              : vent.author.shortHiddenName,
+                          authorAvatar: vent.author.image,
+                          date: timeago.format(vent.createdAt),
+                          upvotes: vent.likes,
+                          comments: vent.comments,
+                          tags: vent.tags,
+                          isLiked: vent.isLiked,
+                          isDisliked: vent.isDisliked,
+                          isSaved: vent.saved
+                              .where((element) =>
+                                  element.userId ==
+                                  homeController.user.value!.id)
+                              .isNotEmpty,
+                          onTap: () {
+                            ventController.selectedVent.value = vent;
+                            Get.toNamed('/post');
+                          },
+                        );
+                      },
+                    )
+                  : const Center(
+                      child: Text('No vents found'),
+                    ),
             ),
           )
-        : Container();
+        : SizedBox();
   }
 }

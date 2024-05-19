@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
@@ -242,6 +243,8 @@ class VentApi {
             homeController.userVented.value = temp;
           }
         }
+        UserApi userApi = UserApi();
+        userApi.fetchLiked();
       }
     } on DioException catch (e) {
       print("Error 1 Reacting vent");
@@ -292,6 +295,30 @@ class VentApi {
             ventController.vents.value = temp;
           }
         }
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        final error = EMResponse.fromJson(e.response.toString());
+        print(error.message);
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchPoints() async {
+    try {
+      final response = await client.get(getPointsRoute);
+      EMResponse res = EMResponse.fromJson(response.toString());
+      if (res.success) {
+        final box = GetStorage();
+        final homeController = Get.find<HomeController>();
+        homeController.dayCount.value = res.data['joined'];
+        homeController.ventCount.value = res.data['vent'];
+        print(box.read(draft_));
+        homeController.draftCount.value = box.read(draft_).length;
       }
     } on DioException catch (e) {
       if (e.response != null) {

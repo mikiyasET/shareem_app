@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/model/Error.dart';
 import 'package:shareem_app/model/Tag.dart';
@@ -18,7 +19,10 @@ class TagApi {
           res.success &&
           res.message == 'FETCH_TAG_SUCCESS') {
         final ventController = Get.find<VentController>();
-        ventController.tags.value = res.data.map<Tag>((tag) => Tag.fromJson(tag)).toList();
+        final homeController = Get.find<HomeController>();
+        homeController.fetchedTags.value = true;
+        ventController.tags.value =
+            res.data.map<Tag>((tag) => Tag.fromJson(tag)).toList();
       }
       return tags;
     } on DioException catch (e) {

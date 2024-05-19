@@ -109,8 +109,8 @@ class _PostState extends State<Post> {
                                   return EMComment(
                                     content: comment.content,
                                     author: comment.identity
-                                        ? comment.user!.fullName ?? ''
-                                        : comment.user!.shortHiddenName ?? '',
+                                        ? comment.user?.fullName ?? ''
+                                        : comment.user?.shortHiddenName ?? '',
                                     authorAvatar: comment.identity
                                         ? comment.user?.image
                                         : null,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/model/Draft.dart';
 import 'package:shareem_app/model/Tag.dart';
 import 'package:shareem_app/model/Vent.dart';
@@ -24,10 +25,14 @@ class VentController extends GetxController {
   final RxList<Draft> drafts = <Draft>[].obs;
 
   void addDraft(Draft draft) {
-    draft.id = drafts.isEmpty ? 0 : drafts.last.id + 1;
+    if (draft.id == 0) {
+      draft.id = drafts.isEmpty ? 0 : drafts.first.id + 1;
+    }
     drafts.add(draft);
     final box = GetStorage();
     box.write(draft_, drafts.map((e) => e.toJson()).toList());
+    final homeController = Get.find<HomeController>();
+    homeController.draftCount.value = drafts.length;
   }
 
   void fetchDrafts() async {
@@ -41,5 +46,7 @@ class VentController extends GetxController {
     drafts.removeWhere((element) => element.id == id);
     final box = GetStorage();
     box.write(draft_, drafts.map((e) => e.toJson()).toList());
+    final homeController = Get.find<HomeController>();
+    homeController.draftCount.value = drafts.length;
   }
 }
