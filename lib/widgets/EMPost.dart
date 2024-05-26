@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shareem_app/controller/chat.controller.dart';
+import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/model/Tag.dart';
+import 'package:shareem_app/model/VentUser.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/utils/enums.dart';
@@ -10,8 +14,8 @@ class EMPost extends StatelessWidget {
   final String title;
   final String content;
   final Feeling feeling;
-  final String author;
-  final String? authorAvatar;
+  final VentUser author;
+  final bool identity;
   final String date;
   final int upvotes;
   final int comments;
@@ -24,14 +28,14 @@ class EMPost extends StatelessWidget {
   final bool tools;
   final Function()? onTap;
 
-  const EMPost({
+  EMPost({
     super.key,
     required this.id,
     required this.title,
     required this.content,
     required this.feeling,
     required this.author,
-    this.authorAvatar,
+    required this.identity,
     required this.date,
     required this.upvotes,
     required this.comments,
@@ -45,9 +49,15 @@ class EMPost extends StatelessWidget {
     this.onTap,
   });
 
+  final homeController = Get.find<HomeController>();
+  final chatController = Get.find<ChatController>();
+
   @override
   Widget build(BuildContext context) {
-    final shortName = author.split(' ').map((e) => e[0]).join();
+    final shortName = (identity ? author.fullName : author.shortHiddenName)
+        .split(' ')
+        .map((e) => e[0])
+        .join();
     final VentApi ventApi = VentApi();
 
     return InkWell(
@@ -71,26 +81,41 @@ class EMPost extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 13,
-                    backgroundImage: authorAvatar == null
-                        ? null
-                        : NetworkImage("${profileUrl}/${authorAvatar!}"),
-                    child: authorAvatar == null
-                        ? Text(
-                            shortName,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 12),
-                          )
-                        : null,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    author,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.w600,
+                  InkWell(
+                    onTap: () {
+                      if (author.id == homeController.user.value?.id) {
+                        Get.toNamed('/account');
+                      } else {
+                        chatController.io.socket.emit('getProfile', author.id);
+                        homeController.isProfileLoading.value = true;
+                        Get.toNamed('/profile');
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 13,
+                          backgroundImage: author.image == null || !identity
+                              ? null
+                              : NetworkImage("${profileUrl}/${author.image}"),
+                          child: author.image == null || !identity
+                              ? Text(
+                                  shortName,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 12),
+                                )
+                              : null,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          (identity ? author.fullName : author.shortHiddenName),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   feeling.toString().split('.').last == 'none'

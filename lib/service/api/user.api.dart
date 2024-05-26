@@ -27,14 +27,14 @@ class UserApi {
       final box = GetStorage();
       if (coreController.user.value == null && box.hasData(accessToken_)) {
         final response = await client.get(meRoute);
-        EMResponse res = EMResponse.fromJson(response.toString());
+        EMResponse res = EMResponse.fromJson(response);
         if (response.statusCode == 200 && res.message == 'USER_DATA') {
           coreController.user.value = User.fromJson(res.data);
         }
       }
     } on DioException catch (e) {
       // if (e.response != null) {
-      //   final error = EMResponse.fromJson(e.response.toString());
+      //   final error = EMResponse.fromJson(e.response));
       //   Fluttertoast.showToast(msg: error.message);
       // } else {
       //   Fluttertoast.showToast(msg: "Unknown Error");
@@ -56,7 +56,7 @@ class UserApi {
             : homeController.myLimit.value *
                 (homeController.myPageIndex.value + 1),
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         homeController.myFetchedOnce.value = true;
         if (nextPage) {
@@ -81,7 +81,7 @@ class UserApi {
       return 5;
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print("Error Fetching Saved");
         print(error.message);
       } else {
@@ -116,7 +116,7 @@ class UserApi {
             : homeController.savedLimit.value *
                 (homeController.savedPageIndex.value + 1),
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         homeController.saveFetchedOnce.value = true;
         if (nextPage) {
@@ -142,7 +142,7 @@ class UserApi {
       return 5;
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print("Error Fetching Saved");
         print(error.message);
       } else {
@@ -180,7 +180,7 @@ class UserApi {
                 (homeController.likedPageIndex.value + 1),
       });
 
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         homeController.likedFetchedOnce.value = true;
         if (nextPage) {
@@ -206,7 +206,7 @@ class UserApi {
       return 5;
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print("Error Fetching Saved");
         print(error.message);
       } else {
@@ -243,7 +243,7 @@ class UserApi {
                 (homeController.commentedPageIndex.value + 1),
       });
 
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         homeController.commentedFetchedOnce.value = true;
         if (nextPage) {
@@ -270,7 +270,7 @@ class UserApi {
       return 5;
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print("Error Fetching Comment");
         print(error.toJson());
       } else {
@@ -311,7 +311,7 @@ class UserApi {
       }),
     );
 
-    final res = EMResponse.fromJson(response.toString());
+    final res = EMResponse.fromJson(response);
     if (res.success) {
       final homeController = getX.Get.find<HomeController>();
       homeController.user.value = User.fromJson(res.data);
@@ -459,7 +459,7 @@ class UserApi {
       }
       final response = await client.put("$editUserRoute/$type", data: data);
       tempController.isUpdateButtonLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (res.success) {
         if (type == 'checkEmail') {
           getX.Get.toNamed('/emailCode');
@@ -490,7 +490,7 @@ class UserApi {
     } on DioException catch (e) {
       tempController.isUpdateButtonLoading.value = false;
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         if (error.message == 'USERNAME_ALREADY_EXISTS') {
           tempController.isUsernameError.value = true;
           tempController.usernameErrorText.value = 'Username already exists';
@@ -572,7 +572,7 @@ class UserApi {
       };
       final response = await client.put(editPasswordRoute, data: data);
       tempController.isUpdateButtonLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (res.success) {
         tempController.currentPassword.value.clear();
         tempController.newPassword.value.clear();
@@ -583,7 +583,7 @@ class UserApi {
     } on DioException catch (e) {
       tempController.isUpdateButtonLoading.value = false;
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         if (error.message == 'UPDATE_PASSWORD_FAILED') {
           tempController.isCurrentPasswordError.value = true;
           tempController.currentPasswordErrorText.value = 'Incorrect password';

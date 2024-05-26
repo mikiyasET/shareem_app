@@ -43,11 +43,36 @@ Status strToStatus(String status) {
   }
 }
 
+ChatType strToChatType(String type) {
+  switch (type) {
+    case 'image':
+      return ChatType.image;
+    case 'video':
+      return ChatType.video;
+    case 'audio':
+      return ChatType.audio;
+    default:
+      return ChatType.text;
+  }
+}
+
+ChatStatus strToChatStatus(String? status) {
+  switch (status) {
+    case 'delivered':
+      return ChatStatus.delivered;
+    case 'seen':
+      return ChatStatus.seen;
+    default:
+      return ChatStatus.deleted;
+  }
+}
+
 String ucWords(String str) {
   return str[0].toUpperCase() + str.substring(1);
 }
 
-String makeFullName(String? fName, String? lName, {bool isShort = false}) {
+String makeFullName(String? fName, String? lName,
+    {bool isShort = false, int len = 15}) {
   final String name;
   if (isShort) {
     name = "${fName ?? ''} ${lName ?? ''}".trim();
@@ -58,8 +83,8 @@ String makeFullName(String? fName, String? lName, {bool isShort = false}) {
   }
   if (name.isEmpty) {
     return "Anonymous";
-  } else if (name.length > 15) {
-    return name.substring(0, 12) + "...";
+  } else if (name.length > len) {
+    return name.substring(0, len - 3) + "...";
   }
   return name;
 }

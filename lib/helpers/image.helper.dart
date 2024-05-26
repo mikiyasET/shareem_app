@@ -215,7 +215,7 @@ Future<void> pickImage(BuildContext context, {bool isCamera = false}) async {
     }
   } on DioException catch (e) {
     if (e.response != null) {
-      final error = EMResponse.fromJson(e.response.toString());
+      final error = EMResponse.fromJson(e.response);
       print("Error Fetching Comment");
       print(error.toJson());
     } else {

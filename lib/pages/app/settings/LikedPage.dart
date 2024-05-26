@@ -59,7 +59,6 @@ class _LikedPageState extends State<LikedPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(homeController.userLiked);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Liked'),
@@ -127,10 +126,8 @@ class _LikedPageState extends State<LikedPage> {
                       title: liked.title,
                       content: liked.content,
                       feeling: liked.feeling,
-                      author: liked.identity
-                          ? liked.author.fullName
-                          : liked.author.shortHiddenName,
-                      authorAvatar: liked.identity ? liked.author.image : null,
+                      author: liked.author,
+                      identity: liked.identity,
                       date: timeago.format(liked.createdAt),
                       upvotes: liked.likes,
                       comments: liked.comments,

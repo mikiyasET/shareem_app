@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/home.controller.dart';
-import 'package:shareem_app/service/api/vent.api.dart';
 import 'package:shareem_app/utils/enums.dart';
 
 class TempController extends GetxController {

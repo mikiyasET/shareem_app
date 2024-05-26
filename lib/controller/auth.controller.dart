@@ -39,7 +39,8 @@ class AuthController extends GetxController {
     confirmPassword.value.clear();
     dateOfBirth.value.clear();
     dateOfBirthDate.value = DateTime(DateTime.now().year - 18);
-    dateOfBirth.value.text = dateOfBirthDate.value.toIso8601String().split('T')[0].toString();
+    dateOfBirth.value.text =
+        dateOfBirthDate.value.toIso8601String().split('T')[0].toString();
 
     isEmailError.value = false;
     isPasswordError.value = false;

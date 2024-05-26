@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/chat.controller.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
@@ -17,6 +18,8 @@ class Dashboard extends StatelessWidget {
   final homeController = Get.put(HomeController());
   final ventController = Get.put(VentController());
   final tempController = Get.put(TempController());
+  final chatController = Get.put(ChatController());
+
   final authController = Get.find<AuthController>();
   final themeController = Get.find<ThemeController>();
   final coreController = Get.find<CoreController>();

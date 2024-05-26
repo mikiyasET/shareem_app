@@ -70,10 +70,8 @@ class _PostState extends State<Post> {
                       id: vent.id,
                       title: vent.title,
                       content: vent.content,
-                      author: vent.identity
-                          ? vent.author.fullName
-                          : vent.author.hiddenName,
-                      authorAvatar: vent.identity ? vent.author.image : null,
+                      author: vent.author,
+                      identity: vent.identity,
                       feeling: vent.feeling,
                       date: timeago.format(vent.createdAt),
                       upvotes: vent.likes,

@@ -127,11 +127,8 @@ class _VentedPageState extends State<VentedPage> {
                       title: vented.title,
                       content: vented.content,
                       feeling: vented.feeling,
-                      author: vented.identity
-                          ? vented.author.fullName
-                          : vented.author.shortHiddenName,
-                      authorAvatar:
-                          vented.identity ? vented.author.image : null,
+                      author: vented.author,
+                      identity: vented.identity,
                       date: timeago.format(vented.createdAt),
                       upvotes: vented.likes,
                       comments: vented.comments,

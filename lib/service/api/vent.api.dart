@@ -29,7 +29,7 @@ class VentApi {
         'tags': ventController.selectedTags,
         'feeling': tempController.feeling.value
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 &&
           res.success &&
           res.message == 'CREATE_VENT_SUCCESS') {
@@ -46,7 +46,7 @@ class VentApi {
       return response.data;
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         if (error.message == 'CREATE_VENT_ERROR') {
           Fluttertoast.showToast(msg: "Failed to create vent");
         }
@@ -68,7 +68,7 @@ class VentApi {
             ? ventController.limit.value
             : ventController.limit.value * (ventController.page.value + 1),
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         if (nextPage) {
           if (res.data.isEmpty) {
@@ -106,7 +106,7 @@ class VentApi {
       final response = await client.get(getVentCommentsRoute, queryParameters: {
         'ventId': Get.find<VentController>().selectedVent.value!.id,
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         for (var vent in ventController.vents) {
           if (vent.id == ventController.selectedVent.value!.id) {
@@ -121,7 +121,7 @@ class VentApi {
         }
       }
     } on DioException catch (e) {
-      final error = EMResponse.fromJson(e.response.toString());
+      final error = EMResponse.fromJson(e.response);
     } catch (e) {
       print(e);
     }
@@ -135,7 +135,7 @@ class VentApi {
         'ventId': ventController.selectedVent.value!.id,
         'content': tempController.commentContent.value.text,
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         print("Creating comment");
         // add comment to vent list
@@ -166,7 +166,7 @@ class VentApi {
       print("Creating comment");
 
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print(error.message);
       } else {
         print(e);
@@ -187,7 +187,7 @@ class VentApi {
         'ventId': ventId,
         'type': likeType ? 'upvote' : 'downvote',
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         for (int i = 0; i < ventController.vents.length; i++) {
           if (ventController.vents[i].id == ventId) {
@@ -249,7 +249,7 @@ class VentApi {
     } on DioException catch (e) {
       print("Error 1 Reacting vent");
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print(error.message);
       } else {
         print(e);
@@ -267,7 +267,7 @@ class VentApi {
       final response = await client.post(saveVentRoute, data: {
         'ventId': ventId,
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
         for (int i = 0; i < ventController.vents.length; i++) {
           if (ventController.vents[i].id == ventId) {
@@ -298,7 +298,7 @@ class VentApi {
       }
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print(error.message);
       } else {
         print(e);
@@ -311,7 +311,7 @@ class VentApi {
   Future<void> fetchPoints() async {
     try {
       final response = await client.get(getPointsRoute);
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (res.success) {
         final box = GetStorage();
         final homeController = Get.find<HomeController>();
@@ -322,7 +322,7 @@ class VentApi {
       }
     } on DioException catch (e) {
       if (e.response != null) {
-        final error = EMResponse.fromJson(e.response.toString());
+        final error = EMResponse.fromJson(e.response);
         print(error.message);
       } else {
         print(e);

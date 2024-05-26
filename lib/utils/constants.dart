@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shareem_app/utils/enums.dart';
 
-const String backendUrl = 'http://127.0.0.1:3100';
-const String profileUrl = '${backendUrl}/img/up_image';
-const String BASE_URL = '${backendUrl}/api/v1';
+// final String backendUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:3100' : 'http://localhost:3100';
+final String backendUrl = 'https://0480-196-188-160-32.ngrok-free.app';
+final String profileUrl = '${backendUrl}/img/up_image';
+final String BASE_URL = '${backendUrl}/api/v1';
 const String accessToken_ = 'accessToken';
 const String refreshToken_ = 'refreshToken';
 const String draft_ = 'draft';

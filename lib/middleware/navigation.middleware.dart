@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
+import 'package:shareem_app/controller/chat.controller.dart';
 import 'package:shareem_app/controller/route.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 
@@ -34,6 +35,10 @@ class NavigationMiddleWare {
           tempController.currentPassword.value.clear();
           tempController.newPassword.value.clear();
           tempController.confirmPassword.value.clear();
+          break;
+        case '/chat':
+          final chatController = Get.find<ChatController>();
+          chatController.clear();
           break;
         default:
           break;

@@ -14,7 +14,7 @@ class TagApi {
   Future<dynamic> fetchTags() async {
     try {
       final tags = await client.get(getTagsRoute);
-      final EMResponse res = EMResponse.fromJson(tags.toString());
+      final EMResponse res = EMResponse.fromJson(tags);
       if (tags.statusCode == 200 &&
           res.success &&
           res.message == 'FETCH_TAG_SUCCESS') {
@@ -27,7 +27,7 @@ class TagApi {
       return tags;
     } on DioException catch (e) {
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         print(error.message);
       } else {
         print("There was an error");

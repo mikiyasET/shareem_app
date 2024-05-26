@@ -89,10 +89,8 @@ class Home extends StatelessWidget {
                           title: vent.title,
                           content: vent.content,
                           feeling: vent.feeling,
-                          author: vent.identity
-                              ? vent.author.fullName
-                              : vent.author.shortHiddenName,
-                          authorAvatar: vent.author.image,
+                          author: vent.author,
+                          identity: vent.identity,
                           date: timeago.format(vent.createdAt),
                           upvotes: vent.likes,
                           comments: vent.comments,

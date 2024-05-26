@@ -18,12 +18,16 @@ class AuthApi {
 
   Future<void> signIn(String email, String password) async {
     try {
+      print("Android SignIn");
       final response = await client.post(signInRoute, data: {
         'email': email,
         'password': password,
       });
+      print("Android SignIn");
       authController.isLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
+      print("Android SignIn");
+      print(res);
       if (response.statusCode == 200 && res.message == 'LOGIN_SUCCESS') {
         final data = res.data;
         final box = GetStorage();
@@ -33,9 +37,11 @@ class AuthApi {
         coreController.user.value = User.fromJson(data['user']);
       }
     } on DioException catch (e) {
+      print("Android SignIn");
+      print(e);
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'REQUIRED_FIELDS_MISSING':
             Fluttertoast.showToast(
@@ -80,7 +86,7 @@ class AuthApi {
         'anonymous': anonymous
       });
       authController.isLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.message == 'REGISTRATION_SUCCESS') {
         final data = res.data;
         final box = GetStorage();
@@ -94,7 +100,7 @@ class AuthApi {
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'EMAIL_CONFIRM_FAILED':
             authController.isCodeError.value = true;
@@ -163,14 +169,14 @@ class AuthApi {
         'birthDate': birthDate,
       });
       authController.isLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.message == 'EMAIL_VERIFY_SUCCESS') {
         Get.toNamed('/vCode');
       }
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'REQUIRED_FIELDS_MISSING':
             Fluttertoast.showToast(
@@ -236,7 +242,7 @@ class AuthApi {
         'gender': coreController.gender.value.toString().split('.').last[0],
       });
       coreController.isBtnLoading.value = false;
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 &&
           res.message == 'REGISTRATION_COMPLETED') {
         coreController.user.value = User.fromJson(res.data);
@@ -245,7 +251,7 @@ class AuthApi {
       coreController.isBtnLoading.value = false;
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'FIRST_NAME_LENGTH_ERROR':
             coreController.isfNameError.value = true;
@@ -305,7 +311,7 @@ class AuthApi {
       final response = await client.post(forgotPasswordRoute, data: {
         'email': email,
       });
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.message == 'FORGOT_SUCCESS') {
         authController.isResetPassword.value = true;
         if (replace) {
@@ -323,7 +329,7 @@ class AuthApi {
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'INVALID_EMAIL':
             authController.isEmailError.value = true;
@@ -372,7 +378,7 @@ class AuthApi {
     try {
       final response = await client.post(forgotPasswordVerifyRoute,
           data: {'email': email, 'code': code});
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 &&
           res.message == 'FORGOT_VERIFY_SUCCESS') {
         authController.isResetPassword.value = false;
@@ -384,7 +390,7 @@ class AuthApi {
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'INVALID_EMAIL':
             authController.isEmailError.value = true;
@@ -426,7 +432,7 @@ class AuthApi {
           },
         ),
       );
-      EMResponse res = EMResponse.fromJson(response.toString());
+      EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 &&
           res.message == 'RESET_PASSWORD_SUCCESS') {
         authController.isResetPassword.value = false;
@@ -438,7 +444,7 @@ class AuthApi {
     } on DioException catch (e) {
       authController.isLoading.value = false;
       if (e.response != null) {
-        EMResponse error = EMResponse.fromJson(e.response.toString());
+        EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'PASSWORD_LENGTH_ERROR':
             authController.isPasswordError.value = true;

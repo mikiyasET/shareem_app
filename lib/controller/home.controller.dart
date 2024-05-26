@@ -4,6 +4,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:shareem_app/controller/core.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
+import 'package:shareem_app/model/ChatUser.dart';
 import 'package:shareem_app/model/Comment.dart';
 import 'package:shareem_app/model/Draft.dart';
 import 'package:shareem_app/model/Like.dart';
@@ -18,6 +19,8 @@ class HomeController extends GetxController {
   final RxInt pageIndex = 0.obs;
   final RxString title = 'Home'.obs;
   final Rx<User?> user = Rx<User?>(null);
+  final Rx<ChatUser?> profile = Rx<ChatUser?>(null);
+  final RxBool isProfileLoading = false.obs;
   final coreController = Get.find<CoreController>();
 
   final RxList<Vent> userVented = <Vent>[].obs;

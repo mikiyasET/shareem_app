@@ -7,8 +7,10 @@ import 'package:shareem_app/controller/route.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/middleware/navigation.middleware.dart';
 import 'package:shareem_app/pages/app/AddPost.dart';
+import 'package:shareem_app/pages/app/Chat.dart';
 import 'package:shareem_app/pages/app/Dashboard.dart';
 import 'package:shareem_app/pages/app/Post.dart';
+import 'package:shareem_app/pages/app/Profile.dart';
 import 'package:shareem_app/pages/app/Settings.dart';
 import 'package:shareem_app/pages/app/Tags.dart';
 import 'package:shareem_app/pages/app/UserDetails.dart';
@@ -78,6 +80,8 @@ class Base extends StatelessWidget {
           GetPage(name: '/commented', page: () => const CommentedPage()),
           GetPage(name: '/developers', page: () => const Developers()),
           GetPage(name: '/emailCode', page: () => EmailCode()),
+          GetPage(name: '/chat', page: () => Chat()),
+          GetPage(name: '/profile', page: () => Profile()),
           GetPage(
             name: '/editAccount',
             page: () => EditAccount(),

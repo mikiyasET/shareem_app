@@ -70,7 +70,7 @@ class DioInterceptor extends Interceptor {
         },
       );
       if (response.statusCode == 200) {
-        EMResponse emResponse = EMResponse.fromJson(response.toString());
+        EMResponse emResponse = EMResponse.fromJson(response);
 
         await box.write(accessToken_, emResponse.data['accessToken']);
         await box.write(refreshToken_, emResponse.data['refreshToken']);

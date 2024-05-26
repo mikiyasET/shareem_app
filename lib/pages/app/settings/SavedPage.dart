@@ -126,10 +126,8 @@ class _SavedPageState extends State<SavedPage> {
                       title: saved.title,
                       content: saved.content,
                       feeling: saved.feeling,
-                      author: saved.identity
-                          ? saved.author.fullName
-                          : saved.author.shortHiddenName,
-                      authorAvatar: saved.identity ? saved.author.image : null,
+                      author: saved.author,
+                      identity: saved.identity,
                       date: timeago.format(saved.createdAt),
                       upvotes: saved.likes,
                       comments: saved.comments,
