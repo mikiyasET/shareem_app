@@ -123,6 +123,7 @@ class PagePicker extends StatelessWidget {
   PagePicker({super.key});
 
   final coreController = Get.find<CoreController>();
+  final themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,43 @@ class PagePicker extends StatelessWidget {
           future: user.getMe(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: EMLoading());
+              return Scaffold(
+                bottomNavigationBar: SafeArea(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Center(
+                          child: Text(
+                            "Share your feelings with the world",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Image.asset(
+                        themeController.isDarkMode.value
+                            ? 'images/ShareEm-White.png'
+                            : 'images/ShareEm.png',
+                      ),
+                    ),
+                    const SizedBox(height: 80),
+                    EMLoading(),
+                  ],
+                ),
+              );
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (coreController.user.value != null &&
                   coreController.user.value?.status == Status.active) {
@@ -154,7 +191,11 @@ class PagePicker extends StatelessWidget {
                 return SignIn();
               }
             } else {
-              return const Text("Something went wrong");
+              return Scaffold(
+                body: Center(
+                  child: const Text("Something went wrong"),
+                ),
+              );
             }
           },
         );
