@@ -1,6 +1,7 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 
 Future<void> EMAlertDialog({
   required BuildContext context,
@@ -21,6 +22,8 @@ Future<void> EMAlertDialog({
         );
       } else {
         return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
           title: Text(title),
           content: content,
           actions: actions,

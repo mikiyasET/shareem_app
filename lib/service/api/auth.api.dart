@@ -18,32 +18,27 @@ class AuthApi {
 
   Future<void> signIn(String email, String password) async {
     try {
-      print("Android SignIn");
       final response = await client.post(signInRoute, data: {
         'email': email,
         'password': password,
       });
-      print("Android SignIn");
       authController.isLoading.value = false;
       EMResponse res = EMResponse.fromJson(response);
-      print("Android SignIn");
-      print(res);
       if (response.statusCode == 200 && res.message == 'LOGIN_SUCCESS') {
         final data = res.data;
         final box = GetStorage();
         box.write(accessToken_, data['accessToken']);
         box.write(refreshToken_, data['refreshToken']);
-        final coreController = Get.find<CoreController>();
         coreController.user.value = User.fromJson(data['user']);
       }
     } on DioException catch (e) {
-      print("Android SignIn");
       print(e);
       authController.isLoading.value = false;
       if (e.response != null) {
         EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
@@ -63,11 +58,13 @@ class AuthApi {
                 'Invalid email or password';
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -92,9 +89,7 @@ class AuthApi {
         final box = GetStorage();
         box.write(accessToken_, data['accessToken']);
         box.write(refreshToken_, data['refreshToken']);
-        final coreController = Get.find<CoreController>();
-        User? uData = User.fromJson(data['user']);
-        coreController.user.value = uData;
+        coreController.user.value = User.fromJson(data['user']);
         Get.offAllNamed('/');
       }
     } on DioException catch (e) {
@@ -105,12 +100,14 @@ class AuthApi {
           case 'EMAIL_CONFIRM_FAILED':
             authController.isCodeError.value = true;
             authController.codeErrorText.value = 'Invalid code';
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: "Invalid code",
             );
             break;
           case 'REQUIRED_FIELDS_MISSING':
             Get.offNamedUntil('/signUp', (route) => false);
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
@@ -142,17 +139,20 @@ class AuthApi {
             break;
           case 'REGISTRATION_FAILED':
             Get.offNamedUntil('/signUp', (route) => false);
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'There was an error during registration',
             );
             break;
           default:
             Get.offNamedUntil('/signUp', (route) => false);
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -179,6 +179,7 @@ class AuthApi {
         EMResponse error = EMResponse.fromJson(e.response);
         switch (error.message) {
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
@@ -205,27 +206,32 @@ class AuthApi {
             authController.emailErrorText.value = 'Email already exists';
             break;
           case 'REGISTRATION_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'There was an error during registration',
             );
             break;
           case 'EMAIL_VERIFY_SUCCESS':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Email verification sent',
             );
             break;
           case 'EMAIL_VERIFY_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Sorry, we couldn\'t send the email verification code',
             );
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
             break;
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -243,9 +249,10 @@ class AuthApi {
       });
       coreController.isBtnLoading.value = false;
       EMResponse res = EMResponse.fromJson(response);
-      if (response.statusCode == 200 &&
-          res.message == 'REGISTRATION_COMPLETED') {
-        coreController.user.value = User.fromJson(res.data);
+      if (response.statusCode == 200) {
+        final data = res.data;
+        coreController.user.value = User.fromJson(data);
+        coreController.clearValues();
       }
     } on DioException catch (e) {
       coreController.isBtnLoading.value = false;
@@ -277,27 +284,32 @@ class AuthApi {
             coreController.genderErrorText.value = 'Invalid gender value';
             break;
           case 'REGISTRATION_COMPLETION_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'There was an error during registration',
             );
             break;
           case 'REGISTRATION_ALREADY_COMPLETED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Registration already completed',
             );
             Get.offAllNamed('/');
             break;
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -321,6 +333,7 @@ class AuthApi {
         }
         if (resendCode) {
           authController.resendLoading.value = false;
+          Fluttertoast.cancel();
           Fluttertoast.showToast(
             msg: 'Verification code resent',
           );
@@ -341,32 +354,38 @@ class AuthApi {
                 'Please check the email and try again.';
             break;
           case 'FORGOT_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'There was an error during password reset',
             );
             break;
           case 'ACCOUNT_NOT_READY_FOR_FORGOT':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg:
                   'You can\'t reset your password of an account that is not yet activated',
             );
             break;
           case 'FORGOT_EMAILING_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Sorry, we couldn\'t send the email verification code',
             );
             break;
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -399,21 +418,25 @@ class AuthApi {
           case 'FORGOT_VERIFY_FAILED':
             authController.isCodeError.value = true;
             authController.codeErrorText.value = 'Invalid code';
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Sorry, we couldn\'t verify the code',
             );
             break;
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );
@@ -423,22 +446,20 @@ class AuthApi {
 
   Future<void> changePassword(String password, String confirmPassword) async {
     try {
+      client.options.headers['Authorization'] =
+          'Bearer ${authController.resetAccessToken.value}';
       final response = await client.post(
         resetPasswordRoute,
         data: {'password': password, 'confirmPassword': confirmPassword},
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${authController.resetAccessToken.value}',
-          },
-        ),
       );
       EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 &&
           res.message == 'RESET_PASSWORD_SUCCESS') {
         authController.isResetPassword.value = false;
         authController.resetAccessToken.value = '';
+        Fluttertoast.cancel();
         Fluttertoast.showToast(msg: 'Password changed successfully');
-        Get.offAllNamed('/signIn');
+        Get.offAllNamed('/');
       }
       authController.isLoading.value = false;
     } on DioException catch (e) {
@@ -459,21 +480,25 @@ class AuthApi {
                 'Passwords do not match';
             break;
           case 'RESET_PASSWORD_FAILED':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'There was an error during password reset',
             );
             break;
           case 'REQUIRED_FIELDS_MISSING':
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'Please fill in all the required fields',
             );
             break;
           default:
+            Fluttertoast.cancel();
             Fluttertoast.showToast(
               msg: 'An error occurred ${error.message}',
             );
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(
           msg: 'Something went wrong, please try again later',
         );

@@ -6,6 +6,7 @@ import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/service/api/tag.api.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 
 class Tags extends StatelessWidget {
   Tags({super.key});
@@ -24,7 +25,7 @@ class Tags extends StatelessWidget {
           future: tagApi.fetchTags(),
           builder: ((context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: EMLoading());
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (ventController.tags.isNotEmpty) {
                 return Obx(
@@ -74,6 +75,7 @@ class Tags extends StatelessWidget {
                                         .add(ventController.tags[index].id);
                                   } else {
                                     HapticFeedback.mediumImpact();
+                                    Fluttertoast.cancel();
                                     Fluttertoast.showToast(
                                       msg: "You can only select 4 tags",
                                       toastLength: Toast.LENGTH_SHORT,

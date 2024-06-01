@@ -5,7 +5,6 @@ import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/service/api/user.api.dart';
-import 'package:shareem_app/widgets/EMAlertDialog.dart';
 
 class Security extends StatelessWidget {
   Security({super.key});
@@ -62,53 +61,53 @@ class Security extends StatelessWidget {
             Divider(
                 color:
                     Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-            ListTile(
-              leading: Icon(CupertinoIcons.delete, color: Colors.red),
-              title: Text(
-                'Delete your account',
-                style: TextStyle(fontSize: 18, color: Colors.red),
-              ),
-              onTap: () => EMAlertDialog(
-                context: context,
-                title: 'Delete your account?',
-                content: const Text(
-                    "Choose an action to perform on your account, remember that this action is irreversible."),
-                actions: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("Delete"),
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(Colors.red),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("Deactivate"),
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(
-                          Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.8)),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text("Cancel"),
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(
-                          Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.8)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-                color:
-                    Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
+            // ListTile(
+            //   leading: Icon(CupertinoIcons.delete, color: Colors.red),
+            //   title: Text(
+            //     'Delete your account',
+            //     style: TextStyle(fontSize: 18, color: Colors.red),
+            //   ),
+            //   onTap: () => EMAlertDialog(
+            //     context: context,
+            //     title: 'Delete your account?',
+            //     content: const Text(
+            //         "Choose an action to perform on your account, remember that this action is irreversible."),
+            //     actions: [
+            //       TextButton(
+            //         onPressed: () {},
+            //         child: Text("Delete"),
+            //         style: ButtonStyle(
+            //           foregroundColor: MaterialStateProperty.all(Colors.red),
+            //         ),
+            //       ),
+            //       TextButton(
+            //         onPressed: () {},
+            //         child: Text("Deactivate"),
+            //         style: ButtonStyle(
+            //           foregroundColor: MaterialStateProperty.all(
+            //               Theme.of(context)
+            //                   .colorScheme
+            //                   .onSurface
+            //                   .withOpacity(.8)),
+            //         ),
+            //       ),
+            //       TextButton(
+            //         onPressed: () => Get.back(),
+            //         child: Text("Cancel"),
+            //         style: ButtonStyle(
+            //           foregroundColor: MaterialStateProperty.all(
+            //               Theme.of(context)
+            //                   .colorScheme
+            //                   .onSurface
+            //                   .withOpacity(.8)),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Divider(
+            //     color:
+            //         Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
           ],
         ),
       ),

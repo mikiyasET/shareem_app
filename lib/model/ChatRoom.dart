@@ -6,7 +6,7 @@ class ChatRoom {
   final String user1Id;
   final ChatUser me;
   final String user2Id;
-  final ChatUser user;
+  late ChatUser user;
   late ChatMessage? lastMessage;
   late int unseen;
   final DateTime createdAt;

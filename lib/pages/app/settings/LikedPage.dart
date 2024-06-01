@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/service/api/user.api.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 import 'package:shareem_app/widgets/EMPost.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -74,17 +72,13 @@ class _LikedPageState extends State<LikedPage> {
               if (mode == RefreshStatus.idle) {
                 body = const Text("Pull down to refresh");
               } else if (mode == RefreshStatus.refreshing) {
-                body = Platform.isIOS
-                    ? const CupertinoActivityIndicator()
-                    : const CircularProgressIndicator();
+                body = const EMLoading();
               } else if (mode == RefreshStatus.failed) {
                 body = const Text("Refresh Failed!Click retry!");
               } else if (mode == RefreshStatus.canRefresh) {
                 body = const Text("Release to refresh");
               } else {
-                body = Platform.isIOS
-                    ? const CupertinoActivityIndicator()
-                    : const CircularProgressIndicator();
+                body = const EMLoading();
               }
               return SizedBox(
                 height: 55.0,
@@ -98,9 +92,7 @@ class _LikedPageState extends State<LikedPage> {
               if (mode == LoadStatus.idle) {
                 body = const Text("Scroll up to load more");
               } else if (mode == LoadStatus.loading) {
-                body = Platform.isIOS
-                    ? const CupertinoActivityIndicator()
-                    : const CircularProgressIndicator();
+                body = const EMLoading();
               } else if (mode == LoadStatus.failed) {
                 body = const Text("Load Failed!Click retry!");
               } else if (mode == LoadStatus.canLoading) {

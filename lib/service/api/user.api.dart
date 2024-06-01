@@ -165,7 +165,6 @@ class UserApi {
   }
 
   Future<int> fetchLiked({nextPage = false}) async {
-    print("Calling fetch");
     final homeController = getX.Get.find<HomeController>();
     try {
       if (nextPage) {
@@ -294,35 +293,44 @@ class UserApi {
 
   Future<void> uploadImage(BuildContext context) async {
     final tempController = getX.Get.find<TempController>();
-    final file = await MultipartFile.fromFile(
-      tempController.profileImage.value,
-      filename: tempController.profileImage.value.split("/").last,
-      contentType: MediaType('image', 'jpeg'),
-    );
-    final FormData formData = FormData.fromMap({
-      'photo': file,
-    });
-
-    final response = await client.put(
-      editPhotoRoute,
-      data: formData,
-      options: Options(headers: {
-        'Content-Type': 'multipart/form-data',
-      }),
-    );
-
-    final res = EMResponse.fromJson(response);
-    if (res.success) {
-      final homeController = getX.Get.find<HomeController>();
-      homeController.user.value = User.fromJson(res.data);
-      getX.Get.back();
-      tempController.profileImage.value = '';
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Profile Picture Updated", textAlign: TextAlign.center),
-          backgroundColor: Color(0xff068181),
-        ),
+    try {
+      tempController.isUploadLoading.value = true;
+      final file = await MultipartFile.fromFile(
+        tempController.profileImage.value,
+        filename: tempController.profileImage.value.split("/").last,
+        contentType: MediaType('image', 'jpeg'),
       );
+      final FormData formData = FormData.fromMap({
+        'photo': file,
+      });
+      final response = await client.put(
+        editPhotoRoute,
+        data: formData,
+        options: Options(headers: {
+          'Content-Type': 'multipart/form-data',
+        }),
+      );
+
+      final res = EMResponse.fromJson(response);
+      if (res.success) {
+        tempController.isUploadLoading.value = false;
+        final homeController = getX.Get.find<HomeController>();
+        homeController.user.value = User.fromJson(res.data);
+        getX.Get.back();
+        tempController.profileImage.value = '';
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text("Profile Picture Updated", textAlign: TextAlign.center),
+            backgroundColor: Color(0xff068181),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        tempController.isUploadLoading.value = false;
+      }
+    } catch (e) {
+      tempController.isUploadLoading.value = false;
     }
   }
 
@@ -466,6 +474,7 @@ class UserApi {
         } else if (type == 'resend') {
           tempController.isEmailResendLoading.value = false;
         } else if (type == 'email') {
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: 'Profile Updated');
           homeController.user.value = User.fromJson(res.data);
           getX.Get.back();
@@ -482,6 +491,7 @@ class UserApi {
             Fluttertoast.showToast(msg: 'You are now anonymous.');
           }
         } else {
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: 'Profile Updated');
           homeController.user.value = User.fromJson(res.data);
           getX.Get.back();
@@ -514,8 +524,10 @@ class UserApi {
           tempController.isEmailCodeError.value = true;
           tempController.emailCodeErrorText.value = "Invalid code";
         } else if (error.message == 'UPDATE_IDENTITY_NO_CHANGE') {
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: 'No changes made');
         } else if (error.message == 'UPDATE_INVALID_IDENTITY') {
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: 'Invalid identity value');
         }
         print("Error updating profile");
@@ -577,6 +589,7 @@ class UserApi {
         tempController.currentPassword.value.clear();
         tempController.newPassword.value.clear();
         tempController.confirmPassword.value.clear();
+        Fluttertoast.cancel();
         Fluttertoast.showToast(msg: 'Password Updated');
         getX.Get.back();
       }

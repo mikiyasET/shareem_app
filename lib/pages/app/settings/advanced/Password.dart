@@ -27,6 +27,7 @@ class Password extends StatelessWidget {
             children: [
               EMInput(
                 label: 'Current Password',
+                obscureText: true,
                 controller: tempController.currentPassword.value,
                 isError: tempController.isCurrentPasswordError.value,
                 errorText: tempController.currentPasswordErrorText.value,
@@ -34,6 +35,7 @@ class Password extends StatelessWidget {
               const SizedBox(height: 20),
               EMInput(
                 label: 'New Password',
+                obscureText: true,
                 controller: tempController.newPassword.value,
                 isError: tempController.isNewPasswordError.value,
                 errorText: tempController.newPasswordErrorText.value,
@@ -41,6 +43,7 @@ class Password extends StatelessWidget {
               const SizedBox(height: 20),
               EMInput(
                 label: 'Confirm Password',
+                obscureText: true,
                 controller: tempController.confirmPassword.value,
                 isError: tempController.isConfirmPasswordError.value,
                 errorText: tempController.confirmPasswordErrorText.value,

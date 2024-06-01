@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
 import 'package:shareem_app/controller/theme.controller.dart';
 
@@ -15,20 +14,22 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: Theme.of(context).colorScheme.surface,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 150, left: 30, right: 30, bottom: 20),
-          child: Obx(
-            () => Column(
+      body: Container(
+        color: Theme.of(context).colorScheme.surface,
+        height: MediaQuery.of(context).size.height,
+        padding: EdgeInsets.only(top: 150, left: 30, right: 30, bottom: 20),
+        child: Obx(
+          () => SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Image.asset(
-                    themeController.isDarkMode.value ? 'images/ShareEm-White.png' :'images/ShareEm.png',
+                    themeController.isDarkMode.value
+                        ? 'images/ShareEm-White.png'
+                        : 'images/ShareEm.png',
                   ),
                 ),
                 const SizedBox(height: 70),
@@ -87,9 +88,10 @@ class SignIn extends StatelessWidget {
                 const SizedBox(height: 20),
                 Obx(
                   () => EMButton(
-                      label: 'Sign In',
-                      onPressed: authController.signIn,
-                      isLoading: authController.isLoading.value),
+                    label: 'Sign In',
+                    onPressed: authController.signIn,
+                    isLoading: authController.isLoading.value,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(

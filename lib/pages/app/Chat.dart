@@ -11,6 +11,7 @@ import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/helpers/format.helper.dart';
 import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/widgets/EMChatText.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 
 class Chat extends StatelessWidget {
   Chat({super.key});
@@ -19,13 +20,11 @@ class Chat extends StatelessWidget {
   final themeController = Get.find<ThemeController>();
   final chatController = Get.find<ChatController>();
 
-  void _onLoading() async {}
-
   @override
   Widget build(BuildContext context) {
     final shortName = chatController.selectedUser.value?.fullName
         .split(' ')
-        .map((e) => e[0])
+        .map((e) => e.trim().length > 0 ? e[0] : '')
         .join();
     return Scaffold(
       appBar: AppBar(
@@ -58,10 +57,32 @@ class Chat extends StatelessWidget {
                         len: 25),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    'Online',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
+                  SizedBox(height: 2.5),
+                  chatController.selectedUser.value?.isOnline == true
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 10,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              'Online',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          'Offline',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
                 ],
               ),
             ],
@@ -78,66 +99,70 @@ class Chat extends StatelessWidget {
         ],
       ),
       body: Obx(
-        () => chatController.chatMessages.value.length == 0
-            ? const Center(child: Text('Start a conversation'))
-            : SmartRefresher(
-                controller: chatController.chatRefreshController.value,
-                enablePullDown: false,
-                enablePullUp: true,
-                header: const ClassicHeader(),
-                footer: CustomFooter(
-                  builder: (BuildContext context, LoadStatus? mode) {
-                    Widget body;
-                    if (mode == LoadStatus.idle) {
-                      body = const Text("Scroll up to load more");
-                    } else if (mode == LoadStatus.loading) {
-                      body = Platform.isIOS
-                          ? const CupertinoActivityIndicator()
-                          : const CupertinoActivityIndicator();
-                    } else if (mode == LoadStatus.failed) {
-                      body = const Text("Load Failed!Click retry!");
-                    } else if (mode == LoadStatus.canLoading) {
-                      body = const Text("Release to load more");
-                    } else {
-                      body = Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 15),
-                          // glassy look
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(.1),
-                          ),
-                          child: const Text("Chat started",
-                              style:
-                                  TextStyle(fontSize: 12, letterSpacing: .3)));
-                    }
-                    return Container(
-                      height: 55.0,
-                      child: Center(child: body),
-                    );
-                  },
-                ),
-                onRefresh: () =>
-                    chatController.chatRefreshController.value.refreshToIdle(),
-                onLoading: () => chatController.nextPage('chat'),
-                child: ListView(
-                  reverse: true,
-                  children: chatController.chatMessages.value
-                      .map(
-                        (element) => EMChatText(
-                          message: element.message,
-                          date: DateFormat('hh:mm a').format(element.createdAt),
-                          type: element.type,
-                          status: element.status,
-                          isMe: element.userId == homeController.user.value?.id,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+        () => chatController.isLoading.value
+            ? Center(child: const EMLoading())
+            : chatController.chatMessages.length == 0
+                ? const Center(child: Text('Start a conversation'))
+                : SmartRefresher(
+                    controller: chatController.chatRefreshController.value,
+                    enablePullDown: false,
+                    enablePullUp: true,
+                    header: const ClassicHeader(),
+                    footer: CustomFooter(
+                      builder: (BuildContext context, LoadStatus? mode) {
+                        Widget body;
+                        if (mode == LoadStatus.idle) {
+                          body = const Text("Scroll up to load more");
+                        } else if (mode == LoadStatus.loading) {
+                          body = Platform.isIOS
+                              ? const CupertinoActivityIndicator()
+                              : const CupertinoActivityIndicator();
+                        } else if (mode == LoadStatus.failed) {
+                          body = const Text("Load Failed!Click retry!");
+                        } else if (mode == LoadStatus.canLoading) {
+                          body = const Text("Release to load more");
+                        } else {
+                          body = Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 15),
+                              // glassy look
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(.1),
+                              ),
+                              child: const Text("Chat started",
+                                  style: TextStyle(
+                                      fontSize: 12, letterSpacing: .3)));
+                        }
+                        return Container(
+                          height: 55.0,
+                          child: Center(child: body),
+                        );
+                      },
+                    ),
+                    onRefresh: () => chatController.chatRefreshController.value
+                        .refreshToIdle(),
+                    onLoading: () => chatController.nextPage('chat'),
+                    child: ListView(
+                      reverse: true,
+                      children: chatController.chatMessages.value
+                          .map(
+                            (element) => EMChatText(
+                              message: element.message,
+                              date: DateFormat('hh:mm a')
+                                  .format(element.createdAt),
+                              type: element.type,
+                              status: element.status,
+                              isMe: element.userId ==
+                                  homeController.user.value?.id,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
       ),
       bottomNavigationBar: Container(
         padding:

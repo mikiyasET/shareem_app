@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shareem_app/controller/auth.controller.dart';
@@ -21,13 +22,19 @@ class NavigationMiddleWare {
     if (routing?.isBack == true) {
       routeController.back(routing?.current ?? '/');
       switch (routeController.previousRoute.value) {
+        case '/':
+          FocusManager.instance.primaryFocus?.unfocus();
+          break;
         case '/resetPassword':
           authController.isResetPassword.value = false;
+          authController.clearValues();
           break;
         case '/addTags':
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: "Tag updated.");
           break;
         case '/addFeelings':
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: "Feeling updated.");
           break;
         case '/password':
@@ -40,6 +47,9 @@ class NavigationMiddleWare {
           final chatController = Get.find<ChatController>();
           chatController.clear();
           break;
+        case '/signUp':
+          authController.clearValues();
+          break;
         default:
           break;
       }
@@ -48,11 +58,15 @@ class NavigationMiddleWare {
       switch (routeController.currentRoute.value) {
         case '/':
           authController.clearValues();
-          break;
-        case '/signUp':
+          FocusManager.instance.primaryFocus?.unfocus();
           break;
         case '/resetPassword':
-          authController.isResetPassword.value = false;
+          authController.password.value.clear();
+          authController.confirmPassword.value.clear();
+          authController.isEmailError.value = false;
+          authController.isPasswordError.value = false;
+          authController.isConfirmPasswordError.value = false;
+          authController.isResetPassword.value = true;
           break;
         default:
           break;
@@ -63,19 +77,4 @@ class NavigationMiddleWare {
       authController.code.value.clear();
     }
   }
-
-// final authController = Get.find<AuthController>();
-// authController.isLoading.value = false;
-// authController.code.value.clear();
-// print("Pre: ${routing?.previous ?? 'Unknown'}");
-// print("Route: ${routing?.current ?? 'Unknown'}");
-// print("Is back: ${routing?.isBack ?? 'Unknown'}");
-// if (routing != null) {
-//   if (routing.current == '/signIn' ||
-//       routing.current == '/resetPassword' ||
-//       (routing.current == '/' && routing.isBack == true)) {
-//     authController.isResetPassword.value = false;
-//     authController.clearValues();
-//   }
-// }
 }

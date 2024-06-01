@@ -18,11 +18,11 @@ class VentApi {
   Dio client = api.client;
 
   Future<void> createVent() async {
+    final homeController = Get.find<HomeController>();
+    final tempController = Get.find<TempController>();
+    final ventController = Get.find<VentController>();
     try {
-      final homeController = Get.find<HomeController>();
-      final tempController = Get.find<TempController>();
-      final ventController = Get.find<VentController>();
-
+      tempController.isPostLoading.value = true;
       final response = await client.post(createVentRoute, data: {
         'title': tempController.postTitleText.value,
         'content': tempController.postContentText.value,
@@ -30,6 +30,7 @@ class VentApi {
         'feeling': tempController.feeling.value
       });
       EMResponse res = EMResponse.fromJson(response);
+      tempController.isPostLoading.value = false;
       if (response.statusCode == 200 &&
           res.success &&
           res.message == 'CREATE_VENT_SUCCESS') {
@@ -41,16 +42,20 @@ class VentApi {
         ventApi.fetchVents();
         UserApi userApi = UserApi();
         userApi.fetchVented();
+        Fluttertoast.cancel();
         Fluttertoast.showToast(msg: "Vent created successfully");
       }
       return response.data;
     } on DioException catch (e) {
+      tempController.isPostLoading.value = false;
       if (e.response != null) {
         final error = EMResponse.fromJson(e.response);
         if (error.message == 'CREATE_VENT_ERROR') {
+          Fluttertoast.cancel();
           Fluttertoast.showToast(msg: "Failed to create vent");
         }
       } else {
+        Fluttertoast.cancel();
         Fluttertoast.showToast(msg: "There was an error");
       }
     }
@@ -58,6 +63,7 @@ class VentApi {
 
   Future<int> fetchVents({nextPage = false}) async {
     final ventController = Get.find<VentController>();
+    final homeController = Get.find<HomeController>();
     try {
       if (nextPage) {
         ventController.page.value++;
@@ -72,6 +78,7 @@ class VentApi {
       if (response.statusCode == 200 && res.success) {
         if (nextPage) {
           if (res.data.isEmpty) {
+            homeController.isVentedLoading.value = false;
             return 0; // no more data
           }
           final List<Vent> vents =
@@ -81,17 +88,21 @@ class VentApi {
               ventController.vents.add(vent);
             }
           }
+          homeController.isVentedLoading.value = false;
           return 1; // load completed
         } else {
           final List<Vent> vents =
               res.data.map<Vent>((vent) => Vent.fromJson(vent)).toList();
           ventController.vents.assignAll(vents);
+          homeController.isVentedLoading.value = false;
           return 2; // refresh completed
         }
         // print(res.data);
       }
+      homeController.isVentedLoading.value = false;
       return 5;
     } on DioException catch (e) {
+      homeController.isVentedLoading.value = false;
       if (nextPage) {
         return 3; // load failed
       } else {
@@ -137,8 +148,6 @@ class VentApi {
       });
       EMResponse res = EMResponse.fromJson(response);
       if (response.statusCode == 200 && res.success) {
-        print("Creating comment");
-        // add comment to vent list
         tempController.commentContent.value.clear();
         ventController.isPostDetailScrolling.value = true;
         for (int i = 0; i < ventController.vents.length; i++) {
@@ -163,8 +172,6 @@ class VentApi {
         Fluttertoast.showToast(msg: "Comment added.");
       }
     } on DioException catch (e) {
-      print("Creating comment");
-
       if (e.response != null) {
         final error = EMResponse.fromJson(e.response);
         print(error.message);
@@ -172,8 +179,6 @@ class VentApi {
         print(e);
       }
     } catch (e) {
-      print("Creating comment");
-
       print(e);
     }
   }
@@ -191,7 +196,6 @@ class VentApi {
       if (response.statusCode == 200 && res.success) {
         for (int i = 0; i < ventController.vents.length; i++) {
           if (ventController.vents[i].id == ventId) {
-            print("Reacting vent ${ventController.vents[i].likes}");
             ventController.vents.value[i].likes =
                 ventController.vents.value[i].isLiked
                     ? ventController.vents.value[i].likes - 1
@@ -216,7 +220,6 @@ class VentApi {
             }
             ventController.vents.value = [];
             ventController.vents.value = temp;
-            print("Reacting vent ${ventController.vents[i].likes}");
           }
         }
         for (int i = 0; i < homeController.userVented.length; i++) {
@@ -317,7 +320,6 @@ class VentApi {
         final homeController = Get.find<HomeController>();
         homeController.dayCount.value = res.data['joined'];
         homeController.ventCount.value = res.data['vent'];
-        print(box.read(draft_));
         homeController.draftCount.value = box.read(draft_).length;
       }
     } on DioException catch (e) {

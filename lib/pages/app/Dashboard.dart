@@ -9,6 +9,7 @@ import 'package:shareem_app/controller/theme.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/helpers/vent.helper.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 import 'package:shareem_app/widgets/main/EMBottomNav.dart';
 import 'package:shareem_app/widgets/main/EMPageStack.dart';
 
@@ -25,6 +26,7 @@ class Dashboard extends StatelessWidget {
   final coreController = Get.find<CoreController>();
 
   final VentApi ventApi = VentApi();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +56,8 @@ class Dashboard extends StatelessWidget {
                       ),
                       onPressed: tempController
                                   .postTitleText.value.isNotEmpty &&
-                              tempController.postContentText.value.isNotEmpty
+                              tempController.postContentText.value.isNotEmpty &&
+                              tempController.isPostLoading.value == false
                           ? () => postVent(context)
                           : null,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -66,7 +69,9 @@ class Dashboard extends StatelessWidget {
                           .colorScheme
                           .onSurface
                           .withOpacity(.4),
-                      child: const Text('Post'),
+                      child: tempController.isPostLoading.value
+                          ? EMLoading()
+                          : const Text('Post'),
                     ),
                   )
                 : const SizedBox(),

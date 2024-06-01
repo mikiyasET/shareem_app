@@ -105,10 +105,12 @@ class EMChatText extends StatelessWidget {
                         Icon(
                           getStatusIcon(),
                           size: 15,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(.5),
+                          color: status == ChatStatus.seen
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(.5),
                         ),
                       ],
                     )

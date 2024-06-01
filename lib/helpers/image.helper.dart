@@ -10,7 +10,6 @@ import 'package:shareem_app/controller/temp.controller.dart';
 import 'package:shareem_app/handlers/camera_permission_handler.dart';
 import 'package:shareem_app/handlers/photo_permission_handler.dart';
 import 'package:shareem_app/model/Error.dart';
-import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/utils/constants.dart';
 import 'package:shareem_app/widgets/EMButton.dart';
 
@@ -61,47 +60,73 @@ Future<void> editPhoto(BuildContext context) async {
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            PhysicalModel(
-                              clipBehavior: Clip.antiAlias,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(.1),
-                              borderRadius: BorderRadius.circular(150),
-                              child: homeController.user.value?.image == null
-                                  ? Icon(Icons.account_circle,
-                                      size: 250,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withOpacity(.2))
-                                  : FadeInImage.assetNetwork(
-                                      placeholder:
-                                          'images/loading/img_load.gif',
-                                      image:
-                                          '$profileUrl/${homeController.user.value?.image}',
-                                      fit: BoxFit.cover,
-                                      height: 250,
-                                      width: 250,
-                                    ),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // loading
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: PhysicalModel(
+                                    clipBehavior: Clip.antiAlias,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withOpacity(.1),
+                                    borderRadius: BorderRadius.circular(150),
+                                    child:
+                                        homeController.user.value?.image == null
+                                            ? Icon(Icons.account_circle,
+                                                size: 250,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface
+                                                    .withOpacity(.2))
+                                            : FadeInImage.assetNetwork(
+                                                placeholder:
+                                                    'images/loading/img_load.gif',
+                                                image:
+                                                    '$profileUrl/${homeController.user.value?.image}',
+                                                fit: BoxFit.cover,
+                                                height: 250,
+                                                width: 250,
+                                              ),
+                                  ),
+                                ),
+                                tempController.isUploadLoading.value == true
+                                    ? Align(
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                          width: 250,
+                                          height: 250,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 5,
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox()
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                            EMButton(
-                              label: 'Change from camera',
-                              backgroundColor: Colors.teal,
-                              textColor: Colors.white,
-                              onPressed: () {
-                                pickImage(context, isCamera: true);
-                              },
-                            ),
-                            const SizedBox(height: 10),
-                            EMButton(
-                              label: 'Change from Gallery',
-                              onPressed: () {
-                                pickImage(context, isCamera: false);
-                              },
-                            ),
+                            Column(
+                              children: [
+                                EMButton(
+                                  label: 'Change from camera',
+                                  backgroundColor: Colors.teal,
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    pickImage(context, isCamera: true);
+                                  },
+                                ),
+                                const SizedBox(height: 10),
+                                EMButton(
+                                  label: 'Change from Gallery',
+                                  onPressed: () {
+                                    pickImage(context, isCamera: false);
+                                  },
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       )
@@ -109,19 +134,38 @@ Future<void> editPhoto(BuildContext context) async {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
                           children: [
-                            PhysicalModel(
-                              clipBehavior: Clip.antiAlias,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(.1),
-                              borderRadius: BorderRadius.circular(150),
-                              child: Image.file(
-                                File(tempController.profileImage.value),
-                                fit: BoxFit.cover,
-                                height: 250,
-                                width: 250,
-                              ),
+                            Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: PhysicalModel(
+                                    clipBehavior: Clip.antiAlias,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withOpacity(.1),
+                                    borderRadius: BorderRadius.circular(150),
+                                    child: Image.file(
+                                      File(tempController.profileImage.value),
+                                      fit: BoxFit.cover,
+                                      height: 250,
+                                      width: 250,
+                                    ),
+                                  ),
+                                ),
+                                tempController.isUploadLoading.value == true
+                                    ? Align(
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                          width: 250,
+                                          height: 250,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 5,
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox()
+                              ],
                             ),
                             const SizedBox(height: 20),
                             EMButton(
@@ -129,8 +173,23 @@ Future<void> editPhoto(BuildContext context) async {
                               backgroundColor: Colors.green,
                               textColor: Colors.white,
                               onPressed: () {
-                                UserApi userApi = UserApi();
-                                userApi.uploadImage(context);
+                                // Dear Ashenafi, we have commented this part because of the server we host in it's free and they don't allow us to upload images
+                                // UserApi userApi = UserApi();
+                                // userApi.uploadImage(context);
+                                Get.back();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Dear Ashenafi the upload image feature is disabled because of the server we host in it's free and they don't allow us to upload images but you can uncomment it in the code we have completed the upload part we can show you if you want to see sir.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        )),
+                                    backgroundColor: Color(0xff068181),
+                                    duration: Duration(seconds: 6),
+                                  ),
+                                );
                               },
                             ),
                             const SizedBox(height: 10),

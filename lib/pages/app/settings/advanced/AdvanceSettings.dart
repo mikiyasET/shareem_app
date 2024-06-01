@@ -48,15 +48,6 @@ class AdvancedSettings extends StatelessWidget {
               Divider(
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
-              ListTile(
-                leading: Icon(CupertinoIcons.bell),
-                title: Text('Notifications', style: TextStyle(fontSize: 18)),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                onTap: () => Get.toNamed('/notSettings'),
-              ),
-              Divider(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(.04)),
               Obx(
                 () => ListTile(
                   onTap: () => themeController.toggleDarkMode(),

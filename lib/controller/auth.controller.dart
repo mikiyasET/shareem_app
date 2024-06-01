@@ -86,6 +86,7 @@ class AuthController extends GetxController {
     if (!isEmailError.value && !isPasswordError.value) {
       AuthApi signIn = AuthApi();
       await signIn.signIn(email.value.text, password.value.text);
+      Get.toNamed('/');
     } else {
       isLoading.value = false;
     }
@@ -249,6 +250,7 @@ class AuthController extends GetxController {
     final coreController = Get.find<CoreController>();
     box.remove(accessToken_);
     box.remove(refreshToken_);
+    box.remove(draft_);
     coreController.user.value = null;
   }
 }

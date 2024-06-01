@@ -31,9 +31,24 @@ class ChatController extends GetxController {
   final RxBool isNewChatRoom = false.obs;
   final Rx<ChatUser?> selectedUser = Rx<ChatUser?>(null);
 
-  final EMWebSocket io = EMWebSocket();
+  late EMWebSocket io;
+
+  @override
+  void onInit() {
+    io = EMWebSocket();
+    io.onInit();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    io.dispose();
+    super.onClose();
+  }
 
   void initializeChatRoom() {
+    print(selectedUser.value?.toJson());
+    isLoading.value = true;
     io.socket.emit('joinRoom', selectedUser.value?.id);
   }
 
@@ -46,7 +61,6 @@ class ChatController extends GetxController {
         'message': messageController.value.text,
       };
       chatQueue.add(chat);
-
       final chatN = ChatMessage(
         id: chat['key'] ?? '',
         chatRoomId: chat['id'] ?? '',
@@ -63,13 +77,15 @@ class ChatController extends GetxController {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      chatRooms[chatRooms
-              .indexWhere((element) => element.id == chatRoom.value?.id)]
-          .lastMessage = chatN;
-      var x = chatRooms.value;
-      chatRooms.value = [];
-      chatRooms.value.addAll(x);
-
+      if (chatRooms.indexWhere((element) => element.id == chatRoom.value?.id) !=
+          -1) {
+        chatRooms[chatRooms
+                .indexWhere((element) => element.id == chatRoom.value?.id)]
+            .lastMessage = chatN;
+        var x = chatRooms.value;
+        chatRooms.value = [];
+        chatRooms.value.addAll(x);
+      }
       chatMessages.assignAll([chatN, ...chatMessages]);
       io.socket.emit('sendMessage', {
         'key': chat['key'],
@@ -78,6 +94,7 @@ class ChatController extends GetxController {
       });
       messageController.value.clear();
     } else {
+      Fluttertoast.cancel();
       Fluttertoast.showToast(msg: 'Message cannot be empty');
     }
   }
@@ -108,7 +125,6 @@ class ChatController extends GetxController {
         }
       });
     } else {
-      chatRoomPage.value++;
       io.socket.emit('getChatRooms', {
         'page': chatRoomPage.value,
       });

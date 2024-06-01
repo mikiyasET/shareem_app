@@ -34,6 +34,7 @@ class DioInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.type == DioExceptionType.connectionError) {
+      Fluttertoast.cancel();
       Fluttertoast.showToast(msg: "Connection Error");
     }
     if (err.response?.statusCode == 401) {

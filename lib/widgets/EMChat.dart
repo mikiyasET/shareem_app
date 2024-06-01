@@ -31,7 +31,8 @@ class EMChat extends StatelessWidget {
   final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    final shortName = name.split(' ').map((e) => e[0]).join();
+    final shortName =
+        name.split(' ').map((e) => e.trim().length > 0 ? e[0] : '').join();
     return InkWell(
       onTap: () {
         chatController.selectedUser.value = user;
@@ -49,17 +50,39 @@ class EMChat extends StatelessWidget {
         ),
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 4),
-          leading: CircleAvatar(
-            radius: 28,
-            backgroundImage:
-                image == null ? null : NetworkImage("$profileUrl/${image!}"),
-            child: image == null
-                ? Text(
-                    shortName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18),
-                  )
-                : null,
+          leading: Stack(
+            children: [
+              CircleAvatar(
+                radius: 28,
+                backgroundImage: image == null
+                    ? null
+                    : NetworkImage("$profileUrl/${image!}"),
+                child: image == null
+                    ? Text(
+                        shortName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    : null,
+              ),
+              if (user.isOnline == true)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.surface,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
           title:
               Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),

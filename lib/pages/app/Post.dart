@@ -106,6 +106,8 @@ class _PostState extends State<Post> {
                                   final comment = vent.commentList[index];
                                   return EMComment(
                                     content: comment.content,
+                                    identity: comment.identity,
+                                    authorID: comment.user?.id,
                                     author: comment.identity
                                         ? comment.user?.fullName ?? ''
                                         : comment.user?.shortHiddenName ?? '',

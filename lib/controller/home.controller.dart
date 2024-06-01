@@ -24,11 +24,21 @@ class HomeController extends GetxController {
   final coreController = Get.find<CoreController>();
 
   final RxList<Vent> userVented = <Vent>[].obs;
+  final RxList<Vent> otherVented = <Vent>[].obs;
+  final RxBool isProfileVentLoading = false.obs;
+  final Rx<RefreshController> profileRefreshController =
+      RefreshController(initialRefresh: false).obs;
+  final RxInt profilePageIndex = 0.obs;
   final RxInt myPageIndex = 0.obs;
   final RxInt myLimit = 10.obs;
   final RxBool myFetchedOnce = false.obs;
   final Rx<RefreshController> myRefreshController =
       RefreshController(initialRefresh: false).obs;
+
+  final RxBool isVentedLoading = false.obs;
+  final RxBool isLikedLoading = false.obs;
+  final RxBool isSavedLoading = false.obs;
+  final RxBool isCommentedLoading = false.obs;
 
   final RxList<Saved> userSaved = <Saved>[].obs;
   final RxInt savedPageIndex = 0.obs;
@@ -58,6 +68,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    isVentedLoading.value = true;
     TagApi tagApi = TagApi();
     VentApi ventApi = VentApi();
 
@@ -153,9 +164,6 @@ class HomeController extends GetxController {
           title.value = '';
           break;
         case 3:
-          title.value = 'Notifications';
-          break;
-        case 4:
           title.value = 'Settings';
           break;
         default:

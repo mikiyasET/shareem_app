@@ -35,6 +35,7 @@ import 'package:shareem_app/pages/auth/changePassword.dart';
 import 'package:shareem_app/service/api/user.api.dart';
 import 'package:shareem_app/theme.dart';
 import 'package:shareem_app/utils/enums.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 
 import 'pages/app/settings/advanced/Account.dart';
 
@@ -59,6 +60,7 @@ class Base extends StatelessWidget {
         theme: EMTheme().lightTheme(),
         themeMode: themeController.theme,
         darkTheme: EMTheme().darkTheme(),
+        debugShowCheckedModeBanner: false,
         getPages: [
           GetPage(name: '/', page: () => PagePicker()),
           GetPage(name: '/signUp', page: () => SignUp()),
@@ -125,7 +127,6 @@ class PagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      print("Page Refreshed");
       if (coreController.user.value != null) {
         final user = coreController.user.value!;
         if (user.status == Status.incomplete) {
@@ -141,7 +142,7 @@ class PagePicker extends StatelessWidget {
           future: user.getMe(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: EMLoading());
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (coreController.user.value != null &&
                   coreController.user.value?.status == Status.active) {

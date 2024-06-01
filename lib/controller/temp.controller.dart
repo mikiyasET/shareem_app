@@ -10,9 +10,11 @@ class TempController extends GetxController {
   final Rx<TextEditingController> commentContent = TextEditingController().obs;
   final RxString postTitleText = ''.obs;
   final RxString postContentText = ''.obs;
+  final RxBool isPostLoading = false.obs;
   final Rx<String> feeling = ''.obs;
   final RxString profileImage = ''.obs;
   final RxBool isUpdateButtonLoading = false.obs;
+  final RxBool isUploadLoading = false.obs;
 
   final Rx<TextEditingController> username = TextEditingController().obs;
   final Rx<TextEditingController> fName = TextEditingController().obs;

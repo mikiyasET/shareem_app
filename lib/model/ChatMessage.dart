@@ -9,7 +9,7 @@ class ChatMessage {
   final ChatUser user;
   final String message;
   final ChatType type;
-  final ChatStatus? status;
+  late ChatStatus? status;
   final DateTime createdAt;
   final DateTime updatedAt;
 

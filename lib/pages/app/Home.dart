@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +6,7 @@ import 'package:shareem_app/controller/home.controller.dart';
 import 'package:shareem_app/controller/vent.controller.dart';
 import 'package:shareem_app/model/Vent.dart';
 import 'package:shareem_app/service/api/vent.api.dart';
+import 'package:shareem_app/widgets/EMLoading.dart';
 import 'package:shareem_app/widgets/EMPost.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -48,72 +47,71 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return homeController.pageIndex.value == 0
-        ? Obx(
-            () => SmartRefresher(
-              controller: ventController.refreshController.value,
-              enablePullDown: true,
-              enablePullUp: true,
-              header: const ClassicHeader(),
-              footer: CustomFooter(
-                builder: (BuildContext context, LoadStatus? mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("Scroll up to load more");
-                  } else if (mode == LoadStatus.loading) {
-                    body = Platform.isIOS
-                        ? const CupertinoActivityIndicator()
-                        : const CircularProgressIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Load Failed!Click retry!");
-                  } else if (mode == LoadStatus.canLoading) {
-                    body = const Text("Release to load more");
-                  } else {
-                    body = const Text("No more vents.");
-                  }
-                  return Container(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              child: ventController.vents.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: ventController.vents.length,
-                      itemBuilder: (context, index) {
-                        final Vent vent = ventController.vents.value[index];
-                        return EMPost(
-                          id: vent.id,
-                          title: vent.title,
-                          content: vent.content,
-                          feeling: vent.feeling,
-                          author: vent.author,
-                          identity: vent.identity,
-                          date: timeago.format(vent.createdAt),
-                          upvotes: vent.likes,
-                          comments: vent.comments,
-                          tags: vent.tags,
-                          isLiked: vent.isLiked,
-                          isDisliked: vent.isDisliked,
-                          isSaved: vent.saved
-                              .where((element) =>
-                                  element.userId ==
-                                  homeController.user.value!.id)
-                              .isNotEmpty,
-                          onTap: () {
-                            ventController.selectedVent.value = vent;
-                            Get.toNamed('/post');
+    return Obx(
+      () => homeController.isVentedLoading.value
+          ? Center(child: const EMLoading())
+          : homeController.pageIndex.value == 0
+              ? SmartRefresher(
+                  controller: ventController.refreshController.value,
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  header: const ClassicHeader(),
+                  footer: CustomFooter(
+                    builder: (BuildContext context, LoadStatus? mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("Scroll up to load more");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const EMLoading();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Load Failed!Click retry!");
+                      } else if (mode == LoadStatus.canLoading) {
+                        body = const Text("Release to load more");
+                      } else {
+                        body = const Text("No more vents.");
+                      }
+                      return Container(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  child: ventController.vents.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: ventController.vents.length,
+                          itemBuilder: (context, index) {
+                            final Vent vent = ventController.vents[index];
+                            final userId = homeController.user.value!.id;
+                            return EMPost(
+                              id: vent.id,
+                              title: vent.title,
+                              content: vent.content,
+                              feeling: vent.feeling,
+                              author: vent.author,
+                              identity: vent.identity,
+                              date: timeago.format(vent.createdAt),
+                              upvotes: vent.likes,
+                              comments: vent.comments,
+                              tags: vent.tags,
+                              isLiked: vent.isLiked,
+                              isDisliked: vent.isDisliked,
+                              isSaved: vent.saved
+                                  .where((e) => e.userId == userId)
+                                  .isNotEmpty,
+                              onTap: () {
+                                ventController.selectedVent.value = vent;
+                                Get.toNamed('/post');
+                              },
+                            );
                           },
-                        );
-                      },
-                    )
-                  : const Center(
-                      child: Text('No vents found'),
-                    ),
-            ),
-          )
-        : SizedBox();
+                        )
+                      : const Center(
+                          child: Text('No vents found'),
+                        ),
+                )
+              : const SizedBox(),
+    );
   }
 }

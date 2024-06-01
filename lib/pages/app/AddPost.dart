@@ -22,6 +22,7 @@ class AddPost extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              autofocus: false,
               controller: tempController.postTitle.value,
               onChanged: (value) => tempController.postTitleText.value = value,
               style: TextStyle(
@@ -110,6 +111,7 @@ class AddPost extends StatelessWidget {
                   tempController.postContentText.value = value,
               maxLines: null,
               minLines: 22,
+              autofocus: false,
               textCapitalization: TextCapitalization.sentences,
               style: TextStyle(
                 fontSize: 17,
